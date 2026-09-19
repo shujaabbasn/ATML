@@ -1,0 +1,5 @@
+seed: 6304                    #split, eval subset, patch permutations and head init all use this
+dataset: stl10
+canonical_size: 224           #interventions are built on a common 224x224 RGB image
+val_fraction: 0.2             #stratified 80/20 split of the official train split
+eval_subset_size: 500         #class-balanced subset of the official test split

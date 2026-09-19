@@ -25,3 +25,10 @@ __pycache__/
 
 # OS
 .DS_Store
+data/
+*.pth
+*.pt
+.venv/
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
