@@ -33601,8 +33601,8 @@
  },
  "cue_conflict": {
   "generated": 500,
-  "accepted": 230,
-  "rejected": 270,
+  "accepted": 376,
+  "rejected": 124,
   "accept_content_ssim": 0.3,
   "pairs": [
    [
@@ -33625,7 +33625,8 @@
     "bird",
     "monkey"
    ]
-  ]
+  ],
+  "balanced": 230
  },
  "patch_permutations": [
   [
