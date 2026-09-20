@@ -1,0 +1,7 @@
+seed: 6304
+dataset: pacs
+target_domain: sketch #unlabelled during adaptation, labels used only at final evaluation
+source_domains: [photo, art_painting, cartoon] #the three labelled domains
+val_fraction: 0.2 #stratified 80/20 split within each source domain
+resize: 256 #images are resized to 256x256 first
+crop: 224 #random crop for training and center crop for evaluation
