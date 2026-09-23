@@ -87,8 +87,8 @@ Seed 6304. Settings are in `task4/configs/task4.yaml`. Outputs are in
   flip. Nothing else changes.
 - PROSER uses five dummy classifiers reduced by max, beta = 1, gamma = 0.1, and manifold mixup
   after `layer2` with lambda drawn from Beta(2,2).
-- Its detection score follows `valdummy` in https://github.com/LAMDA-CL/CVPR21-Proser
-  (Zhou et al., 2021), including that code's temperature of 1024.
+- Its detection score follows the reference implementation of Zhou et al. (2021), including that
+  implementation's temperature of 1024.
 - Every threshold is the 95th percentile of unknownness on the CIFAR-10 validation set.
 - Cells 7 to 14 gave the same numbers on a T4 and on a CPU runtime, with nothing moving past 1e-6.
   Retraining from scratch is seeded but not guaranteed identical on a different GPU.
