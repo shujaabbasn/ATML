@@ -1,0 +1,15 @@
+seed: 6304
+known_dataset: cifar10
+val_fraction: 0.1 #stratified 90/10
+epochs: 100
+batch_size: 128
+learning_rate: 0.1
+momentum: 0.9
+weight_decay: 0.0005
+proser_epochs: 50
+proser_learning_rate: 0.001
+proser_dummy_count: 5
+proser_beta: 1.0 #classifier-placeholder weight
+proser_gamma: 0.1 #data-placeholder weight
+mixup_alpha: 2.0 #lambda ~ Beta(2,2)
+accept_percentile: 95
