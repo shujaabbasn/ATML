@@ -58,6 +58,12 @@ source scores, source-domain separability, the sharpness proxy, Sketch scores, p
 against Task 2, the lambda_DG study, and the expectation written down before any Sketch number was
 read.
 
+Task 3 carries the same two deviations as Task 2, applied identically to every method here: the
+unbiased MMD estimator and gradient clipping at global norm 1.0. Both are described in the Task 2
+section above. The estimator matters most here, since DAN-DG sees only eight samples per domain,
+where the biased version's floor is largest. With it corrected, DAN-DG at the required lambda_DG = 1
+reaches 71.8% on Sketch instead of predicting one class for all 3929 images.
+
 - DAN-DG uses the Task 2 MMD, but between pairs of source domains instead of between source and
   target. Same measure, different information.
 - SAM is plain non-adaptive Sharpness-Aware Minimization at rho = 0.05. Two forward and backward
