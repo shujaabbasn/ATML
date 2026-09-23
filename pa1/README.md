@@ -30,6 +30,11 @@ Outputs are in `task2/results/`: `task2_results.json` (all reported numbers: per
 
 * Source-only, DAN (multi-kernel MMD, λ_MMD = 1), DANN (gradient reversal, α(p) = 2/(1+exp(−10p)) − 1) and CDAN (discriminator on f ⊗ p, no entropy conditioning) are implemented in the notebook following Ganin et al. (2016).
 * Backbone: torchvision ResNet-18 (`IMAGENET1K_V1`), fine-tuned end to end. Dataset: PACS
+**Two documented deviations from the manual**, both stabilisation changes and both applied identically to every method so the comparison stays controlled:
+
+1. **Unbiased MMD estimator.** The diagonal `k(x,x)` terms are excluded from the within-domain blocks. Measured on features drawn from a single distribution, where the true MMD is zero, the biased estimator returns 0.4722 at 8 samples per domain and 0.1573 at 24, while the unbiased one returns ~0.000 at every sample size. Almost the entire penalty at large λ was finite-sample artifact, and minimising it drove the representation to collapse. With the correction, λ_MMD = 10 trains normally (90.0% source, 59.5% target) instead of predicting a single class for all 3929 target images.
+2. **Gradient clipping at global norm 1.0.** The pre-clip norm is logged per epoch as `gradient_norm` in the histories. It bounded DANN's numerical divergence but did not stabilise it: AdamW's update is scale-invariant, so dividing the gradient by a constant leaves `m/sqrt(v)` unchanged and the clipping is undone by the optimizer. DANN's pre-clip norm still reaches 1.2e7 against 13 for plain ERM and 13.3 for the reversal-off control, which isolates the reversed gradient as the cause.
+
 * `dann_strength_0.0` in the histories is a control run with gradient reversal switched off, used to check that the training pipeline itself is correct.
 * Determinism flags are set (cuDNN, cuBLAS workspace, deterministic algorithms in warn-only mode), but GPU runs are not guaranteed to be bit-identical. Reported numbers come from a single run of the notebook.
 
