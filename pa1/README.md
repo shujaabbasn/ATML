@@ -1,7 +1,7 @@
 # PA1
 
 Seed 6304 throughout. Every notebook runs top to bottom on a Colab T4, mounts Drive and sets
-`PROJECT_DIR`, which must be the folder containing `task1/` … `task4/` and `shared/`.
+`PROJECT_DIR`, which must be the folder containing `task1/` to `task4/` and `shared/`.
 
 Model weights (`*.pt`) are not committed: about 400 MB across the four tasks, and the brief asks
 that large checkpoints stay out of the repository. Re-running a notebook regenerates them into
@@ -32,7 +32,7 @@ Outputs are in `task2/results/`: `task2_results.json` (all reported numbers: per
 * Backbone: torchvision ResNet-18 (`IMAGENET1K_V1`), fine-tuned end to end. Dataset: PACS
 **Two documented deviations from the manual**, both stabilisation changes and both applied identically to every method so the comparison stays controlled:
 
-1. **Unbiased MMD estimator.** The diagonal `k(x,x)` terms are excluded from the within-domain blocks. Measured on features drawn from a single distribution, where the true MMD is zero, the biased estimator returns 0.4722 at 8 samples per domain and 0.1573 at 24, while the unbiased one returns ~0.000 at every sample size. Almost the entire penalty at large λ was finite-sample artifact, and minimising it drove the representation to collapse. With the correction, λ_MMD = 10 trains normally (90.0% source, 59.5% target) instead of predicting a single class for all 3929 target images.
+1. **Unbiased MMD estimator.** The diagonal `k(x,x)` terms are excluded from the within-domain blocks. Measured on features from a single distribution, where the true MMD is zero, the biased estimator returns 0.4722 at 8 samples per domain and 0.1573 at 24. The unbiased one returns about 0.000 at every sample size. Almost the entire penalty at large λ was finite-sample artifact, and minimising it drove the representation to collapse. With the correction, λ_MMD = 10 trains normally (90.0% source, 59.5% target) instead of predicting a single class for all 3929 target images.
 2. **Gradient clipping at global norm 1.0.** The pre-clip norm is logged per epoch as `gradient_norm` in the histories. It bounded DANN's numerical divergence but did not stabilise it: AdamW's update is scale-invariant, so dividing the gradient by a constant leaves `m/sqrt(v)` unchanged and the clipping is undone by the optimizer. DANN's pre-clip norm still reaches 1.2e7 against 13 for plain ERM and 13.3 for the reversal-off control, which isolates the reversed gradient as the cause.
 
 * `dann_strength_0.0` in the histories is a control run with gradient reversal switched off, used to check that the training pipeline itself is correct.
@@ -40,21 +40,55 @@ Outputs are in `task2/results/`: `task2_results.json` (all reported numbers: per
 
 ## Task 3: Domain Generalization
 
-Run `task3/task3_domain_generalization.ipynb` top to bottom on a Colab T4 (~1 h). Sketch is the unseen target and is never used for training, source-side diagnostics, checkpoint selection or hyperparameter selection. Cell 3 loads the split file Task 2 wrote rather than recomputing it, and asserts the dataset row order still matches. Cell 5 loads Task 2's Source-only checkpoint as the ERM baseline instead of retraining it, as the brief requires.
-Seed 6304, and the ResNet-18, preprocessing, augmentation, domain-balanced sampling, optimizer, epoch budget and early-stopping rule are all reused from Task 2. Settings are in `task3/configs/task3.yaml`. Checkpoints are selected on mean macro-F1 across the three source validation domains.
+Run `task3/task3_domain_generalization.ipynb` top to bottom on a Colab T4 (~1 h). Run Task 2 first,
+since this task reads two files Task 2 writes.
 
-* DAN-DG applies the Task 2 MMD to every pair of observed source domains rather than to an unlabelled target, so the two tasks share a discrepancy measure and differ only in what information it sees.
-* SAM is standard non-adaptive Sharpness-Aware Minimization at ρ = 0.05, two forward/backward passes per update, with the frozen BatchNorm policy held across both.
-* A tripwire raises if a Sketch row reaches any source-only code path. Only the final evaluation cell passes `allow_target=True`.
-* Outputs are in `task3/results/task3_results.json`: per-domain, mean and worst-domain source metrics, source-domain separability, the common sharpness proxy, Sketch metrics, per-class changes against Task 2, the λ_DG study, and the expectation recorded before any Sketch number was read.
+Sketch is the unseen target. Nothing in training, in the source-side diagnostics, or in checkpoint
+and hyperparameter selection is allowed to see it. Only the final evaluation cell loads it.
+
+Cell 3 reads the split file Task 2 wrote instead of building a new one, and checks that the dataset
+row order still matches. Cell 5 loads Task 2's Source-only checkpoint as the ERM baseline rather
+than retraining it.
+
+Seed 6304. The backbone, preprocessing, augmentation, sampling, optimizer and early stopping are
+all reused from Task 2. Settings are in `task3/configs/task3.yaml`. Checkpoints are chosen on the
+mean macro-F1 over the three source validation sets.
+
+Outputs are in `task3/results/task3_results.json`. It holds the per-domain, mean and worst-domain
+source scores, source-domain separability, the sharpness proxy, Sketch scores, per-class changes
+against Task 2, the lambda_DG study, and the expectation written down before any Sketch number was
+read.
+
+- DAN-DG uses the Task 2 MMD, but between pairs of source domains instead of between source and
+  target. Same measure, different information.
+- SAM is plain non-adaptive Sharpness-Aware Minimization at rho = 0.05. Two forward and backward
+  passes per step, with BatchNorm frozen in both.
+- A tripwire raises if a Sketch row reaches any source-side code path. Only the last cell passes
+  `allow_target=True`.
 
 ## Task 4: Open-Set Recognition
 
-Run `task4/task4_open_set_recognition.ipynb` on a Colab T4. CIFAR-10 is known, split 90/10 stratified; the unknown groups are eight fixed near and eight fixed far CIFAR-100 **test** classes, 800 images each. No CIFAR-100 training image is used anywhere, and `unlock_unknowns()` refuses to expose the unknowns until all three checkpoints exist on disk.
-Training is cells 4–6 and takes about four hours: Vanilla and GCSC from random initialization, then PROSER fine-tuned from the selected Vanilla checkpoint. The reported numbers are reproduced by cells 7–14 against the saved checkpoints in about ten minutes, verified across a T4 and a CPU runtime with no change beyond 1e-6. Retraining from scratch is seeded but not guaranteed bit-identical across different GPUs.
+Run `task4/task4_open_set_recognition.ipynb` on a Colab T4. CIFAR-10 is the known set, split 90/10.
+The unknowns are eight near and eight far CIFAR-100 test classes, 800 images each. No CIFAR-100
+training image is used anywhere.
 
-* Backbone is a CIFAR-appropriate ResNet-18: 3×3 stride-1 first convolution, no initial max pool, operating on 32×32.
-* GCSC is the Vanilla recipe with `RandAugment(num_ops=2, magnitude=9)` inserted after the crop and flip, everything else unchanged.
-* PROSER uses five dummy classifiers reduced by max, β = 1 for the classifier-placeholder loss and γ = 0.1 for the data-placeholder loss, with manifold mixup after `layer2` and λ ~ Beta(2,2).
-* Its placeholder detection score follows `valdummy` in https://github.com/LAMDA-CL/CVPR21-Proser (Zhou et al., 2021), including that implementation's temperature of 1024.
-* Every threshold is the 95th percentile of unknownness on the CIFAR-10 validation set. Outputs are in `task4/results/task4_results.json`.
+Cells 4 to 6 do the training and take about four hours. Vanilla and GCSC start from random weights.
+PROSER is fine-tuned from the Vanilla checkpoint.
+
+Cells 7 to 14 produce every reported number from the saved checkpoints in about ten minutes.
+`unlock_unknowns()` refuses to touch CIFAR-100 until all three checkpoints exist on disk.
+
+Seed 6304. Settings are in `task4/configs/task4.yaml`. Outputs are in
+`task4/results/task4_results.json`.
+
+- The backbone is a CIFAR ResNet-18: 3x3 stride-1 first convolution, no initial max pool, 32x32
+  input.
+- GCSC is the Vanilla recipe with `RandAugment(num_ops=2, magnitude=9)` added after the crop and
+  flip. Nothing else changes.
+- PROSER uses five dummy classifiers reduced by max, beta = 1, gamma = 0.1, and manifold mixup
+  after `layer2` with lambda drawn from Beta(2,2).
+- Its detection score follows `valdummy` in https://github.com/LAMDA-CL/CVPR21-Proser
+  (Zhou et al., 2021), including that code's temperature of 1024.
+- Every threshold is the 95th percentile of unknownness on the CIFAR-10 validation set.
+- Cells 7 to 14 gave the same numbers on a T4 and on a CPU runtime, with nothing moving past 1e-6.
+  Retraining from scratch is seeded but not guaranteed identical on a different GPU.
