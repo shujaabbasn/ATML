@@ -1,0 +1,9 @@
+data/
+hf_cache/
+__pycache__/
+.DS_Store
+*.zip
+
+# checkpoints are regenerable and the brief says not to commit large ones
+*.pt
+*.pth
