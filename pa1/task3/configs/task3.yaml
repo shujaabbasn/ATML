@@ -1,0 +1,10 @@
+seed: 6304
+dataset: pacs
+unseen_domain: sketch
+source_domains: [photo, art_painting, cartoon]
+val_fraction: 0.2
+resize: 256
+crop: 224
+lambda_dg: 1.0
+rho: 0.05
+sharpness_radius: 0.05
