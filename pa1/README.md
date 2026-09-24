@@ -87,7 +87,10 @@ training image is used anywhere.
 Cells 4 to 6 do the training and take about four hours. Vanilla and GCSC start from random weights.
 PROSER is fine-tuned from the Vanilla checkpoint.
 
-Cells 7 to 14 produce every reported number from the saved checkpoints in about ten minutes.
+Cells 7 to 15 produce every reported number from the saved checkpoints, in about ten minutes on a T4
+and about half an hour on a CPU runtime. Cell 7 reloads the checkpoints only when cells 4 to 6 were
+not run in the same session. Cell 13 gives the acceptance rate of each unknown class under every
+score and model, and how often the four vanilla scores make the same accept/reject decision.
 `unlock_unknowns()` refuses to touch CIFAR-100 until all three checkpoints exist on disk.
 
 Seed 6304. Settings are in `task4/configs/task4.yaml`. Environment in `task4/requirements.txt`. Outputs are in
@@ -102,5 +105,6 @@ Seed 6304. Settings are in `task4/configs/task4.yaml`. Environment in `task4/req
 - Its detection score follows the reference implementation of Zhou et al. (2021), including that
   implementation's temperature of 1024.
 - Every threshold is the 95th percentile of unknownness on the CIFAR-10 validation set.
-- Cells 7 to 14 gave the same numbers on a T4 and on a CPU runtime, with nothing moving past 1e-6.
+- Cells 7 to 15 gave the same numbers on a T4 and on a CPU runtime: every AUROC, rate and accuracy
+  is identical, and raw scores differ by at most 4e-6.
   Retraining from scratch is seeded but not guaranteed identical on a different GPU.
