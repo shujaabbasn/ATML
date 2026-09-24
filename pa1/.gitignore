@@ -7,3 +7,6 @@ __pycache__/
 # checkpoints are regenerable and the brief says not to commit large ones
 *.pt
 *.pth
+
+# the report is written and submitted separately, never committed
+report/
