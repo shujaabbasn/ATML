@@ -30,8 +30,8 @@ def dpo_loss(
     # Starter implementation:
     # students must validate the objective carefully.
     logits = beta * (
-        policy_margin + ref_margin
-    )
+        policy_margin - ref_margin
+    ) #fixed
 
     loss = -F.logsigmoid(
         logits
