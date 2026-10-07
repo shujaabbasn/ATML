@@ -44,7 +44,7 @@ def length_stats(lengths):
     }
 
 
-def generation_metrics(policy,tokenizer,reward_model,reward_tokenizer,prompt_rows,cfg,max_new_tokens,max_prompt_length,batch_size,reward_max_length,missing_eos_penalty=0.0):
+def generation_metrics(policy,tokenizer,reward_model,reward_tokenizer,prompt_rows,cfg,max_new_tokens,max_prompt_length,batch_size,reward_max_length,missing_eos_penalty=0.0,logprob_batch_size=2):
     """Generate one response per prompt and measure reward, kl, entropy, length and word limits.
 
     prompt_rows is a list of {"prompt_id":..,"messages":[..]} in a fixed order.
@@ -73,12 +73,22 @@ def generation_metrics(policy,tokenizer,reward_model,reward_tokenizer,prompt_row
         attention_mask=generated["attention_mask"].clone() #prompt padding mask + ones over the response
         response_ids=generated["response_ids"].clone() #sampled tokens after the prompt
         response_mask=generated["response_mask"].clone().float() #1 up to and including eos, 0 after
+        #score log-probs a few rows at a time: 8 rows x 768 tokens x 151k vocab in fp32 ran out of memory on the t4 (task 2)
+        #same padded rows, just fewer at once, so the numbers are the same as scoring all 8 together
+        policy_logp_parts=[] #log pi_theta for each slice of rows
+        ref_logp_parts=[] #log pi_ref for each slice of rows
         with torch.no_grad():
-            policy_logp,policy_logits=response_token_logprobs(policy,sequences,attention_mask,generated["prompt_width"],response_ids) #log pi_theta(a_t|s_t)
-            del policy_logits #only need the gathered log-probs, logits are huge (vocab 151k)
-            with reference_mode(policy):
-                ref_logp,ref_logits=response_token_logprobs(policy,sequences,attention_mask,generated["prompt_width"],response_ids) #adapter off = frozen reference
-            del ref_logits #same reason
+            for row_start in range(0,sequences.shape[0],logprob_batch_size):
+                row_end=row_start+logprob_batch_size #end of this slice
+                part_logp,part_logits=response_token_logprobs(policy,sequences[row_start:row_end],attention_mask[row_start:row_end],generated["prompt_width"],response_ids[row_start:row_end]) #log pi_theta(a_t|s_t)
+                del part_logits #only need the gathered log-probs, logits are huge (vocab 151k)
+                policy_logp_parts.append(part_logp) #keep
+                with reference_mode(policy):
+                    part_ref_logp,part_ref_logits=response_token_logprobs(policy,sequences[row_start:row_end],attention_mask[row_start:row_end],generated["prompt_width"],response_ids[row_start:row_end]) #adapter off = frozen reference
+                del part_ref_logits #same reason
+                ref_logp_parts.append(part_ref_logp) #keep
+        policy_logp=torch.cat(policy_logp_parts,dim=0) #back to [batch, steps]
+        ref_logp=torch.cat(ref_logp_parts,dim=0) #same
         raw_rewards=score_reward_pairs(reward_model,reward_tokenizer,prompts,generated["responses"],max_length=reward_max_length).cpu() #course reward model, one scalar per response
         policy_logp=policy_logp.float().cpu() #move to cpu so gpu memory stays flat across batches
         ref_logp=ref_logp.float().cpu() #same
