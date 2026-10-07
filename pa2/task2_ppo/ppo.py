@@ -53,7 +53,8 @@ def ppo_policy_loss(new_logp, old_logp, advantage, mask, eps=0.2):
     surr2 = ratio.clamp(1.0 - eps, 1.0 + eps) * advantage
 
     # Starter implementation: students must validate the clipping geometry carefully.
-    objective = torch.maximum(surr1, surr2)
+    #fixed: manual says min(rho*A, clip(rho)*A), starter took the max which removes the pessimistic bound
+    objective = torch.minimum(surr1, surr2)
 
     loss = -masked_mean(objective, mask)
     affected = ((ratio < (1.0 - eps)) | (ratio > (1.0 + eps))).float()
@@ -72,3 +73,11 @@ def normalize_advantages(advantages, mask, eps=1e-6):
     mean = valid.mean()
     std = valid.std(unbiased=False).clamp_min(eps)
     return ((advantages - mean) / std) * mask
+
+
+def affected_token_fraction(ratio, advantage, mask, eps=0.2):
+    """Fraction of valid tokens where clipping actually changes the objective."""
+    above=(ratio>(1.0+eps))&(advantage>0) #good token pushed past 1+eps, min picks the clipped term
+    below=(ratio<(1.0-eps))&(advantage<0) #bad token pushed below 1-eps, min picks the clipped term
+    affected=(above|below).float() #only these tokens get zero gradient from the policy loss
+    return masked_mean(affected,mask) #same response mask as clip fraction
