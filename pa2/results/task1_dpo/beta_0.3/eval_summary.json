@@ -1,0 +1,110 @@
+{
+  "name": "beta_0.3",
+  "adapter": "outputs/task1_dpo/beta_0.3",
+  "beta": 0.3,
+  "heldout_pairs": {
+    "n_pairs": 290,
+    "dpo_loss": 0.6769666075706482,
+    "preference_accuracy": 0.6689655172413793,
+    "preference_accuracy_check": 0.6689655184745789,
+    "mean_margin": 0.13096027076244354,
+    "skipped": 10
+  },
+  "length_strata": {
+    "rejected_longer": {
+      "n_pairs": 79,
+      "dpo_loss": 0.6556869149208069,
+      "preference_accuracy": 0.7215189873417721,
+      "preference_accuracy_check": 0.7215189933776855,
+      "mean_margin": 0.27307167649269104,
+      "corr_length_difference_margin": -0.008197778600081614
+    },
+    "preferred_longer": {
+      "n_pairs": 78,
+      "dpo_loss": 0.7037273049354553,
+      "preference_accuracy": 0.44871794871794873,
+      "preference_accuracy_check": 0.44871795177459717,
+      "mean_margin": -0.051451317965984344,
+      "corr_length_difference_margin": -0.0019187143649324688
+    },
+    "length_matched": {
+      "n_pairs": 80,
+      "dpo_loss": 0.682167112827301,
+      "preference_accuracy": 0.55,
+      "preference_accuracy_check": 0.550000011920929,
+      "mean_margin": 0.0845949798822403,
+      "corr_length_difference_margin": -0.005595118723326614
+    },
+    "all": {
+      "n_pairs": 237,
+      "dpo_loss": 0.6804361343383789,
+      "preference_accuracy": 0.5738396624472574,
+      "preference_accuracy_check": 0.5738396644592285,
+      "mean_margin": 0.10264581441879272,
+      "corr_length_difference_margin": -0.23631422288001402
+    },
+    "skipped": 9
+  },
+  "heldout_generation": {
+    "n_prompts": 290,
+    "reward_mean": 1.3191212736327074,
+    "reward_std": 1.249896927620882,
+    "effective_reward_mean": 1.3191212736327074,
+    "kl_from_reference": -9.580938058206812e-05,
+    "entropy": 0.7749986052513123,
+    "response_length": {
+      "mean": 152.92758620689656,
+      "std": 103.77910026972816,
+      "median": 185.0,
+      "q25": 41.0,
+      "q75": 256.0,
+      "iqr": 215.0,
+      "min": 2.0,
+      "max": 256.0
+    },
+    "truncation_rate": 0.41724137931034483,
+    "eos_rate": 0.5827586206896552,
+    "prompts_truncated": 0,
+    "word_limit_compliance": 0.0,
+    "word_limit_prompts_scored": 1,
+    "reward_length_corr": 0.01721139976389071,
+    "max_new_tokens": 256,
+    "max_prompt_length": 768,
+    "decoding": {
+      "temperature": 0.7,
+      "top_p": 0.9,
+      "do_sample": true
+    }
+  },
+  "word_limit_prompts": {
+    "n_prompts": 10,
+    "reward_mean": 3.450390625,
+    "reward_std": 0.5252455364257332,
+    "effective_reward_mean": 3.450390625,
+    "kl_from_reference": 0.0002376590418862179,
+    "entropy": 0.70761638879776,
+    "response_length": {
+      "mean": 45.7,
+      "std": 20.293102276389387,
+      "median": 39.5,
+      "q25": 32.0,
+      "q75": 44.75,
+      "iqr": 12.75,
+      "min": 28.0,
+      "max": 88.0
+    },
+    "truncation_rate": 0.0,
+    "eos_rate": 1.0,
+    "prompts_truncated": 0,
+    "word_limit_compliance": 0.7,
+    "word_limit_prompts_scored": 10,
+    "reward_length_corr": -0.4534299394421446,
+    "max_new_tokens": 256,
+    "max_prompt_length": 768,
+    "decoding": {
+      "temperature": 0.7,
+      "top_p": 0.9,
+      "do_sample": true
+    }
+  }
+}
