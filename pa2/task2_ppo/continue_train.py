@@ -35,6 +35,28 @@ def disable_dropout(model):
             module.p=0.0 #lora dropout would otherwise make the ratio != 1 even with identical weights
 
 
+def cast_input_to_float(module,args):
+    """Forward pre-hook: feed the fp32 critic head an fp32 input (the backbone hands it fp16)."""
+    return (args[0].float(),) #same tensor, just fp32
+
+
+def critic_trainable_to_fp32(value_model):
+    """Keep the critic's trainable parameters in fp32.
+
+    The released critic loads in fp16 and its trainable head stays fp16. AdamW's eps=1e-8 rounds to 0 in fp16,
+    so the very first critic step divided 0 by 0 and the critic became NaN (Kaggle run, update 1, epoch 2).
+    """
+    for name,parameter in value_model.named_parameters():
+        if parameter.requires_grad==True:
+            if parameter.dtype!=torch.float32:
+                parameter.data=parameter.data.float() #same Parameter object, so the optimizer still holds it
+    for name,module in value_model.named_modules():
+        if isinstance(module,torch.nn.Linear):
+            if "score" in name:
+                if module.weight.requires_grad==True:
+                    module.register_forward_pre_hook(cast_input_to_float) #trainable head copy now expects fp32 input
+
+
 def ppo_prompt_order(prompt_rows,seed):
     """Fixed shuffled order of the training prompts, identical for every fork."""
     order=list(range(len(prompt_rows))) #0..n-1
@@ -133,6 +155,7 @@ def run_ppo(config_path: str, output: str | None = None, updates: int | None = N
 
     disable_dropout(policy) #ratio must be exactly 1 at theta=theta_old
     disable_dropout(value_model) #same for old vs new values
+    critic_trainable_to_fp32(value_model) #fp16 head + adamw gave NaN after the first critic step, see the function
     order=ppo_prompt_order(prompt_rows,int(cfg["seed"])) #same prompt sequence for standard and every fork
 
     if torch.cuda.is_available():
@@ -201,6 +224,8 @@ def run_ppo(config_path: str, output: str | None = None, updates: int | None = N
             policy_loss,ratio,clip_fraction=ppo_policy_loss(new_logp,old_logp,advantages,mask,eps) #fixed clipped surrogate
             affected=affected_token_fraction(ratio,advantages,mask,eps) #tokens where clipping changes the objective
             approx_kl_old_new=masked_mean(old_logp-new_logp.detach().float(),mask) #how far this update has already moved from pi_old
+            if torch.isfinite(policy_loss)==False:
+                raise RuntimeError("policy loss is not finite at update "+str(update+1)+", stopping before the weights get corrupted") #fail loudly
             policy_optimizer.zero_grad() #clear
             policy_loss.backward() #gradient of -L_clip
             policy_grad_norm=torch.nn.utils.clip_grad_norm_(trainable_parameters(policy),max_grad_norm) #norm before clipping
@@ -209,6 +234,8 @@ def run_ppo(config_path: str, output: str | None = None, updates: int | None = N
             #critic step
             new_values=response_values(value_model,sequences,attention_mask,prompt_width,steps) #V_theta(s_t) with gradient
             value_loss=value_mse_loss(new_values,returns.detach(),mask) #regress onto the gae returns
+            if torch.isfinite(value_loss)==False:
+                raise RuntimeError("value loss is not finite at update "+str(update+1)+", stopping before the weights get corrupted") #fail loudly
             value_optimizer.zero_grad() #clear
             (value_coef*value_loss).backward() #config value_coef 0.5
             value_params=[] #trainable critic params
