@@ -1,0 +1,34 @@
+{
+  "n_prompts": 200,
+  "reward_mean": 1.602889289855957,
+  "reward_std": 1.520826650648694,
+  "effective_reward_mean": 1.532889289855957,
+  "kl_from_reference": 1.2136730447309674e-06,
+  "entropy": 0.8184466361999512,
+  "response_length": {
+    "mean": 301.35,
+    "std": 245.06035481080983,
+    "median": 251.0,
+    "q25": 70.75,
+    "q75": 484.75,
+    "iqr": 414.0,
+    "min": 2.0,
+    "max": 768.0
+  },
+  "truncation_rate": 0.07,
+  "eos_rate": 0.93,
+  "prompts_truncated": 35,
+  "word_limit_compliance": 1.0,
+  "word_limit_prompts_scored": 1,
+  "reward_length_corr": 0.2989751059149271,
+  "max_new_tokens": 768,
+  "max_prompt_length": 256,
+  "decoding": {
+    "temperature": 0.7,
+    "top_p": 0.9,
+    "do_sample": true
+  },
+  "name": "midpoint",
+  "adapter": "checkpoints/ppo_midpoint_policy",
+  "limit": null
+}

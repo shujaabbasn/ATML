@@ -1,0 +1,13 @@
+{
+  "run_name": "clip_0.5",
+  "updates": 8,
+  "prompts_per_update": 1,
+  "ppo_epochs": 2,
+  "clip_epsilon": 0.5,
+  "kl_beta": 0.1,
+  "seed": 6304,
+  "total_generated_tokens": 2028,
+  "wall_clock_seconds": 115.14142699400054,
+  "peak_vram_gib": 6.874072551727295,
+  "output": "/kaggle/working/ATML/pa2/outputs/task2_ppo/clip_0.5"
+}

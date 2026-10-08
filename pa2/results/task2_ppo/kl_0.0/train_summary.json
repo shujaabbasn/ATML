@@ -1,0 +1,13 @@
+{
+  "run_name": "kl_0.0",
+  "updates": 8,
+  "prompts_per_update": 1,
+  "ppo_epochs": 2,
+  "clip_epsilon": 0.2,
+  "kl_beta": 0.0,
+  "seed": 6304,
+  "total_generated_tokens": 2076,
+  "wall_clock_seconds": 111.87194849900061,
+  "peak_vram_gib": 6.874434947967529,
+  "output": "/kaggle/working/ATML/pa2/outputs/task2_ppo/kl_0.0"
+}

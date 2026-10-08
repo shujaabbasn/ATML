@@ -1,0 +1,53 @@
+[
+  {
+    "condition": "clip_0.05",
+    "epsilon": 0.05,
+    "updates": 8,
+    "generated_tokens": 2028,
+    "heldout_reward": 1.448355941772461,
+    "heldout_effective_reward": 1.368355941772461,
+    "heldout_kl": -3.602993820095435e-05,
+    "heldout_entropy": 0.822864830493927,
+    "heldout_length_mean": 299.955,
+    "heldout_truncation_rate": 0.08,
+    "stability_mean_approx_kl_old_new": -0.0001114094825425127,
+    "stability_max_approx_kl_old_new": 0.0006641902728006244,
+    "train_clip_fraction_mean": 0.0,
+    "train_grad_norm_std": 0.4561441600686792,
+    "updates_with_grad_clipped": 1
+  },
+  {
+    "condition": "clip_0.2",
+    "epsilon": 0.2,
+    "updates": 8,
+    "generated_tokens": 2028,
+    "heldout_reward": 1.448355941772461,
+    "heldout_effective_reward": 1.368355941772461,
+    "heldout_kl": -3.602993820095435e-05,
+    "heldout_entropy": 0.822864830493927,
+    "heldout_length_mean": 299.955,
+    "heldout_truncation_rate": 0.08,
+    "stability_mean_approx_kl_old_new": -0.0001114094825425127,
+    "stability_max_approx_kl_old_new": 0.0006641902728006244,
+    "train_clip_fraction_mean": 0.0,
+    "train_grad_norm_std": 0.4561441600686792,
+    "updates_with_grad_clipped": 1
+  },
+  {
+    "condition": "clip_0.5",
+    "epsilon": 0.5,
+    "updates": 8,
+    "generated_tokens": 2028,
+    "heldout_reward": 1.448355941772461,
+    "heldout_effective_reward": 1.368355941772461,
+    "heldout_kl": -3.602993820095435e-05,
+    "heldout_entropy": 0.822864830493927,
+    "heldout_length_mean": 299.955,
+    "heldout_truncation_rate": 0.08,
+    "stability_mean_approx_kl_old_new": -0.0001114094825425127,
+    "stability_max_approx_kl_old_new": 0.0006641902728006244,
+    "train_clip_fraction_mean": 0.0,
+    "train_grad_norm_std": 0.4561441600686792,
+    "updates_with_grad_clipped": 1
+  }
+]

@@ -1,0 +1,34 @@
+{
+  "n_prompts": 200,
+  "reward_mean": 1.585836706161499,
+  "reward_std": 1.3735304121930347,
+  "effective_reward_mean": 1.5108367061614991,
+  "kl_from_reference": 4.283363978174748e-06,
+  "entropy": 0.819767951965332,
+  "response_length": {
+    "mean": 302.2,
+    "std": 245.5236852118345,
+    "median": 259.0,
+    "q25": 80.5,
+    "q75": 494.75,
+    "iqr": 414.25,
+    "min": 2.0,
+    "max": 768.0
+  },
+  "truncation_rate": 0.075,
+  "eos_rate": 0.925,
+  "prompts_truncated": 35,
+  "word_limit_compliance": 1.0,
+  "word_limit_prompts_scored": 1,
+  "reward_length_corr": 0.33331803987207437,
+  "max_new_tokens": 768,
+  "max_prompt_length": 256,
+  "decoding": {
+    "temperature": 0.7,
+    "top_p": 0.9,
+    "do_sample": true
+  },
+  "name": "kl_0.2",
+  "adapter": "outputs/task2_ppo/kl_0.2",
+  "limit": null
+}

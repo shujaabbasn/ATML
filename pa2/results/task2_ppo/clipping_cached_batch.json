@@ -1,0 +1,67 @@
+{
+  "results": [
+    {
+      "epsilon": 0.05,
+      "clipped_surrogate": -0.0053941658698022366,
+      "unclipped_surrogate": 9.072478860616684e-05,
+      "clip_fraction": 0.10766961425542831,
+      "affected_fraction": 0.0524166114628315,
+      "ratio_mean": 1.0154515504837036,
+      "max_abs_log_ratio": 3.6514790058135986,
+      "stage": "midpoint_vs_cached_old"
+    },
+    {
+      "epsilon": 0.2,
+      "clipped_surrogate": -0.003989774733781815,
+      "unclipped_surrogate": 9.072478860616684e-05,
+      "clip_fraction": 0.008509189821779728,
+      "affected_fraction": 0.004538234788924456,
+      "ratio_mean": 1.0154515504837036,
+      "max_abs_log_ratio": 3.6514790058135986,
+      "stage": "midpoint_vs_cached_old"
+    },
+    {
+      "epsilon": 0.5,
+      "clipped_surrogate": -0.0033342107199132442,
+      "unclipped_surrogate": 9.072478860616684e-05,
+      "clip_fraction": 0.005559337325394154,
+      "affected_fraction": 0.0032902201637625694,
+      "ratio_mean": 1.0154515504837036,
+      "max_abs_log_ratio": 3.6514790058135986,
+      "stage": "midpoint_vs_cached_old"
+    },
+    {
+      "epsilon": 0.05,
+      "clipped_surrogate": -0.005301624070852995,
+      "unclipped_surrogate": 0.00019615524797700346,
+      "clip_fraction": 0.10676196962594986,
+      "affected_fraction": 0.05230315402150154,
+      "ratio_mean": 1.0154905319213867,
+      "max_abs_log_ratio": 3.659153699874878,
+      "stage": "after_2_steps"
+    },
+    {
+      "epsilon": 0.2,
+      "clipped_surrogate": -0.003927312791347504,
+      "unclipped_surrogate": 0.00013782725727651268,
+      "clip_fraction": 0.008509189821779728,
+      "affected_fraction": 0.0046516903676092625,
+      "ratio_mean": 1.015466332435608,
+      "max_abs_log_ratio": 3.655975103378296,
+      "stage": "after_2_steps"
+    },
+    {
+      "epsilon": 0.5,
+      "clipped_surrogate": -0.0032326718792319298,
+      "unclipped_surrogate": 0.00018997746519744396,
+      "clip_fraction": 0.005559337325394154,
+      "affected_fraction": 0.0032902201637625694,
+      "ratio_mean": 1.0154544115066528,
+      "max_abs_log_ratio": 3.6566390991210938,
+      "stage": "after_2_steps"
+    }
+  ],
+  "skipped": [],
+  "usable_rollouts": 32,
+  "kl_beta": 0.1
+}
