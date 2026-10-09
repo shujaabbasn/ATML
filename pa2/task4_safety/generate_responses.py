@@ -7,6 +7,9 @@ from common.data import load_yaml, repo_path
 from common.generation import batch_generate
 from common.models import load_policy, load_tokenizer
 
+from common.data import write_jsonl
+from common.models import clear_gpu
+
 
 def policy_specs(cfg):
     return {
@@ -63,9 +66,14 @@ def main():
     cfg = load_yaml(args.config)
     print("Policies:", list(policy_specs(cfg)))
     print("XSTest rows:", len(load_xstest(cfg)))
-    raise NotImplementedError(
-        "TODO(student): call generate_for_policy for SFT/DPO/PPO/GRPO, save common deterministic responses, and preserve the fixed prompt order."
-    )
+    outdir=repo_path(cfg["results_dir"])/"task4_safety" #results/task4_safety/
+    outdir.mkdir(parents=True,exist_ok=True) #make it
+    for policy_name in policy_specs(cfg):
+        #sft = base model with no adapter, then the three standard adapters from tasks 1-3
+        records=generate_for_policy(cfg,policy_name) #given: greedy, same 256-token cap and same prompt order for every policy
+        write_jsonl(outdir/("generated_"+policy_name+".jsonl"),records) #make_audit_sheet reads generated_sft.jsonl
+        print(policy_name,"responses:",len(records)) #progress
+        clear_gpu() #free this policy before loading the next one
 
 
 if __name__ == "__main__":

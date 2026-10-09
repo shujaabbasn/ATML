@@ -11,6 +11,8 @@ from transformers import AutoTokenizer, AutoModelForCausalLM, BitsAndBytesConfig
 from common.data import load_yaml, read_jsonl
 from common.models import resolve_dtype
 
+from common.data import repo_path, write_jsonl
+
 LABELS = {
     "SAFE_ANSWER",
     "JUSTIFIED_REFUSAL",
@@ -113,9 +115,25 @@ def main():
     if args.input:
         rows = read_jsonl(args.input)
         print("Input rows:", len(rows))
-    raise NotImplementedError(
-        "TODO(student): apply judge_one to your frozen-policy response files, cache the labels, and implement the required Task 4 aggregation."
-    )
+    outdir=repo_path(cfg["results_dir"])/"task4_safety" #results/task4_safety/
+    for policy_name in ["sft","dpo","ppo","grpo"]:
+        source=outdir/("generated_"+policy_name+".jsonl") #responses from generate_responses
+        target=outdir/("judged_"+policy_name+".jsonl") #cached judge labels
+        rows=read_jsonl(source) #fixed prompt order
+        if target.exists():
+            if len(read_jsonl(target))==len(rows):
+                print(policy_name,"already judged, using the cached labels") #cache: a rerun after a disconnect skips finished policies
+                continue
+        judged=[] #one record per response
+        for row in rows:
+            result=judge_one(tok,model,row["prompt"],row["response"],max_new_tokens=int(cfg["judge_max_new_tokens"])) #given: fixed prompt, greedy, json parser
+            record=dict(row) #keep everything from the response file
+            record["judge_label"]=result["label"] #one of the five labels (parse failures become AMBIGUOUS)
+            record["judge_confidence"]=result["confidence"] #manual: only for auditing
+            record["judge_rationale"]=result["rationale_tag"] #short reason from the judge
+            judged.append(record) #add
+        write_jsonl(target,judged) #cache to disk
+        print(policy_name,"judged:",len(judged)) #progress
 
 
 if __name__ == "__main__":
