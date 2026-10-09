@@ -1,0 +1,34 @@
+{
+  "n_prompts": 200,
+  "reward_mean": 1.32001651763916,
+  "reward_std": 1.7238374949356667,
+  "effective_reward_mean": 1.32001651763916,
+  "kl_from_reference": 8.598091517342255e-05,
+  "entropy": 0.8401400446891785,
+  "response_length": {
+    "mean": 295.355,
+    "std": 260.00667102018747,
+    "median": 239.5,
+    "q25": 47.75,
+    "q75": 477.5,
+    "iqr": 429.75,
+    "min": 2.0,
+    "max": 768.0
+  },
+  "truncation_rate": 0.085,
+  "eos_rate": 0.915,
+  "prompts_truncated": 35,
+  "word_limit_compliance": 0.0,
+  "word_limit_prompts_scored": 1,
+  "reward_length_corr": 0.26139697924493355,
+  "max_new_tokens": 768,
+  "max_prompt_length": 256,
+  "decoding": {
+    "temperature": 0.7,
+    "top_p": 0.9,
+    "do_sample": true
+  },
+  "name": "standard",
+  "adapter": "outputs/task3_grpo/standard",
+  "limit": null
+}

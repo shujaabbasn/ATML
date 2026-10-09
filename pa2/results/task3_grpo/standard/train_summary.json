@@ -1,0 +1,16 @@
+{
+  "run_name": "standard",
+  "loss_type": "grpo",
+  "updates": 20,
+  "prompts_per_update": 1,
+  "num_generations": 4,
+  "clip_epsilon": 0.2,
+  "kl_beta": 0.1,
+  "max_completion_length": 512,
+  "mask_truncated_completions": true,
+  "seed": 6304,
+  "total_generated_tokens": 22960,
+  "wall_clock_seconds": 406.52714079399993,
+  "peak_vram_gib": 5.526008129119873,
+  "output": "/kaggle/working/ATML/pa2/outputs/task3_grpo/standard"
+}

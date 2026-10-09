@@ -1,0 +1,249 @@
+{
+  "table": [
+    {
+      "K": 2,
+      "bin": "all",
+      "groups": 96,
+      "completions": 192,
+      "informative_rate": 0.9375,
+      "mean_within_group_std": 0.3845672607421875,
+      "var_centered_signal": 0.3368348777294159,
+      "var_normalized_advantage": 0.9374814033508301
+    },
+    {
+      "K": 2,
+      "bin": "hard",
+      "groups": 32,
+      "completions": 64,
+      "informative_rate": 0.84375,
+      "mean_within_group_std": 0.49340057373046875,
+      "var_centered_signal": 0.5984376072883606,
+      "var_normalized_advantage": 0.8437429666519165
+    },
+    {
+      "K": 2,
+      "bin": "medium",
+      "groups": 32,
+      "completions": 64,
+      "informative_rate": 0.96875,
+      "mean_within_group_std": 0.41237640380859375,
+      "var_centered_signal": 0.30409058928489685,
+      "var_normalized_advantage": 0.968732476234436
+    },
+    {
+      "K": 2,
+      "bin": "easy",
+      "groups": 32,
+      "completions": 64,
+      "informative_rate": 1.0,
+      "mean_within_group_std": 0.2479248046875,
+      "var_centered_signal": 0.10797643661499023,
+      "var_normalized_advantage": 0.9999688267707825
+    },
+    {
+      "K": 4,
+      "bin": "all",
+      "groups": 48,
+      "completions": 192,
+      "informative_rate": 0.9583333333333334,
+      "mean_within_group_std": 0.5410044193267822,
+      "var_centered_signal": 0.46772605180740356,
+      "var_normalized_advantage": 0.95832759141922
+    },
+    {
+      "K": 4,
+      "bin": "hard",
+      "groups": 16,
+      "completions": 64,
+      "informative_rate": 0.875,
+      "mean_within_group_std": 0.6614877581596375,
+      "var_centered_signal": 0.7865267992019653,
+      "var_normalized_advantage": 0.8749959468841553
+    },
+    {
+      "K": 4,
+      "bin": "medium",
+      "groups": 16,
+      "completions": 64,
+      "informative_rate": 1.0,
+      "mean_within_group_std": 0.5516940951347351,
+      "var_centered_signal": 0.4017186760902405,
+      "var_normalized_advantage": 0.9999937415122986
+    },
+    {
+      "K": 4,
+      "bin": "easy",
+      "groups": 16,
+      "completions": 64,
+      "informative_rate": 1.0,
+      "mean_within_group_std": 0.4098311960697174,
+      "var_centered_signal": 0.21493268013000488,
+      "var_normalized_advantage": 0.999993085861206
+    },
+    {
+      "K": 8,
+      "bin": "all",
+      "groups": 24,
+      "completions": 192,
+      "informative_rate": 0.9583333333333334,
+      "mean_within_group_std": 0.61905437707901,
+      "var_centered_signal": 0.5598951578140259,
+      "var_normalized_advantage": 0.9583290815353394
+    },
+    {
+      "K": 8,
+      "bin": "hard",
+      "groups": 8,
+      "completions": 64,
+      "informative_rate": 0.875,
+      "mean_within_group_std": 0.7633688449859619,
+      "var_centered_signal": 0.8869009017944336,
+      "var_normalized_advantage": 0.8749973773956299
+    },
+    {
+      "K": 8,
+      "bin": "medium",
+      "groups": 8,
+      "completions": 64,
+      "informative_rate": 1.0,
+      "mean_within_group_std": 0.5990220308303833,
+      "var_centered_signal": 0.4469122290611267,
+      "var_normalized_advantage": 0.9999955892562866
+    },
+    {
+      "K": 8,
+      "bin": "easy",
+      "groups": 8,
+      "completions": 64,
+      "informative_rate": 1.0,
+      "mean_within_group_std": 0.494772344827652,
+      "var_centered_signal": 0.34587228298187256,
+      "var_normalized_advantage": 0.9999942183494568
+    }
+  ],
+  "bins": [
+    {
+      "source_index": "671",
+      "mean_reward": -1.45556640625,
+      "bin": "hard"
+    },
+    {
+      "source_index": "495",
+      "mean_reward": -1.42041015625,
+      "bin": "hard"
+    },
+    {
+      "source_index": "457",
+      "mean_reward": -0.85198974609375,
+      "bin": "hard"
+    },
+    {
+      "source_index": "961",
+      "mean_reward": -0.1944580078125,
+      "bin": "hard"
+    },
+    {
+      "source_index": "953",
+      "mean_reward": 0.73388671875,
+      "bin": "hard"
+    },
+    {
+      "source_index": "175",
+      "mean_reward": 0.7420654296875,
+      "bin": "hard"
+    },
+    {
+      "source_index": "936",
+      "mean_reward": 0.8939208984375,
+      "bin": "hard"
+    },
+    {
+      "source_index": "280",
+      "mean_reward": 1.2734375,
+      "bin": "hard"
+    },
+    {
+      "source_index": "254",
+      "mean_reward": 1.3321533203125,
+      "bin": "medium"
+    },
+    {
+      "source_index": "796",
+      "mean_reward": 1.81658935546875,
+      "bin": "medium"
+    },
+    {
+      "source_index": "510",
+      "mean_reward": 1.86572265625,
+      "bin": "medium"
+    },
+    {
+      "source_index": "873",
+      "mean_reward": 2.1845703125,
+      "bin": "medium"
+    },
+    {
+      "source_index": "436",
+      "mean_reward": 2.212890625,
+      "bin": "medium"
+    },
+    {
+      "source_index": "981",
+      "mean_reward": 2.2646484375,
+      "bin": "medium"
+    },
+    {
+      "source_index": "124",
+      "mean_reward": 2.375,
+      "bin": "medium"
+    },
+    {
+      "source_index": "922",
+      "mean_reward": 2.4169921875,
+      "bin": "medium"
+    },
+    {
+      "source_index": "263",
+      "mean_reward": 2.4296875,
+      "bin": "easy"
+    },
+    {
+      "source_index": "185",
+      "mean_reward": 2.4599609375,
+      "bin": "easy"
+    },
+    {
+      "source_index": "832",
+      "mean_reward": 2.65625,
+      "bin": "easy"
+    },
+    {
+      "source_index": "942",
+      "mean_reward": 2.6875,
+      "bin": "easy"
+    },
+    {
+      "source_index": "184",
+      "mean_reward": 2.966796875,
+      "bin": "easy"
+    },
+    {
+      "source_index": "463",
+      "mean_reward": 3.00390625,
+      "bin": "easy"
+    },
+    {
+      "source_index": "755",
+      "mean_reward": 3.072265625,
+      "bin": "easy"
+    },
+    {
+      "source_index": "507",
+      "mean_reward": 3.220703125,
+      "bin": "easy"
+    }
+  ],
+  "tolerance": 1e-06,
+  "cached_completions_clipped_at_cap": 29,
+  "partition_rule": "first 8 completions per prompt in generation_index order, split into 8/K consecutive groups"
+}

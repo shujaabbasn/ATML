@@ -1,0 +1,16 @@
+{
+  "run_name": "norm_grpo",
+  "loss_type": "grpo",
+  "updates": 8,
+  "prompts_per_update": 1,
+  "num_generations": 4,
+  "clip_epsilon": 0.2,
+  "kl_beta": 0.1,
+  "max_completion_length": 512,
+  "mask_truncated_completions": true,
+  "seed": 6304,
+  "total_generated_tokens": 8505,
+  "wall_clock_seconds": 138.63133244000028,
+  "peak_vram_gib": 5.459896087646484,
+  "output": "/kaggle/working/ATML/pa2/outputs/task3_grpo/norm_grpo"
+}
