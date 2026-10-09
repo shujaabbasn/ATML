@@ -12,9 +12,16 @@ def group_relative_advantages(rewards: torch.Tensor, group_ids: torch.Tensor, ep
     Validate this implementation against the group-relative definition in the assignment manual.
     """
     # Starter implementation: students must validate the grouping logic carefully.
-    mean = rewards.mean()
-    std = rewards.std(unbiased=False).clamp_min(eps)
-    return (rewards - mean) / std
+    #fixed: manual (and lecture 12) take mu_r and sigma_r over the K completions of the SAME prompt,
+    #the starter used the mean/std of the whole batch so prompts got compared against each other
+    advantages=torch.zeros_like(rewards) #one advantage per completion
+    for group in torch.unique(group_ids):
+        members=group_ids==group #completions that came from this prompt
+        group_rewards=rewards[members] #their rewards
+        mean=group_rewards.mean() #mu_r of this group
+        std=group_rewards.std(unbiased=False) #sigma_r of this group (population std, same choice as the starter)
+        advantages[members]=(group_rewards-mean)/(std+eps) #manual: (r_k - mu_r)/(sigma_r + eps)
+    return advantages
 
 
 def grpo_policy_loss(
