@@ -1,0 +1,6 @@
+variant_type,n,rlvr_mean_reward,rlaif_mean_reward
+clean_correct,20,1.0,0.49375
+corrupt_reasoning_correct_final,20,1.0,0.5
+good_reasoning_wrong_final,20,0.0,0.475
+persuasive_filler_correct,20,1.0,0.5875
+gold_distractor_wrong_final,20,0.0,0.44375

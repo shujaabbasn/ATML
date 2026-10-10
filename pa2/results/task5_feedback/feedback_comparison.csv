@@ -1,0 +1,4 @@
+policy,gsm_exact_accuracy,svamp_exact_accuracy,accuracy_drop,gsm_format_compliance,svamp_format_compliance,gsm_length_mean,svamp_length_mean,gsm_ai_win_rate_vs_sft,svamp_ai_win_rate_vs_sft,win_rate_drop,gsm_verifier_judge_agreement,svamp_verifier_judge_agreement
+sft,0.2833333333333333,0.44,-0.15666666666666668,0.35,0.57,274.33,163.96,,,,,
+rlvr,0.2866666666666667,0.46,-0.17333333333333334,0.36,0.59,275.87666666666667,164.07,0.5033333333333333,0.515,-0.011666666666666714,0.07692307692307693,0.25
+rlaif,0.2866666666666667,0.44,-0.15333333333333332,0.36,0.57,275.45,162.98,0.495,0.525,-0.030000000000000027,0.0,0.5

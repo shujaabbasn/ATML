@@ -1,0 +1,9 @@
+pair,perturbation,mechanism,n,better_rate,tie_rate,wrong_preference_rate
+clean_correct vs corrupt_reasoning_correct_final,reasoning,rlvr,20,0.0,1.0,0.0
+clean_correct vs corrupt_reasoning_correct_final,reasoning,rlaif,20,0.1,0.75,0.15
+clean_correct vs good_reasoning_wrong_final,outcome,rlvr,20,1.0,0.0,0.0
+clean_correct vs good_reasoning_wrong_final,outcome,rlaif,20,0.3,0.55,0.15
+clean_correct vs gold_distractor_wrong_final,outcome_distractor,rlvr,20,1.0,0.0,0.0
+clean_correct vs gold_distractor_wrong_final,outcome_distractor,rlaif,20,0.4,0.5,0.1
+clean_correct vs persuasive_filler_correct,filler,rlvr,20,0.0,1.0,0.0
+clean_correct vs persuasive_filler_correct,filler,rlaif,20,0.1,0.5,0.4

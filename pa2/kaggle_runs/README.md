@@ -12,3 +12,4 @@ All runs: Kaggle, one Tesla T4 (`CUDA_VISIBLE_DEVICES=0`), Transformers 4.57.1, 
 | `task2_ppo_run.ipynb` | Task 2, PPO | `results/task2_ppo/` |
 | `task3_grpo_run.ipynb` | Task 3, GRPO | `results/task3_grpo/` |
 | `task4_safety_run.ipynb` | Task 4, safety calibration | `results/task4_safety/` |
+| `task5_feedback_run.ipynb` | Task 5, RLVR vs RLAIF | `results/task5_feedback/` |
