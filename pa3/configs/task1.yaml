@@ -1,0 +1,73 @@
+# Task 1 - LLM fine-tuning. Every number here is from the PA3 manual unless marked "ours".
+seed: 6304
+base_model: Qwen/Qwen3-0.6B
+
+data:
+  metamath: meta-math/MetaMathQA
+  gsm8k: openai/gsm8k
+  hellaswag: Rowan/hellaswag
+  train_examples: 40000
+  max_length: 2048
+  probe_gsm8k: 32
+  probe_hellaswag: 32
+  qualitative_yaml: data/task1/first_plot_questions.yaml
+  qualitative_yaml_url: https://raw.githubusercontent.com/emergent-misalignment/emergent-misalignment/main/evaluation/first_plot_questions.yaml
+
+train:
+  updates: 1250
+  micro_batch: 2
+  grad_accum: 16
+  adam_betas: [0.9, 0.999]
+  adam_eps: 1.0e-8
+  weight_decay: 0.01
+  warmup_updates: 38
+  max_grad_norm: 1.0
+  recovery_updates: [312, 625, 937, 1250]
+  midpoint_update: 625
+  loss_chunk_tokens: 1024 # ours: lm_head + cross-entropy in chunks so a 2x2048 batch fits on a T4
+
+runs:
+  full_ft:
+    method: full
+    lr: 2.0e-5
+    l2sp_lambda: 0.0
+  full_ft_l2sp:
+    method: full
+    lr: 2.0e-5
+    l2sp_lambda: 1.0e-3
+  lora4:
+    method: lora
+    lr: 2.0e-4
+    rank: 4
+    alpha: 8
+  lora16:
+    method: lora
+    lr: 2.0e-4
+    rank: 16
+    alpha: 32
+  oplora16:
+    method: oplora
+    lr: 2.0e-4
+    rank: 16
+    alpha: 32
+    protect_rank: 128
+
+lora:
+  dropout: 0.05
+  targets: [q_proj, k_proj, v_proj, o_proj, gate_proj, up_proj, down_proj]
+
+eval:
+  gsm8k_task: gsm8k_cot
+  other_tasks: [hellaswag, boolq, arc_easy]
+  max_gen_toks: 1024
+  gsm8k_batch_size: 32 # ours
+  other_batch_size: auto # ours
+  qualitative_max_new_tokens: 512
+
+diagnostics:
+  layers: [0, 13, 27]
+  module: down_proj
+  protect_rank: 128
+
+outputs_dir: outputs/task1
+results_dir: results/task1

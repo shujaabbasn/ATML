@@ -1,0 +1,44 @@
+# Task 3 - test-time compute. Numbers from the PA3 manual / supplied README unless marked "ours".
+seed: 6304
+
+data:
+  drive_folder: https://drive.google.com/drive/folders/1utX-Gfi9vvaoi1mi0pzNpDGL1o1fAh23
+  root: data/task3/ATML-PA3-Data
+  math_folder: qwen25-math
+  mathvista_folder: qwen25vl-mathvista
+  mathvista_metadata_url: https://raw.githubusercontent.com/lupantech/MathVista/main/data/testmini.json
+  mathvista_metadata: data/task3/mathvista_testmini.json
+  prepared_dir: data/task3/prepared
+
+splits:
+  dev_questions: 200
+  live_questions: 50
+
+offline:
+  budgets: [1, 2, 4, 8, 16, 32]
+  orders: 10
+  bootstrap: 1000
+
+adaptive:
+  check_points: [4, 8, 16]
+  max_candidates: 32
+  taus: [0.5, 0.625, 0.75, 0.875, 1.0]
+  gammas: [0.0, 0.1, 0.25, 0.5]
+  tolerance_pp: 1.0
+
+live:
+  model: Qwen/Qwen2.5-3B-Instruct
+  revision: aa8e72537993ba99e69dfaafa59ed015b17504d1
+  system: "You are a helpful assistant."
+  instruction: "Think step by step inside <think> </think> tags, then give your final answer inside \\boxed{}."
+  review: "Review the solution above. Identify and correct any errors; if it is correct, retain its answer. Give your final answer inside \\boxed{}."
+  temperature: 0.7
+  top_p: 0.8
+  top_k: 20
+  repetition_penalty: 1.0
+  single_cap: 3072
+  parallel_cap: 1024
+  parallel_samples: 3
+  revision_cap: 2048
+
+results_dir: results/task3

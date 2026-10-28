@@ -1,0 +1,66 @@
+# Task 2 - SigLIP-Qwen VLM. Numbers from the PA3 manual unless marked "ours".
+seed: 6304
+language_model: Qwen/Qwen3-0.6B
+vision_encoder: google/siglip-base-patch16-224
+
+urls:
+  coco_annotations: http://images.cocodataset.org/annotations/annotations_trainval2014.zip
+  coco_images: http://images.cocodataset.org # + /train2014/COCO_train2014_<id 12 digits>.jpg
+  vqa_questions_train: https://s3.amazonaws.com/cvmlp/vqa/mscoco/vqa/v2_Questions_Train_mscoco.zip
+  vqa_questions_val: https://s3.amazonaws.com/cvmlp/vqa/mscoco/vqa/v2_Questions_Val_mscoco.zip
+  vqa_annotations_train: https://s3.amazonaws.com/cvmlp/vqa/mscoco/vqa/v2_Annotations_Train_mscoco.zip
+  vqa_annotations_val: https://s3.amazonaws.com/cvmlp/vqa/mscoco/vqa/v2_Annotations_Val_mscoco.zip
+  vqa_pairs_train: https://s3.amazonaws.com/cvmlp/vqa/mscoco/vqa/v2_Complementary_Pairs_Train_mscoco.zip
+  vqa_pairs_val: https://s3.amazonaws.com/cvmlp/vqa/mscoco/vqa/v2_Complementary_Pairs_Val_mscoco.zip
+
+data:
+  raw_dir: data/task2/raw
+  image_dir: data/task2/images
+  splits: data/task2/splits.json
+  features: data/task2/features_fp16.pt
+  caption_train_images: 6000
+  captions_per_train_image: 3
+  caption_dev_images: 96
+  grounding_dev_pairs: 24 # 12 presence + 12 counting
+  grounding_test_pairs: 64 # 32 presence + 32 counting
+  vqa_train_pairs: {yes/no: 640, number: 256, other: 640}
+  vqa_dev_pairs: {yes/no: 12, number: 8, other: 12}
+  vqa_test_pairs: {yes/no: 36, number: 24, other: 36}
+  vqa_min_agreement: 8
+  count_min: 1
+  count_max: 4
+  caption_prompt: "Write a short caption for this image." # ours, the manual gives no caption instruction
+
+model:
+  visual_tokens: 196
+  vision_dim: 768
+  hidden_dim: 1024
+  calibration_images: 512 # ours: training images used for the connector scale rule
+
+caps:
+  question: 80
+  caption: 64
+  answer: 16
+
+train:
+  micro_batch: 8
+  grad_accum: 2
+  weight_decay: 0.01
+  max_grad_norm: 1.0
+  warmup_fraction: 0.05
+  final_lr_fraction: 0.10
+  checkpoint_every: 250
+  dev_eval_every: 500
+  lora: {rank: 16, alpha: 32, dropout: 0.05, targets: [q_proj, k_proj, v_proj, o_proj]}
+  stages:
+    - {name: caption_alignment, updates: 2250, connector_lr: 1.0e-3, lora_lr: null, mixture: {caption: 1.0}}
+    - {name: visual_instruction_tuning, updates: 1500, connector_lr: 1.0e-4, lora_lr: 2.0e-5, mixture: {presence: 0.50, counting: 0.25, caption: 0.25}}
+    - {name: natural_vqa, updates: 750, connector_lr: 5.0e-5, lora_lr: 1.0e-5, mixture: {vqa: 0.70, presence: 0.10, counting: 0.10, caption: 0.10}}
+
+eval:
+  max_new_tokens: 16
+  batch_size: 8
+  bootstrap: 4000
+
+outputs_dir: outputs/task2
+results_dir: results/task2
