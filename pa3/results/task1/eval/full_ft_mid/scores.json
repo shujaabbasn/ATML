@@ -1,0 +1,35 @@
+{
+  "condition": "full_ft_mid",
+  "model_path": "/kaggle/working/ATML/pa3/outputs/task1/full_ft/midpoint",
+  "gsm8k": {
+    "flexible_exact_match": 0.5686125852918877,
+    "flexible_exact_match_stderr": 0.013642195352511563,
+    "strict_exact_match": 0.0,
+    "n": 1319,
+    "truncation_rate": 0.009855951478392721,
+    "flexible_unextractable_rate": 0.0,
+    "docs_without_generation_record": 0
+  },
+  "gsm8k_seconds": 1692.5810456559993,
+  "lm_eval_version": "0.4.11",
+  "likelihood_seconds": 703.0195244130009,
+  "hellaswag": {
+    "acc": 0.3703445528779128,
+    "acc_stderr": 0.0048191004568676815,
+    "acc_norm": 0.457876916948815,
+    "acc_norm_stderr": 0.004972042602001537,
+    "n": 10042
+  },
+  "boolq": {
+    "acc": 0.5896024464831804,
+    "acc_stderr": 0.008603488048617302,
+    "n": 3270
+  },
+  "arc_easy": {
+    "acc": 0.6553030303030303,
+    "acc_stderr": 0.009752321586569631,
+    "acc_norm": 0.6224747474747475,
+    "acc_norm_stderr": 0.009947227833469284,
+    "n": 2376
+  }
+}

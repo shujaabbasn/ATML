@@ -1,0 +1,62 @@
+{
+  "agreement": {
+    "tau": 0.625,
+    "gamma": null,
+    "fallback_32": false,
+    "accuracy": 0.7347499999999999,
+    "mean_token_cost": 10142.232875000002,
+    "mean_rollouts": 11.8335,
+    "stop_distribution": {
+      "4": 0.662625,
+      "8": 0.058375,
+      "16": 0.01325,
+      "32": 0.26575
+    },
+    "early_stops": 5874,
+    "incorrect_early_stops": 670,
+    "incorrect_early_stops_fixed32_correct": 50
+  },
+  "quality": {
+    "tau": 0.5,
+    "gamma": 0.0,
+    "fallback_32": false,
+    "accuracy": 0.73,
+    "mean_token_cost": 7661.943374999999,
+    "mean_rollouts": 9.003,
+    "stop_distribution": {
+      "4": 0.76375,
+      "8": 0.05825,
+      "16": 0.013375,
+      "32": 0.164625
+    },
+    "early_stops": 6683,
+    "incorrect_early_stops": 1167,
+    "incorrect_early_stops_fixed32_correct": 130
+  },
+  "fixed_n_self_consistency": {
+    "1": {
+      "accuracy": 0.641875,
+      "mean_token_cost": 669.772625
+    },
+    "2": {
+      "accuracy": 0.641875,
+      "mean_token_cost": 1339.8655
+    },
+    "4": {
+      "accuracy": 0.6905,
+      "mean_token_cost": 2679.694125
+    },
+    "8": {
+      "accuracy": 0.71625,
+      "mean_token_cost": 5344.108500000001
+    },
+    "16": {
+      "accuracy": 0.7295,
+      "mean_token_cost": 10677.742750000001
+    },
+    "32": {
+      "accuracy": 0.73625,
+      "mean_token_cost": 21347.0175
+    }
+  }
+}

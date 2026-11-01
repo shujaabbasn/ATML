@@ -1,0 +1,417 @@
+{
+  "fixed32_self_consistency_dev_accuracy": 0.825,
+  "chosen": {
+    "agreement": {
+      "tau": 0.625,
+      "gamma": null,
+      "fallback_32": false,
+      "accuracy": 0.826,
+      "mean_token_cost": 7088.9555,
+      "mean_rollouts": 9.15,
+      "stop_distribution": {
+        "4": 0.7635,
+        "8": 0.053,
+        "16": 0.0125,
+        "32": 0.171
+      }
+    },
+    "quality": {
+      "tau": 0.5,
+      "gamma": 0.0,
+      "fallback_32": false,
+      "accuracy": 0.8215,
+      "mean_token_cost": 5479.528499999999,
+      "mean_rollouts": 7.152,
+      "stop_distribution": {
+        "4": 0.844,
+        "8": 0.044,
+        "16": 0.01,
+        "32": 0.102
+      }
+    }
+  },
+  "grid": {
+    "agreement": [
+      {
+        "tau": null,
+        "gamma": null,
+        "fallback_32": true,
+        "accuracy": 0.825,
+        "mean_token_cost": 18322.4,
+        "mean_rollouts": 32.0,
+        "stop_distribution": {
+          "4": 0.0,
+          "8": 0.0,
+          "16": 0.0,
+          "32": 1.0
+        }
+      },
+      {
+        "tau": 0.5,
+        "gamma": null,
+        "fallback_32": false,
+        "accuracy": 0.8144999999999999,
+        "mean_token_cost": 5052.79,
+        "mean_rollouts": 6.648000000000001,
+        "stop_distribution": {
+          "4": 0.876,
+          "8": 0.03,
+          "16": 0.0065,
+          "32": 0.0875
+        }
+      },
+      {
+        "tau": 0.625,
+        "gamma": null,
+        "fallback_32": false,
+        "accuracy": 0.826,
+        "mean_token_cost": 7088.9555,
+        "mean_rollouts": 9.15,
+        "stop_distribution": {
+          "4": 0.7635,
+          "8": 0.053,
+          "16": 0.0125,
+          "32": 0.171
+        }
+      },
+      {
+        "tau": 0.75,
+        "gamma": null,
+        "fallback_32": false,
+        "accuracy": 0.826,
+        "mean_token_cost": 7717.453,
+        "mean_rollouts": 10.113999999999999,
+        "stop_distribution": {
+          "4": 0.7635,
+          "8": 0.0175,
+          "16": 0.0055,
+          "32": 0.2135
+        }
+      },
+      {
+        "tau": 0.875,
+        "gamma": null,
+        "fallback_32": false,
+        "accuracy": 0.826,
+        "mean_token_cost": 9981.583,
+        "mean_rollouts": 13.65,
+        "stop_distribution": {
+          "4": 0.6005,
+          "8": 0.054,
+          "16": 0.015,
+          "32": 0.3305
+        }
+      },
+      {
+        "tau": 1.0,
+        "gamma": null,
+        "fallback_32": false,
+        "accuracy": 0.826,
+        "mean_token_cost": 10856.926000000001,
+        "mean_rollouts": 15.186,
+        "stop_distribution": {
+          "4": 0.6005,
+          "8": 0.0,
+          "16": 0.0,
+          "32": 0.3995
+        }
+      }
+    ],
+    "quality": [
+      {
+        "tau": null,
+        "gamma": null,
+        "fallback_32": true,
+        "accuracy": 0.825,
+        "mean_token_cost": 18322.4,
+        "mean_rollouts": 32.0,
+        "stop_distribution": {
+          "4": 0.0,
+          "8": 0.0,
+          "16": 0.0,
+          "32": 1.0
+        }
+      },
+      {
+        "tau": 0.5,
+        "gamma": 0.0,
+        "fallback_32": false,
+        "accuracy": 0.8215,
+        "mean_token_cost": 5479.528499999999,
+        "mean_rollouts": 7.152,
+        "stop_distribution": {
+          "4": 0.844,
+          "8": 0.044,
+          "16": 0.01,
+          "32": 0.102
+        }
+      },
+      {
+        "tau": 0.5,
+        "gamma": 0.1,
+        "fallback_32": false,
+        "accuracy": 0.8220000000000002,
+        "mean_token_cost": 5664.8075,
+        "mean_rollouts": 7.434000000000001,
+        "stop_distribution": {
+          "4": 0.8155,
+          "8": 0.0625,
+          "16": 0.0145,
+          "32": 0.1075
+        }
+      },
+      {
+        "tau": 0.5,
+        "gamma": 0.25,
+        "fallback_32": false,
+        "accuracy": 0.821,
+        "mean_token_cost": 6028.227999999999,
+        "mean_rollouts": 7.932,
+        "stop_distribution": {
+          "4": 0.8,
+          "8": 0.0585,
+          "16": 0.0165,
+          "32": 0.125
+        }
+      },
+      {
+        "tau": 0.5,
+        "gamma": 0.5,
+        "fallback_32": false,
+        "accuracy": 0.8225,
+        "mean_token_cost": 7062.705499999999,
+        "mean_rollouts": 9.383999999999999,
+        "stop_distribution": {
+          "4": 0.748,
+          "8": 0.049,
+          "16": 0.031,
+          "32": 0.172
+        }
+      },
+      {
+        "tau": 0.625,
+        "gamma": 0.0,
+        "fallback_32": false,
+        "accuracy": 0.8265,
+        "mean_token_cost": 7129.35,
+        "mean_rollouts": 9.22,
+        "stop_distribution": {
+          "4": 0.758,
+          "8": 0.0555,
+          "16": 0.014,
+          "32": 0.1725
+        }
+      },
+      {
+        "tau": 0.625,
+        "gamma": 0.1,
+        "fallback_32": false,
+        "accuracy": 0.8265,
+        "mean_token_cost": 7249.9675,
+        "mean_rollouts": 9.424,
+        "stop_distribution": {
+          "4": 0.741,
+          "8": 0.0655,
+          "16": 0.016,
+          "32": 0.1775
+        }
+      },
+      {
+        "tau": 0.625,
+        "gamma": 0.25,
+        "fallback_32": false,
+        "accuracy": 0.8255000000000001,
+        "mean_token_cost": 7293.888499999998,
+        "mean_rollouts": 9.5,
+        "stop_distribution": {
+          "4": 0.741,
+          "8": 0.062,
+          "16": 0.0165,
+          "32": 0.1805
+        }
+      },
+      {
+        "tau": 0.625,
+        "gamma": 0.5,
+        "fallback_32": false,
+        "accuracy": 0.825,
+        "mean_token_cost": 7851.983,
+        "mean_rollouts": 10.342,
+        "stop_distribution": {
+          "4": 0.7135,
+          "8": 0.052,
+          "16": 0.027,
+          "32": 0.2075
+        }
+      },
+      {
+        "tau": 0.75,
+        "gamma": 0.0,
+        "fallback_32": false,
+        "accuracy": 0.8265,
+        "mean_token_cost": 7756.0554999999995,
+        "mean_rollouts": 10.176,
+        "stop_distribution": {
+          "4": 0.758,
+          "8": 0.021,
+          "16": 0.006,
+          "32": 0.215
+        }
+      },
+      {
+        "tau": 0.75,
+        "gamma": 0.1,
+        "fallback_32": false,
+        "accuracy": 0.8265,
+        "mean_token_cost": 7928.784000000001,
+        "mean_rollouts": 10.436,
+        "stop_distribution": {
+          "4": 0.741,
+          "8": 0.029,
+          "16": 0.0075,
+          "32": 0.2225
+        }
+      },
+      {
+        "tau": 0.75,
+        "gamma": 0.25,
+        "fallback_32": false,
+        "accuracy": 0.826,
+        "mean_token_cost": 7942.102,
+        "mean_rollouts": 10.464,
+        "stop_distribution": {
+          "4": 0.741,
+          "8": 0.0275,
+          "16": 0.008,
+          "32": 0.2235
+        }
+      },
+      {
+        "tau": 0.75,
+        "gamma": 0.5,
+        "fallback_32": false,
+        "accuracy": 0.8245,
+        "mean_token_cost": 8253.234,
+        "mean_rollouts": 10.99,
+        "stop_distribution": {
+          "4": 0.7135,
+          "8": 0.034,
+          "16": 0.0135,
+          "32": 0.239
+        }
+      },
+      {
+        "tau": 0.875,
+        "gamma": 0.0,
+        "fallback_32": false,
+        "accuracy": 0.826,
+        "mean_token_cost": 9981.583,
+        "mean_rollouts": 13.65,
+        "stop_distribution": {
+          "4": 0.6005,
+          "8": 0.054,
+          "16": 0.015,
+          "32": 0.3305
+        }
+      },
+      {
+        "tau": 0.875,
+        "gamma": 0.1,
+        "fallback_32": false,
+        "accuracy": 0.826,
+        "mean_token_cost": 9981.583,
+        "mean_rollouts": 13.65,
+        "stop_distribution": {
+          "4": 0.6005,
+          "8": 0.054,
+          "16": 0.015,
+          "32": 0.3305
+        }
+      },
+      {
+        "tau": 0.875,
+        "gamma": 0.25,
+        "fallback_32": false,
+        "accuracy": 0.826,
+        "mean_token_cost": 9981.583,
+        "mean_rollouts": 13.65,
+        "stop_distribution": {
+          "4": 0.6005,
+          "8": 0.054,
+          "16": 0.015,
+          "32": 0.3305
+        }
+      },
+      {
+        "tau": 0.875,
+        "gamma": 0.5,
+        "fallback_32": false,
+        "accuracy": 0.826,
+        "mean_token_cost": 9987.28,
+        "mean_rollouts": 13.665999999999999,
+        "stop_distribution": {
+          "4": 0.6005,
+          "8": 0.053,
+          "16": 0.0155,
+          "32": 0.331
+        }
+      },
+      {
+        "tau": 1.0,
+        "gamma": 0.0,
+        "fallback_32": false,
+        "accuracy": 0.826,
+        "mean_token_cost": 10856.926000000001,
+        "mean_rollouts": 15.186,
+        "stop_distribution": {
+          "4": 0.6005,
+          "8": 0.0,
+          "16": 0.0,
+          "32": 0.3995
+        }
+      },
+      {
+        "tau": 1.0,
+        "gamma": 0.1,
+        "fallback_32": false,
+        "accuracy": 0.826,
+        "mean_token_cost": 10856.926000000001,
+        "mean_rollouts": 15.186,
+        "stop_distribution": {
+          "4": 0.6005,
+          "8": 0.0,
+          "16": 0.0,
+          "32": 0.3995
+        }
+      },
+      {
+        "tau": 1.0,
+        "gamma": 0.25,
+        "fallback_32": false,
+        "accuracy": 0.826,
+        "mean_token_cost": 10856.926000000001,
+        "mean_rollouts": 15.186,
+        "stop_distribution": {
+          "4": 0.6005,
+          "8": 0.0,
+          "16": 0.0,
+          "32": 0.3995
+        }
+      },
+      {
+        "tau": 1.0,
+        "gamma": 0.5,
+        "fallback_32": false,
+        "accuracy": 0.826,
+        "mean_token_cost": 10856.926000000001,
+        "mean_rollouts": 15.186,
+        "stop_distribution": {
+          "4": 0.6005,
+          "8": 0.0,
+          "16": 0.0,
+          "32": 0.3995
+        }
+      }
+    ]
+  }
+}

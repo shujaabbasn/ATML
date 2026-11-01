@@ -1,0 +1,28 @@
+{
+  "run_name": "lora4",
+  "method": "lora",
+  "peak_lr": 0.0002,
+  "l2sp_lambda": 0.0,
+  "rank": 4,
+  "alpha": 8,
+  "protect_rank": null,
+  "updates": 1250,
+  "examples": 40000,
+  "trainable_parameters": 2523136,
+  "total_parameters": 598573056,
+  "train_seconds": 9109.652661107,
+  "peak_vram_note": "whole run",
+  "resumed_from_update": 0,
+  "peak_vram_gib": 3.1422553062438965,
+  "checkpoint_bytes": {
+    "recovery_u312": 30755229,
+    "midpoint": 10134056,
+    "recovery_u625": 30755293,
+    "recovery_u937": 30755293,
+    "recovery_u1250": 30755357,
+    "final": 10134056
+  },
+  "skipped_updates": [],
+  "method_preprocessing_seconds": 0.04918009900001152,
+  "gpu": "Tesla T4"
+}

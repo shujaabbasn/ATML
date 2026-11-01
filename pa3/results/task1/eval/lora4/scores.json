@@ -1,0 +1,35 @@
+{
+  "condition": "lora4",
+  "model_path": "/kaggle/working/ATML/pa3/outputs/task1/lora4/merged",
+  "gsm8k": {
+    "flexible_exact_match": 0.601213040181956,
+    "flexible_exact_match_stderr": 0.01348736047706084,
+    "strict_exact_match": 0.0,
+    "n": 1319,
+    "truncation_rate": 0.008339651250947688,
+    "flexible_unextractable_rate": 0.0,
+    "docs_without_generation_record": 0
+  },
+  "gsm8k_seconds": 1513.9237302799993,
+  "lm_eval_version": "0.4.11",
+  "likelihood_seconds": 761.9829173990001,
+  "hellaswag": {
+    "acc": 0.3776140211113324,
+    "acc_stderr": 0.004837995637638387,
+    "acc_norm": 0.47301334395538736,
+    "acc_norm_stderr": 0.004982508198584547,
+    "n": 10042
+  },
+  "boolq": {
+    "acc": 0.6908256880733945,
+    "acc_stderr": 0.008083109838380247,
+    "n": 3270
+  },
+  "arc_easy": {
+    "acc": 0.6582491582491582,
+    "acc_stderr": 0.009732359564894466,
+    "acc_norm": 0.632996632996633,
+    "acc_norm_stderr": 0.00989017365845214,
+    "n": 2376
+  }
+}

@@ -1,0 +1,20 @@
+{
+  "mean_logprob": {
+    "top_minus_bottom_quartile_correct": 0.07875,
+    "same_on_mixed_questions": 0.1346153846153846,
+    "mixed_questions": 468,
+    "spearman_length_vs_score": 0.22450990220048075
+  },
+  "self_certainty": {
+    "top_minus_bottom_quartile_correct": 0.1196875,
+    "same_on_mixed_questions": 0.2045940170940171,
+    "mixed_questions": 468,
+    "spearman_length_vs_score": -0.16109595817293734
+  },
+  "shortest": {
+    "top_minus_bottom_quartile_correct": 0.045,
+    "same_on_mixed_questions": 0.07692307692307693,
+    "mixed_questions": 468,
+    "spearman_length_vs_score": -1.0
+  }
+}

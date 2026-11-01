@@ -1,0 +1,31 @@
+{
+  "run_name": "oplora16",
+  "method": "oplora",
+  "peak_lr": 0.0002,
+  "l2sp_lambda": 0.0,
+  "rank": 16,
+  "alpha": 32,
+  "protect_rank": 128,
+  "updates": 1250,
+  "examples": 40000,
+  "trainable_parameters": 10092544,
+  "total_parameters": 606142464,
+  "train_seconds": 11598.479512347001,
+  "peak_vram_note": "whole run",
+  "resumed_from_update": 0,
+  "peak_vram_gib": 3.5592055320739746,
+  "checkpoint_bytes": {
+    "recovery_u312": 121588381,
+    "midpoint": 80825509,
+    "recovery_u625": 121588445,
+    "recovery_u937": 121588509,
+    "recovery_u1250": 121588509,
+    "final": 80825509
+  },
+  "skipped_updates": [],
+  "method_preprocessing_seconds": 32.1889826000006,
+  "gpu": "Tesla T4",
+  "oplora_basis_storage_bytes": 322961408,
+  "oplora_svd_seconds": 32.1889826000006,
+  "oplora_projected_export_seconds": 0.09268673499900615
+}

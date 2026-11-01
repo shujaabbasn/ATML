@@ -1,0 +1,35 @@
+{
+  "condition": "baseline",
+  "model_path": "Qwen/Qwen3-0.6B",
+  "gsm8k": {
+    "flexible_exact_match": 0.4336618650492798,
+    "flexible_exact_match_stderr": 0.013650728047064692,
+    "strict_exact_match": 0.0,
+    "n": 1319,
+    "truncation_rate": 0.008339651250947688,
+    "flexible_unextractable_rate": 0.0,
+    "docs_without_generation_record": 0
+  },
+  "gsm8k_seconds": 1989.671143691001,
+  "lm_eval_version": "0.4.11",
+  "likelihood_seconds": 815.6872387429994,
+  "hellaswag": {
+    "acc": 0.3754232224656443,
+    "acc_stderr": 0.004832423630593549,
+    "acc_norm": 0.4733120892252539,
+    "acc_norm_stderr": 0.004982668452119063,
+    "n": 10042
+  },
+  "boolq": {
+    "acc": 0.6443425076452599,
+    "acc_stderr": 0.00837272663997743,
+    "n": 3270
+  },
+  "arc_easy": {
+    "acc": 0.609006734006734,
+    "acc_stderr": 0.010012992232540683,
+    "acc_norm": 0.5601851851851852,
+    "acc_norm_stderr": 0.010185185185185184,
+    "n": 2376
+  }
+}

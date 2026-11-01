@@ -1,0 +1,41 @@
+{
+  "questions": 50,
+  "peak_vram_gib_this_session": 6.17330265045166,
+  "gpu": "Tesla T4",
+  "model": "Qwen/Qwen2.5-3B-Instruct",
+  "revision": "aa8e72537993ba99e69dfaafa59ed015b17504d1",
+  "single": {
+    "accuracy": 0.62,
+    "mean_output_tokens": 761.32,
+    "mean_input_tokens": 108.38,
+    "mean_seconds": 38.045307189499965,
+    "truncation_rate": 0.04,
+    "no_final_answer_rate": 0.04,
+    "extraction_rate": 0.96
+  },
+  "parallel": {
+    "accuracy": 0.54,
+    "mean_output_tokens": 1859.52,
+    "mean_input_tokens": 325.14,
+    "mean_seconds": 91.72961299259987,
+    "truncation_rate": 0.26,
+    "no_final_answer_rate": 0.22,
+    "extraction_rate": 0.78
+  },
+  "refinement": {
+    "accuracy": 0.6,
+    "mean_output_tokens": 1264.8,
+    "mean_input_tokens": 889.62,
+    "mean_seconds": 63.54585931548,
+    "truncation_rate": 0.2,
+    "no_final_answer_rate": 0.02,
+    "extraction_rate": 0.98
+  },
+  "refinement_transitions_vs_shared_initial": {
+    "wrong_to_correct": 3,
+    "correct_to_wrong": 1,
+    "stayed_correct": 27,
+    "stayed_wrong": 19
+  },
+  "initial_accuracy": 0.56
+}

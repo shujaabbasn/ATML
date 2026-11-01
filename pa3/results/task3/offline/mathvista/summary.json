@@ -1,0 +1,942 @@
+{
+  "dev": {
+    "1": {
+      "coverage": 0.53,
+      "distinct_groups": 1.0,
+      "methods": {
+        "first_answer": {
+          "accuracy": 0.53,
+          "mean_token_cost": 284.747,
+          "no_correct_candidate": 0.47,
+          "correct_available_but_missed": 0.0
+        },
+        "highest_logprob": {
+          "accuracy": 0.53,
+          "mean_token_cost": 284.747,
+          "no_correct_candidate": 0.47,
+          "correct_available_but_missed": 0.0
+        },
+        "highest_self_certainty": {
+          "accuracy": 0.53,
+          "mean_token_cost": 284.747,
+          "no_correct_candidate": 0.47,
+          "correct_available_but_missed": 0.0
+        },
+        "highest_visconf": {
+          "accuracy": 0.53,
+          "mean_token_cost": 284.747,
+          "no_correct_candidate": 0.47,
+          "correct_available_but_missed": 0.0
+        },
+        "highest_visconf_tokenwise": {
+          "accuracy": 0.53,
+          "mean_token_cost": 284.747,
+          "no_correct_candidate": 0.47,
+          "correct_available_but_missed": 0.0
+        },
+        "highest_vision": {
+          "accuracy": 0.53,
+          "mean_token_cost": 284.747,
+          "no_correct_candidate": 0.47,
+          "correct_available_but_missed": 0.0
+        },
+        "self_certainty_rwc": {
+          "accuracy": 0.53,
+          "mean_token_cost": 284.747,
+          "no_correct_candidate": 0.47,
+          "correct_available_but_missed": 0.0
+        },
+        "self_consistency": {
+          "accuracy": 0.53,
+          "mean_token_cost": 284.747,
+          "no_correct_candidate": 0.47,
+          "correct_available_but_missed": 0.0
+        },
+        "shortest_rollout": {
+          "accuracy": 0.53,
+          "mean_token_cost": 284.747,
+          "no_correct_candidate": 0.47,
+          "correct_available_but_missed": 0.0
+        },
+        "visconf_rwc": {
+          "accuracy": 0.53,
+          "mean_token_cost": 284.747,
+          "no_correct_candidate": 0.47,
+          "correct_available_but_missed": 0.0
+        },
+        "visconf_tokenwise_rwc": {
+          "accuracy": 0.53,
+          "mean_token_cost": 284.747,
+          "no_correct_candidate": 0.47,
+          "correct_available_but_missed": 0.0
+        },
+        "vision_rwc": {
+          "accuracy": 0.53,
+          "mean_token_cost": 284.747,
+          "no_correct_candidate": 0.47,
+          "correct_available_but_missed": 0.0
+        }
+      }
+    },
+    "2": {
+      "coverage": 0.6480000000000001,
+      "distinct_groups": 1.4564999999999997,
+      "methods": {
+        "first_answer": {
+          "accuracy": 0.53,
+          "mean_token_cost": 284.747,
+          "no_correct_candidate": 0.35199999999999987,
+          "correct_available_but_missed": 0.1180000000000001
+        },
+        "highest_logprob": {
+          "accuracy": 0.5475,
+          "mean_token_cost": 575.5715,
+          "no_correct_candidate": 0.35199999999999987,
+          "correct_available_but_missed": 0.10050000000000014
+        },
+        "highest_self_certainty": {
+          "accuracy": 0.5585,
+          "mean_token_cost": 575.5715,
+          "no_correct_candidate": 0.35199999999999987,
+          "correct_available_but_missed": 0.08950000000000014
+        },
+        "highest_visconf": {
+          "accuracy": 0.5509999999999999,
+          "mean_token_cost": 575.5715,
+          "no_correct_candidate": 0.35199999999999987,
+          "correct_available_but_missed": 0.0970000000000002
+        },
+        "highest_visconf_tokenwise": {
+          "accuracy": 0.5539999999999999,
+          "mean_token_cost": 575.5715,
+          "no_correct_candidate": 0.35199999999999987,
+          "correct_available_but_missed": 0.0940000000000002
+        },
+        "highest_vision": {
+          "accuracy": 0.534,
+          "mean_token_cost": 575.5715,
+          "no_correct_candidate": 0.35199999999999987,
+          "correct_available_but_missed": 0.1140000000000001
+        },
+        "self_certainty_rwc": {
+          "accuracy": 0.5585,
+          "mean_token_cost": 575.5715,
+          "no_correct_candidate": 0.35199999999999987,
+          "correct_available_but_missed": 0.08950000000000014
+        },
+        "self_consistency": {
+          "accuracy": 0.53,
+          "mean_token_cost": 575.5715,
+          "no_correct_candidate": 0.35199999999999987,
+          "correct_available_but_missed": 0.1180000000000001
+        },
+        "shortest_rollout": {
+          "accuracy": 0.547,
+          "mean_token_cost": 575.5715,
+          "no_correct_candidate": 0.35199999999999987,
+          "correct_available_but_missed": 0.10100000000000009
+        },
+        "visconf_rwc": {
+          "accuracy": 0.5509999999999999,
+          "mean_token_cost": 575.5715,
+          "no_correct_candidate": 0.35199999999999987,
+          "correct_available_but_missed": 0.0970000000000002
+        },
+        "visconf_tokenwise_rwc": {
+          "accuracy": 0.5539999999999999,
+          "mean_token_cost": 575.5715,
+          "no_correct_candidate": 0.35199999999999987,
+          "correct_available_but_missed": 0.0940000000000002
+        },
+        "vision_rwc": {
+          "accuracy": 0.534,
+          "mean_token_cost": 575.5715,
+          "no_correct_candidate": 0.35199999999999987,
+          "correct_available_but_missed": 0.1140000000000001
+        }
+      }
+    },
+    "4": {
+      "coverage": 0.7465,
+      "distinct_groups": 2.0780000000000003,
+      "methods": {
+        "first_answer": {
+          "accuracy": 0.53,
+          "mean_token_cost": 284.747,
+          "no_correct_candidate": 0.25349999999999995,
+          "correct_available_but_missed": 0.21650000000000003
+        },
+        "highest_logprob": {
+          "accuracy": 0.5505,
+          "mean_token_cost": 1150.172,
+          "no_correct_candidate": 0.25349999999999995,
+          "correct_available_but_missed": 0.19600000000000006
+        },
+        "highest_self_certainty": {
+          "accuracy": 0.571,
+          "mean_token_cost": 1150.172,
+          "no_correct_candidate": 0.25349999999999995,
+          "correct_available_but_missed": 0.1755000000000001
+        },
+        "highest_visconf": {
+          "accuracy": 0.559,
+          "mean_token_cost": 1150.172,
+          "no_correct_candidate": 0.25349999999999995,
+          "correct_available_but_missed": 0.1875
+        },
+        "highest_visconf_tokenwise": {
+          "accuracy": 0.5565000000000001,
+          "mean_token_cost": 1150.172,
+          "no_correct_candidate": 0.25349999999999995,
+          "correct_available_but_missed": 0.18999999999999995
+        },
+        "highest_vision": {
+          "accuracy": 0.525,
+          "mean_token_cost": 1150.172,
+          "no_correct_candidate": 0.25349999999999995,
+          "correct_available_but_missed": 0.22150000000000003
+        },
+        "self_certainty_rwc": {
+          "accuracy": 0.5820000000000001,
+          "mean_token_cost": 1150.172,
+          "no_correct_candidate": 0.25349999999999995,
+          "correct_available_but_missed": 0.16449999999999998
+        },
+        "self_consistency": {
+          "accuracy": 0.5875,
+          "mean_token_cost": 1150.172,
+          "no_correct_candidate": 0.25349999999999995,
+          "correct_available_but_missed": 0.15900000000000003
+        },
+        "shortest_rollout": {
+          "accuracy": 0.5379999999999999,
+          "mean_token_cost": 1150.172,
+          "no_correct_candidate": 0.25349999999999995,
+          "correct_available_but_missed": 0.20850000000000013
+        },
+        "visconf_rwc": {
+          "accuracy": 0.5805,
+          "mean_token_cost": 1150.172,
+          "no_correct_candidate": 0.25349999999999995,
+          "correct_available_but_missed": 0.16600000000000004
+        },
+        "visconf_tokenwise_rwc": {
+          "accuracy": 0.5785,
+          "mean_token_cost": 1150.172,
+          "no_correct_candidate": 0.25349999999999995,
+          "correct_available_but_missed": 0.16800000000000004
+        },
+        "vision_rwc": {
+          "accuracy": 0.5535,
+          "mean_token_cost": 1150.172,
+          "no_correct_candidate": 0.25349999999999995,
+          "correct_available_but_missed": 0.19300000000000006
+        }
+      }
+    },
+    "8": {
+      "coverage": 0.8155000000000001,
+      "distinct_groups": 2.885,
+      "methods": {
+        "first_answer": {
+          "accuracy": 0.53,
+          "mean_token_cost": 284.747,
+          "no_correct_candidate": 0.1844999999999999,
+          "correct_available_but_missed": 0.2855000000000001
+        },
+        "highest_logprob": {
+          "accuracy": 0.5465000000000001,
+          "mean_token_cost": 2301.3045,
+          "no_correct_candidate": 0.1844999999999999,
+          "correct_available_but_missed": 0.269
+        },
+        "highest_self_certainty": {
+          "accuracy": 0.5595,
+          "mean_token_cost": 2301.3045,
+          "no_correct_candidate": 0.1844999999999999,
+          "correct_available_but_missed": 0.2560000000000001
+        },
+        "highest_visconf": {
+          "accuracy": 0.5495,
+          "mean_token_cost": 2301.3045,
+          "no_correct_candidate": 0.1844999999999999,
+          "correct_available_but_missed": 0.2660000000000001
+        },
+        "highest_visconf_tokenwise": {
+          "accuracy": 0.5495,
+          "mean_token_cost": 2301.3045,
+          "no_correct_candidate": 0.1844999999999999,
+          "correct_available_but_missed": 0.2660000000000001
+        },
+        "highest_vision": {
+          "accuracy": 0.5145000000000001,
+          "mean_token_cost": 2301.3045,
+          "no_correct_candidate": 0.1844999999999999,
+          "correct_available_but_missed": 0.30100000000000005
+        },
+        "self_certainty_rwc": {
+          "accuracy": 0.5985,
+          "mean_token_cost": 2301.3045,
+          "no_correct_candidate": 0.1844999999999999,
+          "correct_available_but_missed": 0.21700000000000008
+        },
+        "self_consistency": {
+          "accuracy": 0.607,
+          "mean_token_cost": 2301.3045,
+          "no_correct_candidate": 0.1844999999999999,
+          "correct_available_but_missed": 0.20850000000000013
+        },
+        "shortest_rollout": {
+          "accuracy": 0.536,
+          "mean_token_cost": 2301.3045,
+          "no_correct_candidate": 0.1844999999999999,
+          "correct_available_but_missed": 0.2795000000000001
+        },
+        "visconf_rwc": {
+          "accuracy": 0.593,
+          "mean_token_cost": 2301.3045,
+          "no_correct_candidate": 0.1844999999999999,
+          "correct_available_but_missed": 0.22250000000000014
+        },
+        "visconf_tokenwise_rwc": {
+          "accuracy": 0.5994999999999999,
+          "mean_token_cost": 2301.3045,
+          "no_correct_candidate": 0.1844999999999999,
+          "correct_available_but_missed": 0.2160000000000002
+        },
+        "vision_rwc": {
+          "accuracy": 0.586,
+          "mean_token_cost": 2301.3045,
+          "no_correct_candidate": 0.1844999999999999,
+          "correct_available_but_missed": 0.22950000000000015
+        }
+      }
+    },
+    "16": {
+      "coverage": 0.858,
+      "distinct_groups": 3.9475,
+      "methods": {
+        "first_answer": {
+          "accuracy": 0.53,
+          "mean_token_cost": 284.747,
+          "no_correct_candidate": 0.14200000000000002,
+          "correct_available_but_missed": 0.32799999999999996
+        },
+        "highest_logprob": {
+          "accuracy": 0.534,
+          "mean_token_cost": 4602.9715,
+          "no_correct_candidate": 0.14200000000000002,
+          "correct_available_but_missed": 0.32399999999999995
+        },
+        "highest_self_certainty": {
+          "accuracy": 0.561,
+          "mean_token_cost": 4602.9715,
+          "no_correct_candidate": 0.14200000000000002,
+          "correct_available_but_missed": 0.29699999999999993
+        },
+        "highest_visconf": {
+          "accuracy": 0.5489999999999999,
+          "mean_token_cost": 4602.9715,
+          "no_correct_candidate": 0.14200000000000002,
+          "correct_available_but_missed": 0.30900000000000005
+        },
+        "highest_visconf_tokenwise": {
+          "accuracy": 0.5385,
+          "mean_token_cost": 4602.9715,
+          "no_correct_candidate": 0.14200000000000002,
+          "correct_available_but_missed": 0.3195
+        },
+        "highest_vision": {
+          "accuracy": 0.512,
+          "mean_token_cost": 4602.9715,
+          "no_correct_candidate": 0.14200000000000002,
+          "correct_available_but_missed": 0.346
+        },
+        "self_certainty_rwc": {
+          "accuracy": 0.6145,
+          "mean_token_cost": 4602.9715,
+          "no_correct_candidate": 0.14200000000000002,
+          "correct_available_but_missed": 0.24349999999999994
+        },
+        "self_consistency": {
+          "accuracy": 0.618,
+          "mean_token_cost": 4602.9715,
+          "no_correct_candidate": 0.14200000000000002,
+          "correct_available_but_missed": 0.24
+        },
+        "shortest_rollout": {
+          "accuracy": 0.5329999999999999,
+          "mean_token_cost": 4602.9715,
+          "no_correct_candidate": 0.14200000000000002,
+          "correct_available_but_missed": 0.32500000000000007
+        },
+        "visconf_rwc": {
+          "accuracy": 0.6155,
+          "mean_token_cost": 4602.9715,
+          "no_correct_candidate": 0.14200000000000002,
+          "correct_available_but_missed": 0.24249999999999994
+        },
+        "visconf_tokenwise_rwc": {
+          "accuracy": 0.6125,
+          "mean_token_cost": 4602.9715,
+          "no_correct_candidate": 0.14200000000000002,
+          "correct_available_but_missed": 0.24549999999999994
+        },
+        "vision_rwc": {
+          "accuracy": 0.6060000000000001,
+          "mean_token_cost": 4602.9715,
+          "no_correct_candidate": 0.14200000000000002,
+          "correct_available_but_missed": 0.2519999999999999
+        }
+      }
+    },
+    "32": {
+      "coverage": 0.89,
+      "distinct_groups": 5.34,
+      "methods": {
+        "first_answer": {
+          "accuracy": 0.53,
+          "mean_token_cost": 284.747,
+          "no_correct_candidate": 0.10999999999999999,
+          "correct_available_but_missed": 0.36
+        },
+        "highest_logprob": {
+          "accuracy": 0.54,
+          "mean_token_cost": 9217.485,
+          "no_correct_candidate": 0.10999999999999999,
+          "correct_available_but_missed": 0.35
+        },
+        "highest_self_certainty": {
+          "accuracy": 0.555,
+          "mean_token_cost": 9217.485,
+          "no_correct_candidate": 0.10999999999999999,
+          "correct_available_but_missed": 0.33499999999999996
+        },
+        "highest_visconf": {
+          "accuracy": 0.545,
+          "mean_token_cost": 9217.485,
+          "no_correct_candidate": 0.10999999999999999,
+          "correct_available_but_missed": 0.345
+        },
+        "highest_visconf_tokenwise": {
+          "accuracy": 0.545,
+          "mean_token_cost": 9217.485,
+          "no_correct_candidate": 0.10999999999999999,
+          "correct_available_but_missed": 0.345
+        },
+        "highest_vision": {
+          "accuracy": 0.495,
+          "mean_token_cost": 9217.485,
+          "no_correct_candidate": 0.10999999999999999,
+          "correct_available_but_missed": 0.395
+        },
+        "self_certainty_rwc": {
+          "accuracy": 0.6335000000000001,
+          "mean_token_cost": 9217.485,
+          "no_correct_candidate": 0.10999999999999999,
+          "correct_available_but_missed": 0.25649999999999995
+        },
+        "self_consistency": {
+          "accuracy": 0.6425,
+          "mean_token_cost": 9217.485,
+          "no_correct_candidate": 0.10999999999999999,
+          "correct_available_but_missed": 0.24750000000000005
+        },
+        "shortest_rollout": {
+          "accuracy": 0.5095000000000001,
+          "mean_token_cost": 9217.485,
+          "no_correct_candidate": 0.10999999999999999,
+          "correct_available_but_missed": 0.38049999999999995
+        },
+        "visconf_rwc": {
+          "accuracy": 0.63,
+          "mean_token_cost": 9217.485,
+          "no_correct_candidate": 0.10999999999999999,
+          "correct_available_but_missed": 0.26
+        },
+        "visconf_tokenwise_rwc": {
+          "accuracy": 0.635,
+          "mean_token_cost": 9217.485,
+          "no_correct_candidate": 0.10999999999999999,
+          "correct_available_but_missed": 0.255
+        },
+        "vision_rwc": {
+          "accuracy": 0.63,
+          "mean_token_cost": 9217.485,
+          "no_correct_candidate": 0.10999999999999999,
+          "correct_available_but_missed": 0.26
+        }
+      }
+    }
+  },
+  "eval": {
+    "1": {
+      "coverage": 0.5359999999999999,
+      "distinct_groups": 1.0,
+      "methods": {
+        "first_answer": {
+          "accuracy": 0.5359999999999999,
+          "mean_token_cost": 277.79637499999995,
+          "no_correct_candidate": 0.4640000000000001,
+          "correct_available_but_missed": 0.0
+        },
+        "highest_logprob": {
+          "accuracy": 0.5359999999999999,
+          "mean_token_cost": 277.79637499999995,
+          "no_correct_candidate": 0.4640000000000001,
+          "correct_available_but_missed": 0.0
+        },
+        "highest_self_certainty": {
+          "accuracy": 0.5359999999999999,
+          "mean_token_cost": 277.79637499999995,
+          "no_correct_candidate": 0.4640000000000001,
+          "correct_available_but_missed": 0.0
+        },
+        "highest_visconf": {
+          "accuracy": 0.5359999999999999,
+          "mean_token_cost": 277.79637499999995,
+          "no_correct_candidate": 0.4640000000000001,
+          "correct_available_but_missed": 0.0
+        },
+        "highest_visconf_tokenwise": {
+          "accuracy": 0.5359999999999999,
+          "mean_token_cost": 277.79637499999995,
+          "no_correct_candidate": 0.4640000000000001,
+          "correct_available_but_missed": 0.0
+        },
+        "highest_vision": {
+          "accuracy": 0.5359999999999999,
+          "mean_token_cost": 277.79637499999995,
+          "no_correct_candidate": 0.4640000000000001,
+          "correct_available_but_missed": 0.0
+        },
+        "self_certainty_rwc": {
+          "accuracy": 0.5359999999999999,
+          "mean_token_cost": 277.79637499999995,
+          "no_correct_candidate": 0.4640000000000001,
+          "correct_available_but_missed": 0.0
+        },
+        "self_consistency": {
+          "accuracy": 0.5359999999999999,
+          "mean_token_cost": 277.79637499999995,
+          "no_correct_candidate": 0.4640000000000001,
+          "correct_available_but_missed": 0.0
+        },
+        "shortest_rollout": {
+          "accuracy": 0.5359999999999999,
+          "mean_token_cost": 277.79637499999995,
+          "no_correct_candidate": 0.4640000000000001,
+          "correct_available_but_missed": 0.0
+        },
+        "visconf_rwc": {
+          "accuracy": 0.5359999999999999,
+          "mean_token_cost": 277.79637499999995,
+          "no_correct_candidate": 0.4640000000000001,
+          "correct_available_but_missed": 0.0
+        },
+        "visconf_tokenwise_rwc": {
+          "accuracy": 0.5359999999999999,
+          "mean_token_cost": 277.79637499999995,
+          "no_correct_candidate": 0.4640000000000001,
+          "correct_available_but_missed": 0.0
+        },
+        "vision_rwc": {
+          "accuracy": 0.5359999999999999,
+          "mean_token_cost": 277.79637499999995,
+          "no_correct_candidate": 0.4640000000000001,
+          "correct_available_but_missed": 0.0
+        }
+      }
+    },
+    "2": {
+      "coverage": 0.6603749999999999,
+      "distinct_groups": 1.453375,
+      "methods": {
+        "first_answer": {
+          "accuracy": 0.5359999999999999,
+          "mean_token_cost": 277.79637499999995,
+          "no_correct_candidate": 0.33962500000000007,
+          "correct_available_but_missed": 0.12437500000000001
+        },
+        "highest_logprob": {
+          "accuracy": 0.542625,
+          "mean_token_cost": 551.250125,
+          "no_correct_candidate": 0.33962500000000007,
+          "correct_available_but_missed": 0.11774999999999991
+        },
+        "highest_self_certainty": {
+          "accuracy": 0.5475,
+          "mean_token_cost": 551.250125,
+          "no_correct_candidate": 0.33962500000000007,
+          "correct_available_but_missed": 0.11287499999999995
+        },
+        "highest_visconf": {
+          "accuracy": 0.554125,
+          "mean_token_cost": 551.250125,
+          "no_correct_candidate": 0.33962500000000007,
+          "correct_available_but_missed": 0.10624999999999996
+        },
+        "highest_visconf_tokenwise": {
+          "accuracy": 0.55375,
+          "mean_token_cost": 551.250125,
+          "no_correct_candidate": 0.33962500000000007,
+          "correct_available_but_missed": 0.10662499999999997
+        },
+        "highest_vision": {
+          "accuracy": 0.543375,
+          "mean_token_cost": 551.250125,
+          "no_correct_candidate": 0.33962500000000007,
+          "correct_available_but_missed": 0.11699999999999988
+        },
+        "self_certainty_rwc": {
+          "accuracy": 0.5475,
+          "mean_token_cost": 551.250125,
+          "no_correct_candidate": 0.33962500000000007,
+          "correct_available_but_missed": 0.11287499999999995
+        },
+        "self_consistency": {
+          "accuracy": 0.5359999999999999,
+          "mean_token_cost": 551.250125,
+          "no_correct_candidate": 0.33962500000000007,
+          "correct_available_but_missed": 0.12437500000000001
+        },
+        "shortest_rollout": {
+          "accuracy": 0.54975,
+          "mean_token_cost": 551.250125,
+          "no_correct_candidate": 0.33962500000000007,
+          "correct_available_but_missed": 0.11062499999999997
+        },
+        "visconf_rwc": {
+          "accuracy": 0.554125,
+          "mean_token_cost": 551.250125,
+          "no_correct_candidate": 0.33962500000000007,
+          "correct_available_but_missed": 0.10624999999999996
+        },
+        "visconf_tokenwise_rwc": {
+          "accuracy": 0.55375,
+          "mean_token_cost": 551.250125,
+          "no_correct_candidate": 0.33962500000000007,
+          "correct_available_but_missed": 0.10662499999999997
+        },
+        "vision_rwc": {
+          "accuracy": 0.543375,
+          "mean_token_cost": 551.250125,
+          "no_correct_candidate": 0.33962500000000007,
+          "correct_available_but_missed": 0.11699999999999988
+        }
+      }
+    },
+    "4": {
+      "coverage": 0.75875,
+      "distinct_groups": 2.036375,
+      "methods": {
+        "first_answer": {
+          "accuracy": 0.5359999999999999,
+          "mean_token_cost": 277.79637499999995,
+          "no_correct_candidate": 0.24124999999999996,
+          "correct_available_but_missed": 0.22275000000000011
+        },
+        "highest_logprob": {
+          "accuracy": 0.5323749999999999,
+          "mean_token_cost": 1111.591625,
+          "no_correct_candidate": 0.24124999999999996,
+          "correct_available_but_missed": 0.2263750000000001
+        },
+        "highest_self_certainty": {
+          "accuracy": 0.550125,
+          "mean_token_cost": 1111.591625,
+          "no_correct_candidate": 0.24124999999999996,
+          "correct_available_but_missed": 0.20862500000000006
+        },
+        "highest_visconf": {
+          "accuracy": 0.5625,
+          "mean_token_cost": 1111.591625,
+          "no_correct_candidate": 0.24124999999999996,
+          "correct_available_but_missed": 0.19625000000000004
+        },
+        "highest_visconf_tokenwise": {
+          "accuracy": 0.5585,
+          "mean_token_cost": 1111.591625,
+          "no_correct_candidate": 0.24124999999999996,
+          "correct_available_but_missed": 0.20025000000000004
+        },
+        "highest_vision": {
+          "accuracy": 0.54525,
+          "mean_token_cost": 1111.591625,
+          "no_correct_candidate": 0.24124999999999996,
+          "correct_available_but_missed": 0.21350000000000002
+        },
+        "self_certainty_rwc": {
+          "accuracy": 0.5683750000000001,
+          "mean_token_cost": 1111.591625,
+          "no_correct_candidate": 0.24124999999999996,
+          "correct_available_but_missed": 0.19037499999999996
+        },
+        "self_consistency": {
+          "accuracy": 0.5798749999999999,
+          "mean_token_cost": 1111.591625,
+          "no_correct_candidate": 0.24124999999999996,
+          "correct_available_but_missed": 0.17887500000000012
+        },
+        "shortest_rollout": {
+          "accuracy": 0.5515000000000001,
+          "mean_token_cost": 1111.591625,
+          "no_correct_candidate": 0.24124999999999996,
+          "correct_available_but_missed": 0.20724999999999993
+        },
+        "visconf_rwc": {
+          "accuracy": 0.57775,
+          "mean_token_cost": 1111.591625,
+          "no_correct_candidate": 0.24124999999999996,
+          "correct_available_but_missed": 0.18100000000000005
+        },
+        "visconf_tokenwise_rwc": {
+          "accuracy": 0.576125,
+          "mean_token_cost": 1111.591625,
+          "no_correct_candidate": 0.24124999999999996,
+          "correct_available_but_missed": 0.18262500000000004
+        },
+        "vision_rwc": {
+          "accuracy": 0.5663750000000001,
+          "mean_token_cost": 1111.591625,
+          "no_correct_candidate": 0.24124999999999996,
+          "correct_available_but_missed": 0.19237499999999996
+        }
+      }
+    },
+    "8": {
+      "coverage": 0.826875,
+      "distinct_groups": 2.785625,
+      "methods": {
+        "first_answer": {
+          "accuracy": 0.5359999999999999,
+          "mean_token_cost": 277.79637499999995,
+          "no_correct_candidate": 0.17312499999999997,
+          "correct_available_but_missed": 0.2908750000000001
+        },
+        "highest_logprob": {
+          "accuracy": 0.5191250000000001,
+          "mean_token_cost": 2229.902,
+          "no_correct_candidate": 0.17312499999999997,
+          "correct_available_but_missed": 0.30774999999999997
+        },
+        "highest_self_certainty": {
+          "accuracy": 0.5476249999999999,
+          "mean_token_cost": 2229.902,
+          "no_correct_candidate": 0.17312499999999997,
+          "correct_available_but_missed": 0.2792500000000001
+        },
+        "highest_visconf": {
+          "accuracy": 0.562625,
+          "mean_token_cost": 2229.902,
+          "no_correct_candidate": 0.17312499999999997,
+          "correct_available_but_missed": 0.26425
+        },
+        "highest_visconf_tokenwise": {
+          "accuracy": 0.55725,
+          "mean_token_cost": 2229.902,
+          "no_correct_candidate": 0.17312499999999997,
+          "correct_available_but_missed": 0.269625
+        },
+        "highest_vision": {
+          "accuracy": 0.54325,
+          "mean_token_cost": 2229.902,
+          "no_correct_candidate": 0.17312499999999997,
+          "correct_available_but_missed": 0.283625
+        },
+        "self_certainty_rwc": {
+          "accuracy": 0.60575,
+          "mean_token_cost": 2229.902,
+          "no_correct_candidate": 0.17312499999999997,
+          "correct_available_but_missed": 0.22112500000000002
+        },
+        "self_consistency": {
+          "accuracy": 0.6051249999999999,
+          "mean_token_cost": 2229.902,
+          "no_correct_candidate": 0.17312499999999997,
+          "correct_available_but_missed": 0.2217500000000001
+        },
+        "shortest_rollout": {
+          "accuracy": 0.545625,
+          "mean_token_cost": 2229.902,
+          "no_correct_candidate": 0.17312499999999997,
+          "correct_available_but_missed": 0.28125
+        },
+        "visconf_rwc": {
+          "accuracy": 0.611,
+          "mean_token_cost": 2229.902,
+          "no_correct_candidate": 0.17312499999999997,
+          "correct_available_but_missed": 0.21587500000000004
+        },
+        "visconf_tokenwise_rwc": {
+          "accuracy": 0.6128750000000001,
+          "mean_token_cost": 2229.902,
+          "no_correct_candidate": 0.17312499999999997,
+          "correct_available_but_missed": 0.21399999999999997
+        },
+        "vision_rwc": {
+          "accuracy": 0.604375,
+          "mean_token_cost": 2229.902,
+          "no_correct_candidate": 0.17312499999999997,
+          "correct_available_but_missed": 0.22250000000000003
+        }
+      }
+    },
+    "16": {
+      "coverage": 0.871,
+      "distinct_groups": 3.730625,
+      "methods": {
+        "first_answer": {
+          "accuracy": 0.5359999999999999,
+          "mean_token_cost": 277.79637499999995,
+          "no_correct_candidate": 0.129,
+          "correct_available_but_missed": 0.3350000000000001
+        },
+        "highest_logprob": {
+          "accuracy": 0.504875,
+          "mean_token_cost": 4461.8425,
+          "no_correct_candidate": 0.129,
+          "correct_available_but_missed": 0.36612500000000003
+        },
+        "highest_self_certainty": {
+          "accuracy": 0.54975,
+          "mean_token_cost": 4461.8425,
+          "no_correct_candidate": 0.129,
+          "correct_available_but_missed": 0.32125000000000004
+        },
+        "highest_visconf": {
+          "accuracy": 0.567375,
+          "mean_token_cost": 4461.8425,
+          "no_correct_candidate": 0.129,
+          "correct_available_but_missed": 0.30362500000000003
+        },
+        "highest_visconf_tokenwise": {
+          "accuracy": 0.556875,
+          "mean_token_cost": 4461.8425,
+          "no_correct_candidate": 0.129,
+          "correct_available_but_missed": 0.314125
+        },
+        "highest_vision": {
+          "accuracy": 0.54,
+          "mean_token_cost": 4461.8425,
+          "no_correct_candidate": 0.129,
+          "correct_available_but_missed": 0.33099999999999996
+        },
+        "self_certainty_rwc": {
+          "accuracy": 0.619875,
+          "mean_token_cost": 4461.8425,
+          "no_correct_candidate": 0.129,
+          "correct_available_but_missed": 0.25112500000000004
+        },
+        "self_consistency": {
+          "accuracy": 0.6185,
+          "mean_token_cost": 4461.8425,
+          "no_correct_candidate": 0.129,
+          "correct_available_but_missed": 0.25249999999999995
+        },
+        "shortest_rollout": {
+          "accuracy": 0.543,
+          "mean_token_cost": 4461.8425,
+          "no_correct_candidate": 0.129,
+          "correct_available_but_missed": 0.32799999999999996
+        },
+        "visconf_rwc": {
+          "accuracy": 0.6253749999999999,
+          "mean_token_cost": 4461.8425,
+          "no_correct_candidate": 0.129,
+          "correct_available_but_missed": 0.2456250000000001
+        },
+        "visconf_tokenwise_rwc": {
+          "accuracy": 0.625625,
+          "mean_token_cost": 4461.8425,
+          "no_correct_candidate": 0.129,
+          "correct_available_but_missed": 0.245375
+        },
+        "vision_rwc": {
+          "accuracy": 0.620125,
+          "mean_token_cost": 4461.8425,
+          "no_correct_candidate": 0.129,
+          "correct_available_but_missed": 0.25087499999999996
+        }
+      }
+    },
+    "32": {
+      "coverage": 0.895,
+      "distinct_groups": 4.91,
+      "methods": {
+        "first_answer": {
+          "accuracy": 0.5359999999999999,
+          "mean_token_cost": 277.79637499999995,
+          "no_correct_candidate": 0.10499999999999998,
+          "correct_available_but_missed": 0.3590000000000001
+        },
+        "highest_logprob": {
+          "accuracy": 0.48125,
+          "mean_token_cost": 8897.7575,
+          "no_correct_candidate": 0.10499999999999998,
+          "correct_available_but_missed": 0.41375
+        },
+        "highest_self_certainty": {
+          "accuracy": 0.54625,
+          "mean_token_cost": 8897.7575,
+          "no_correct_candidate": 0.10499999999999998,
+          "correct_available_but_missed": 0.34875
+        },
+        "highest_visconf": {
+          "accuracy": 0.5775,
+          "mean_token_cost": 8897.7575,
+          "no_correct_candidate": 0.10499999999999998,
+          "correct_available_but_missed": 0.3175
+        },
+        "highest_visconf_tokenwise": {
+          "accuracy": 0.5625,
+          "mean_token_cost": 8897.7575,
+          "no_correct_candidate": 0.10499999999999998,
+          "correct_available_but_missed": 0.3325
+        },
+        "highest_vision": {
+          "accuracy": 0.53625,
+          "mean_token_cost": 8897.7575,
+          "no_correct_candidate": 0.10499999999999998,
+          "correct_available_but_missed": 0.35875
+        },
+        "self_certainty_rwc": {
+          "accuracy": 0.637875,
+          "mean_token_cost": 8897.7575,
+          "no_correct_candidate": 0.10499999999999998,
+          "correct_available_but_missed": 0.25712500000000005
+        },
+        "self_consistency": {
+          "accuracy": 0.63125,
+          "mean_token_cost": 8897.7575,
+          "no_correct_candidate": 0.10499999999999998,
+          "correct_available_but_missed": 0.26375000000000004
+        },
+        "shortest_rollout": {
+          "accuracy": 0.5385,
+          "mean_token_cost": 8897.7575,
+          "no_correct_candidate": 0.10499999999999998,
+          "correct_available_but_missed": 0.35650000000000004
+        },
+        "visconf_rwc": {
+          "accuracy": 0.645,
+          "mean_token_cost": 8897.7575,
+          "no_correct_candidate": 0.10499999999999998,
+          "correct_available_but_missed": 0.25
+        },
+        "visconf_tokenwise_rwc": {
+          "accuracy": 0.63875,
+          "mean_token_cost": 8897.7575,
+          "no_correct_candidate": 0.10499999999999998,
+          "correct_available_but_missed": 0.25625
+        },
+        "vision_rwc": {
+          "accuracy": 0.63875,
+          "mean_token_cost": 8897.7575,
+          "no_correct_candidate": 0.10499999999999998,
+          "correct_available_but_missed": 0.25625
+        }
+      }
+    }
+  }
+}

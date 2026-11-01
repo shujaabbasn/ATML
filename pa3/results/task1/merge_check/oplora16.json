@@ -1,0 +1,10 @@
+{
+  "prompts": 4,
+  "tokens": 315,
+  "max_abs_logit_diff": 0.138671875,
+  "mean_abs_logit_diff": 0.006511415354907513,
+  "top1_agreement": 0.9968253970146179,
+  "run": "oplora16",
+  "merged_modules": 196,
+  "factors": "projected"
+}

@@ -1,0 +1,378 @@
+{
+  "selection_disagreement": [
+    {
+      "dataset": "math",
+      "sample_id": "test:2460",
+      "question": "At a competition with $N$ players, the number of players given elite status is equal to $2^{1+\\lfloor \\log_{2} (N-1) \\rfloor}-N$. Suppose that $19$ players are given elite status. What is the sum of the two smallest possible values of $N$?",
+      "gold": "154",
+      "self_consistency": {
+        "answer": "58",
+        "correct": false
+      },
+      "self_certainty_rwc": {
+        "answer": "154",
+        "correct": true,
+        "rollout_tail": "\\lfloor \\log_{2} 108 \\rfloor = 6 \\):\n\\[ 2^{1 + 6} - 109 = 2^7 - 109 = 128 - 109 = 19. \\]\nThis satisfies the condition \\( N = 109 \\).\n\nThus, the two smallest possible values of \\( N \\) are 45 and 109. The sum of these values is:\n\\[ 45 + 109 = 154. \\]\nTherefore, the final answer is:\n\\[ \\boxed{154}. \\]"
+      },
+      "group_support": {
+        "50": 1,
+        "58": 11,
+        "NO_ANSWER": 3,
+        "154": 11,
+        "346": 1,
+        "90": 1,
+        "13": 1,
+        "80": 1,
+        "98": 1,
+        "45": 1
+      }
+    },
+    {
+      "dataset": "math",
+      "sample_id": "test:2892",
+      "question": "There is a unique polynomial $P(x)$ of degree $8$ with rational coefficients and leading coefficient $1,$ which has the number \\[\\sqrt{2} + \\sqrt{3} + \\sqrt{5}\\]as a root. Compute $P(1).$",
+      "gold": "-71",
+      "self_consistency": {
+        "answer": "1",
+        "correct": false
+      },
+      "self_certainty_rwc": {
+        "answer": "0",
+        "correct": false,
+        "rollout_tail": "- 16 \\cdot 1^7 + 92 \\cdot 1^6 - 268 \\cdot 1^5 + 344 \\cdot 1^4 - 268 \\cdot 1^3 + 92 \\cdot 1^2 - 16 \\cdot 1 + 1\n   \\]\n   \\[\n   P(1) = 1 - 16 + 92 - 268 + 344 - 268 + 92 - 16 + 1\n   \\]\n   \\[\n   P(1) = 1 - 16 + 92 - 268 + 344 - 268 + 92 - 16 + 1 = 0\n   \\]\n\nThus, the value of \\( P(1) \\) is \\(\\boxed{0}\\)."
+      },
+      "group_support": {
+        "1": 4,
+        "0": 4,
+        "360": 1,
+        "44": 1,
+        "-708": 1,
+        "-162": 1,
+        "23": 2,
+        "88": 1,
+        "-391": 1,
+        "-55": 1,
+        "-429": 1,
+        "561": 1,
+        "-2": 1,
+        "36": 1,
+        "-167": 1,
+        "263": 1,
+        "-49": 1,
+        "-1": 1,
+        "280": 1,
+        "162": 1,
+        "4713": 1,
+        "-87": 1,
+        "113": 1,
+        "NO_ANSWER": 1,
+        "1600": 1
+      }
+    },
+    {
+      "dataset": "math",
+      "sample_id": "test:2948",
+      "question": "Find all solutions to the equation $$(z^2 - 3z + 1)^2 - 3(z^2 - 3z + 1) + 1 = z.$$",
+      "gold": "1+\\sqrt 2,\\ 1-\\sqrt 2,\\ 2+\\sqrt 3,\\ 2-\\sqrt 3",
+      "self_consistency": {
+        "answer": "1",
+        "correct": false
+      },
+      "self_certainty_rwc": {
+        "answer": "2 + \\sqrt{3}, 2 - \\sqrt{3}, \\frac{3 + \\sqrt{13 + 4\\sqrt{3}}}{2}, \\frac{3 - \\sqrt{13 + 4\\sqrt{3}}}{2}, \\frac{3 + \\sqrt{13 - 4\\sqrt{3}}}{2}, \\frac{3 - \\sqrt{13 - 4\\sqrt{3}}}{2}",
+        "correct": false,
+        "rollout_tail": "= \\frac{3 + \\sqrt{13 - 4\\sqrt{3}}}{2}, \\quad z = \\frac{3 - \\sqrt{13 - 4\\sqrt{3}}}{2}. \\]\n\nThe final answer is:\n\n\\[\n\\boxed{2 + \\sqrt{3}, 2 - \\sqrt{3}, \\frac{3 + \\sqrt{13 + 4\\sqrt{3}}}{2}, \\frac{3 - \\sqrt{13 + 4\\sqrt{3}}}{2}, \\frac{3 + \\sqrt{13 - 4\\sqrt{3}}}{2}, \\frac{3 - \\sqrt{13 - 4\\sqrt{3}}}{2}}\n\\]"
+      },
+      "group_support": {
+        "2 + \\sqrt{3}, 2 - \\sqrt{3}": 3,
+        "\\frac{3 + \\sqrt{13 + 4\\sqrt{2}}}{2}, \\frac{3 - \\sqrt{13 + 4\\sqrt{2}}}{2}, \\frac{3 + \\sqrt{13 - 4\\sqrt{2}}}{2}, \\frac{3 - \\sqrt{13 - 4\\sqrt{2}}}{2}": 1,
+        "1 \\text{ and } 2": 4,
+        "1": 5,
+        "0 \\text{ and } 4": 1,
+        "-\\sqrt{2}, \\sqrt{2}": 1,
+        "-1, \\sqrt{3}": 1,
+        "0, 3, \\frac{3 + \\sqrt{17}}{2}, \\frac{3 - \\sqrt{17}}{2}": 1,
+        "4, -1, 0, 3": 1,
+        "2 + \\sqrt{3}, 2 - \\sqrt{3}, \\frac{3 + \\sqrt{13 + 4\\sqrt{3}}}{2}, \\frac{3 - \\sqrt{13 + 4\\sqrt{3}}}{2}, \\frac{3 + \\sqrt{13 - 4\\sqrt{3}}}{2}, \\frac{3 - \\sqrt{13 - 4\\sqrt{3}}}{2}": 3,
+        "0": 2,
+        "-1": 1,
+        "NO_ANSWER": 2,
+        "0 \\text{ and } 3": 1,
+        "-1, 2": 1,
+        "3": 1,
+        "1, -1, 1 + \\sqrt{2}, 1 - \\sqrt{2}": 1,
+        "-1, -0.171, -0.49, 3.118": 1,
+        "0 \\text{ and } 2": 1
+      }
+    },
+    {
+      "dataset": "mathvista",
+      "sample_id": "552",
+      "question": "How many queries have a p-value lower than 0.50?",
+      "gold": "4",
+      "self_consistency": {
+        "answer": "4",
+        "correct": true
+      },
+      "visconf_rwc": {
+        "answer": "2",
+        "correct": false,
+        "rollout_tail": "telligent: 0.10 (above 0.1)\n5. rot23: 0.58 (above 0.1)\n6. paperclips: 0.43 (above 0.1)\n7. paperclips_large: 0.60 (above 0.1)\n8. water: 0.01 (below 0.1)\n\nNow, let's count the queries with p-values below 0.50:\n\n1. objective: 0.01\n2. water: 0.01\n\nThere are 2 queries with p-values below 0.50.\n\n\\boxed{2}"
+      },
+      "group_support": {
+        "2": 9,
+        "4": 14,
+        "3": 9
+      }
+    },
+    {
+      "dataset": "mathvista",
+      "sample_id": "643",
+      "question": "As shown in the figure, CD is the diameter of ⊙O, chord DE ∥ OA, if the degree of ∠D is 50.0, then the degree of ∠C is ()\nA. 25°\nB. 30°\nC. 40°\nD. 50°",
+      "gold": "A",
+      "self_consistency": {
+        "answer": "C",
+        "correct": false
+      },
+      "visconf_rwc": {
+        "answer": "A",
+        "correct": true,
+        "rollout_tail": "e angle \\(\\angle C\\) is actually half of the angle \\(\\angle AOD\\) because it is an angle in the semicircle and the parallelism condition simplifies the angle to half of \\(\\angle AOD\\).\n\nSo, \\(\\angle C = \\frac{1}{2} \\times 50^\\circ = 25^\\circ\\).\n\nTherefore, the correct answer is \\(\\boxed{25^\\circ}\\)."
+      },
+      "group_support": {
+        "D": 3,
+        "C": 11,
+        "A": 10,
+        "NO_ANSWER": 8
+      }
+    },
+    {
+      "dataset": "mathvista",
+      "sample_id": "313",
+      "question": "What is the age gap between these two people in image?",
+      "gold": "10",
+      "self_consistency": {
+        "answer": "UNPARSED:10-20 years",
+        "correct": false
+      },
+      "visconf_rwc": {
+        "answer": "20",
+        "correct": false,
+        "rollout_tail": "le features, the person on the left appears to be younger, possibly in his late 30s to early 50s.\n   - The person on the right appears to be older, possibly in his late 50s to early 70s.\n\nGiven these observations, the age gap between the two people in the image is approximately 20 years.\n\n\\boxed{20}"
+      },
+      "group_support": {
+        "UNPARSED:10-20 years": 5,
+        "10": 5,
+        "0": 3,
+        "20": 4,
+        "UNPARSED:5-10 years": 2,
+        "UNPARSED:20-30 years": 3,
+        "UNPARSED:10 to 15 years": 1,
+        "UNPARSED:10-15 years": 5,
+        "UNPARSED:\\text{Not determinable}": 1,
+        "UNPARSED:10 \\text{ to } 30 \\text{ years}": 1,
+        "UNPARSED:30-40 years": 1,
+        "UNPARSED:10-15": 1
+      }
+    }
+  ],
+  "revision": [
+    {
+      "kind": "wrong_to_correct",
+      "sample_id": "test:3504",
+      "gold": "216",
+      "initial_answer": null,
+      "revised_answer": "216",
+      "initial_tail": "\\times 2 \\)**\n   \\[\n   n = p_1^1 \\times p_2^1 \\times p_3^1 \\times p_4^1\n   \\]\n   The smallest \\( n \\) is:\n   \\[\n   2^1 \\times 3^1 \\times 5^1 \\times 7^1 = 2 \\times 3 \\times 5 \\times 7 = 210\n   \\]\n   Check if 210 is a multiple of 72:\n   \\[\n   210 \\div 72 = 2.9167 \\quad (\\text{not an integer})\n   \\]\n  ",
+      "revision_tail": ":\n   \\[\n   210 \\div 72 = 2.9167 \\quad (\\text{not an integer})\n   \\]\n   This case is not valid.\n\nAfter re-evaluating all the cases, we find that the smallest number that fits the criteria is \\( 216 \\).\n\nThus, the least positive multiple of 72 that has exactly 16 positive factors is:\n\\[\n\\boxed{216}\n\\]"
+    },
+    {
+      "kind": "wrong_to_correct",
+      "sample_id": "test:3285",
+      "gold": "0",
+      "initial_answer": null,
+      "revised_answer": "0",
+      "initial_tail": "\\(1110010110110111\\).\n\n### Step 3: Interpret the sum as a base 10 number\nThe sum in binary is \\(1110010110110111\\). Converting this to base 10, we get:\n\\[\n1 \\cdot 2^{15} + 1 \\cdot 2^{14} + 1 \\cdot 2^{13} + 0 \\cdot 2^{12} + 0 \\cdot 2^{11} + 1 \\cdot 2^{10} + 0 \\cdot 2^9 + 1 \\cdot 2^8 + 1 \\cdot 2^7 + 0",
+      "revision_tail": " 2^9 + 1 \\cdot 2^8 + 1 \\cdot 2^7 + 0 \\cdot 2^6 + 1 \\cdot 2^5 + 1 \\cdot 2^4 + 0 \\cdot 2^3 + 1 \\cdot 2^2 + 1 \\cdot 2^1 + 1 \\cdot 2^0\n\\]\n\\[\n= 32768 + 16384 + 8192 + 1024 + 1024 + 1024 + 16 + 4 + 1 = 67875\n\\]\nSo, \\(n = 67875\\).\n\n\\[\nn - m = 67875 - 67875 = 0\n\\]\n\nThus, the final answer is:\n\\[\n\\boxed{0}\n\\]"
+    },
+    {
+      "kind": "correct_to_wrong",
+      "sample_id": "test:1324",
+      "gold": "\\frac{3}{16}",
+      "initial_answer": "\\frac{3}{16}",
+      "revised_answer": "\\frac{3}{32}",
+      "initial_tail": "bility that Polya ends up on the 7th floor or higher is the number of favorable outcomes divided by the total number of outcomes:\n\n\\[\n\\text{Probability} = \\frac{6}{32} = \\frac{3}{16}\n\\]\n\nThus, the probability that each of her next five stops is on the 7th floor or higher is \\(\\boxed{\\frac{3}{16}}\\).",
+      "revision_tail": "lating Probability**:\n   \\[\n   \\text{Probability} = \\frac{\\text{Number of favorable outcomes}}{\\text{Total number of outcomes}} = \\frac{3}{32}\n   \\]\n\n### Conclusion\nThe probability that Polya ends up on the 7th floor or higher is \\(\\frac{3}{32}\\).\n\nThus, the final answer is \\(\\boxed{\\frac{3}{32}}\\)."
+    }
+  ],
+  "premature_stopping": [
+    {
+      "family": "agreement",
+      "sample_id": "test:2460",
+      "order": 7,
+      "stop_n": 4,
+      "support": 0.75,
+      "rwc_margin": 0.3333333333333333,
+      "correct": 0.0,
+      "fixed32_correct": 1.0,
+      "pool_correct_fraction": 0.34375,
+      "selected_answer": "58",
+      "fixed32_answer": "154",
+      "gold": "154"
+    },
+    {
+      "family": "agreement",
+      "sample_id": "test:534",
+      "order": 6,
+      "stop_n": 4,
+      "support": 0.75,
+      "rwc_margin": 0.0,
+      "correct": 0.0,
+      "fixed32_correct": 1.0,
+      "pool_correct_fraction": 0.71875,
+      "selected_answer": "48",
+      "fixed32_answer": "56",
+      "gold": "56"
+    },
+    {
+      "family": "agreement",
+      "sample_id": "test:3409",
+      "order": 4,
+      "stop_n": 8,
+      "support": 0.625,
+      "rwc_margin": 0.10714285714285716,
+      "correct": 0.0,
+      "fixed32_correct": 1.0,
+      "pool_correct_fraction": 0.65625,
+      "selected_answer": "0",
+      "fixed32_answer": "3",
+      "gold": "3"
+    },
+    {
+      "family": "quality",
+      "sample_id": "test:3504",
+      "order": 7,
+      "stop_n": 4,
+      "support": 0.5,
+      "rwc_margin": 0.6666666666666667,
+      "correct": 0.0,
+      "fixed32_correct": 1.0,
+      "pool_correct_fraction": 0.40625,
+      "selected_answer": "120",
+      "fixed32_answer": "216",
+      "gold": "216"
+    },
+    {
+      "family": "quality",
+      "sample_id": "test:2460",
+      "order": 7,
+      "stop_n": 4,
+      "support": 0.75,
+      "rwc_margin": 0.3333333333333333,
+      "correct": 0.0,
+      "fixed32_correct": 1.0,
+      "pool_correct_fraction": 0.34375,
+      "selected_answer": "58",
+      "fixed32_answer": "154",
+      "gold": "154"
+    },
+    {
+      "family": "quality",
+      "sample_id": "test:534",
+      "order": 2,
+      "stop_n": 4,
+      "support": 0.5,
+      "rwc_margin": 0.0,
+      "correct": 0.0,
+      "fixed32_correct": 1.0,
+      "pool_correct_fraction": 0.71875,
+      "selected_answer": "48",
+      "fixed32_answer": "56",
+      "gold": "56"
+    },
+    {
+      "family": "agreement",
+      "sample_id": "358",
+      "order": 4,
+      "stop_n": 4,
+      "support": 0.5,
+      "rwc_margin": 0.3333333333333333,
+      "correct": 0.0,
+      "fixed32_correct": 1.0,
+      "pool_correct_fraction": 0.4375,
+      "selected_answer": "D",
+      "fixed32_answer": "A",
+      "gold": "A"
+    },
+    {
+      "family": "agreement",
+      "sample_id": "358",
+      "order": 5,
+      "stop_n": 4,
+      "support": 0.5,
+      "rwc_margin": 0.1666666666666667,
+      "correct": 0.0,
+      "fixed32_correct": 1.0,
+      "pool_correct_fraction": 0.4375,
+      "selected_answer": "D",
+      "fixed32_answer": "A",
+      "gold": "A"
+    },
+    {
+      "family": "agreement",
+      "sample_id": "358",
+      "order": 6,
+      "stop_n": 4,
+      "support": 0.5,
+      "rwc_margin": 0.6666666666666667,
+      "correct": 0.0,
+      "fixed32_correct": 1.0,
+      "pool_correct_fraction": 0.4375,
+      "selected_answer": "E",
+      "fixed32_answer": "A",
+      "gold": "A"
+    },
+    {
+      "family": "quality",
+      "sample_id": "358",
+      "order": 4,
+      "stop_n": 4,
+      "support": 0.5,
+      "rwc_margin": 0.3333333333333333,
+      "correct": 0.0,
+      "fixed32_correct": 1.0,
+      "pool_correct_fraction": 0.4375,
+      "selected_answer": "D",
+      "fixed32_answer": "A",
+      "gold": "A"
+    },
+    {
+      "family": "quality",
+      "sample_id": "358",
+      "order": 5,
+      "stop_n": 4,
+      "support": 0.5,
+      "rwc_margin": 0.1666666666666667,
+      "correct": 0.0,
+      "fixed32_correct": 1.0,
+      "pool_correct_fraction": 0.4375,
+      "selected_answer": "D",
+      "fixed32_answer": "A",
+      "gold": "A"
+    },
+    {
+      "family": "quality",
+      "sample_id": "358",
+      "order": 6,
+      "stop_n": 4,
+      "support": 0.5,
+      "rwc_margin": 0.6666666666666667,
+      "correct": 0.0,
+      "fixed32_correct": 1.0,
+      "pool_correct_fraction": 0.4375,
+      "selected_answer": "E",
+      "fixed32_answer": "A",
+      "gold": "A"
+    }
+  ]
+}

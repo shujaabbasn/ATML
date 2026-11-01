@@ -1,0 +1,15 @@
+{
+  "kept": 40000,
+  "last_source_index": 40001,
+  "scanned": 40002,
+  "excluded": {
+    "empty": 0,
+    "too_long": 2,
+    "gsm8k_test_overlap": 0
+  },
+  "probe_counts": [
+    32,
+    32
+  ],
+  "qualitative_prompts": 24
+}

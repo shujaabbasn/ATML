@@ -1,0 +1,10 @@
+{
+  "prompts": 4,
+  "tokens": 315,
+  "max_abs_logit_diff": 0.140625,
+  "mean_abs_logit_diff": 0.0066551887430250645,
+  "top1_agreement": 0.9968253970146179,
+  "run": "lora16",
+  "merged_modules": 196,
+  "factors": "raw"
+}

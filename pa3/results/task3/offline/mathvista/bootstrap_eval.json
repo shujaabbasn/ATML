@@ -1,0 +1,554 @@
+{
+  "1": {
+    "first_answer_minus_self_consistency": {
+      "estimate": 0.0,
+      "ci95_low": 0.0,
+      "ci95_high": 0.0
+    },
+    "highest_logprob_minus_self_consistency": {
+      "estimate": 0.0,
+      "ci95_low": 0.0,
+      "ci95_high": 0.0
+    },
+    "highest_self_certainty_minus_self_consistency": {
+      "estimate": 0.0,
+      "ci95_low": 0.0,
+      "ci95_high": 0.0
+    },
+    "highest_visconf_minus_self_consistency": {
+      "estimate": 0.0,
+      "ci95_low": 0.0,
+      "ci95_high": 0.0
+    },
+    "highest_visconf_tokenwise_minus_self_consistency": {
+      "estimate": 0.0,
+      "ci95_low": 0.0,
+      "ci95_high": 0.0
+    },
+    "highest_vision_minus_self_consistency": {
+      "estimate": 0.0,
+      "ci95_low": 0.0,
+      "ci95_high": 0.0
+    },
+    "self_certainty_rwc_minus_self_consistency": {
+      "estimate": 0.0,
+      "ci95_low": 0.0,
+      "ci95_high": 0.0
+    },
+    "shortest_rollout_minus_self_consistency": {
+      "estimate": 0.0,
+      "ci95_low": 0.0,
+      "ci95_high": 0.0
+    },
+    "visconf_rwc_minus_self_consistency": {
+      "estimate": 0.0,
+      "ci95_low": 0.0,
+      "ci95_high": 0.0
+    },
+    "visconf_tokenwise_rwc_minus_self_consistency": {
+      "estimate": 0.0,
+      "ci95_low": 0.0,
+      "ci95_high": 0.0
+    },
+    "vision_rwc_minus_self_consistency": {
+      "estimate": 0.0,
+      "ci95_low": 0.0,
+      "ci95_high": 0.0
+    },
+    "self_certainty_rwc_minus_highest_self_certainty": {
+      "estimate": 0.0,
+      "ci95_low": 0.0,
+      "ci95_high": 0.0
+    },
+    "vision_rwc_minus_highest_vision": {
+      "estimate": 0.0,
+      "ci95_low": 0.0,
+      "ci95_high": 0.0
+    },
+    "visconf_rwc_minus_highest_visconf": {
+      "estimate": 0.0,
+      "ci95_low": 0.0,
+      "ci95_high": 0.0
+    },
+    "highest_visconf_minus_highest_self_certainty": {
+      "estimate": 0.0,
+      "ci95_low": 0.0,
+      "ci95_high": 0.0
+    },
+    "visconf_rwc_minus_self_certainty_rwc": {
+      "estimate": 0.0,
+      "ci95_low": 0.0,
+      "ci95_high": 0.0
+    },
+    "highest_visconf_tokenwise_minus_highest_visconf": {
+      "estimate": 0.0,
+      "ci95_low": 0.0,
+      "ci95_high": 0.0
+    },
+    "visconf_tokenwise_rwc_minus_visconf_rwc": {
+      "estimate": 0.0,
+      "ci95_low": 0.0,
+      "ci95_high": 0.0
+    }
+  },
+  "2": {
+    "first_answer_minus_self_consistency": {
+      "estimate": 0.0,
+      "ci95_low": 0.0,
+      "ci95_high": 0.0
+    },
+    "highest_logprob_minus_self_consistency": {
+      "estimate": 0.006624999999999999,
+      "ci95_low": -0.0017531250000000014,
+      "ci95_high": 0.015003124999999997
+    },
+    "highest_self_certainty_minus_self_consistency": {
+      "estimate": 0.0115,
+      "ci95_low": 0.0037468749999999976,
+      "ci95_high": 0.020003124999999993
+    },
+    "highest_visconf_minus_self_consistency": {
+      "estimate": 0.018125,
+      "ci95_low": 0.009746874999999997,
+      "ci95_high": 0.026999999999999996
+    },
+    "highest_visconf_tokenwise_minus_self_consistency": {
+      "estimate": 0.01775,
+      "ci95_low": 0.009,
+      "ci95_high": 0.026503124999999995
+    },
+    "highest_vision_minus_self_consistency": {
+      "estimate": 0.007374999999999997,
+      "ci95_low": -0.0021250000000000045,
+      "ci95_high": 0.016378124999999993
+    },
+    "self_certainty_rwc_minus_self_consistency": {
+      "estimate": 0.0115,
+      "ci95_low": 0.0038749999999999974,
+      "ci95_high": 0.019378124999999996
+    },
+    "shortest_rollout_minus_self_consistency": {
+      "estimate": 0.013749999999999998,
+      "ci95_low": 0.005621874999999997,
+      "ci95_high": 0.022624999999999992
+    },
+    "visconf_rwc_minus_self_consistency": {
+      "estimate": 0.018125,
+      "ci95_low": 0.009749999999999998,
+      "ci95_high": 0.027253124999999996
+    },
+    "visconf_tokenwise_rwc_minus_self_consistency": {
+      "estimate": 0.01775,
+      "ci95_low": 0.009125,
+      "ci95_high": 0.026753124999999996
+    },
+    "vision_rwc_minus_self_consistency": {
+      "estimate": 0.007374999999999997,
+      "ci95_low": -0.0010000000000000037,
+      "ci95_high": 0.016003124999999997
+    },
+    "self_certainty_rwc_minus_highest_self_certainty": {
+      "estimate": 0.0,
+      "ci95_low": 0.0,
+      "ci95_high": 0.0
+    },
+    "vision_rwc_minus_highest_vision": {
+      "estimate": 0.0,
+      "ci95_low": 0.0,
+      "ci95_high": 0.0
+    },
+    "visconf_rwc_minus_highest_visconf": {
+      "estimate": 0.0,
+      "ci95_low": 0.0,
+      "ci95_high": 0.0
+    },
+    "highest_visconf_minus_highest_self_certainty": {
+      "estimate": 0.006624999999999999,
+      "ci95_low": -0.0001250000000000004,
+      "ci95_high": 0.013999999999999999
+    },
+    "visconf_rwc_minus_self_certainty_rwc": {
+      "estimate": 0.006624999999999999,
+      "ci95_low": -0.00012500000000000065,
+      "ci95_high": 0.013503125
+    },
+    "highest_visconf_tokenwise_minus_highest_visconf": {
+      "estimate": -0.000375,
+      "ci95_low": -0.0038749999999999995,
+      "ci95_high": 0.0031249999999999993
+    },
+    "visconf_tokenwise_rwc_minus_visconf_rwc": {
+      "estimate": -0.000375,
+      "ci95_low": -0.004,
+      "ci95_high": 0.0031281249999999972
+    }
+  },
+  "4": {
+    "first_answer_minus_self_consistency": {
+      "estimate": -0.043875000000000004,
+      "ci95_low": -0.052375,
+      "ci95_high": -0.036371875
+    },
+    "highest_logprob_minus_self_consistency": {
+      "estimate": -0.0475,
+      "ci95_low": -0.05862812500000001,
+      "ci95_high": -0.036871875
+    },
+    "highest_self_certainty_minus_self_consistency": {
+      "estimate": -0.029750000000000006,
+      "ci95_low": -0.040625,
+      "ci95_high": -0.018250000000000002
+    },
+    "highest_visconf_minus_self_consistency": {
+      "estimate": -0.017375,
+      "ci95_low": -0.02850625,
+      "ci95_high": -0.006749999999999999
+    },
+    "highest_visconf_tokenwise_minus_self_consistency": {
+      "estimate": -0.021374999999999998,
+      "ci95_low": -0.03263125,
+      "ci95_high": -0.010375
+    },
+    "highest_vision_minus_self_consistency": {
+      "estimate": -0.034625,
+      "ci95_low": -0.046628125,
+      "ci95_high": -0.022621875
+    },
+    "self_certainty_rwc_minus_self_consistency": {
+      "estimate": -0.0115,
+      "ci95_low": -0.019125,
+      "ci95_high": -0.004125000000000001
+    },
+    "shortest_rollout_minus_self_consistency": {
+      "estimate": -0.028374999999999997,
+      "ci95_low": -0.03938125,
+      "ci95_high": -0.015625
+    },
+    "visconf_rwc_minus_self_consistency": {
+      "estimate": -0.0021249999999999997,
+      "ci95_low": -0.009749999999999998,
+      "ci95_high": 0.005003124999999999
+    },
+    "visconf_tokenwise_rwc_minus_self_consistency": {
+      "estimate": -0.003749999999999999,
+      "ci95_low": -0.012006249999999996,
+      "ci95_high": 0.0038812499999999975
+    },
+    "vision_rwc_minus_self_consistency": {
+      "estimate": -0.013500000000000002,
+      "ci95_low": -0.02125,
+      "ci95_high": -0.005993750000000004
+    },
+    "self_certainty_rwc_minus_highest_self_certainty": {
+      "estimate": 0.01825,
+      "ci95_low": 0.011875,
+      "ci95_high": 0.023878124999999997
+    },
+    "vision_rwc_minus_highest_vision": {
+      "estimate": 0.021125,
+      "ci95_low": 0.014621875,
+      "ci95_high": 0.027874999999999997
+    },
+    "visconf_rwc_minus_highest_visconf": {
+      "estimate": 0.015250000000000001,
+      "ci95_low": 0.008996875,
+      "ci95_high": 0.0215
+    },
+    "highest_visconf_minus_highest_self_certainty": {
+      "estimate": 0.012374999999999999,
+      "ci95_low": 0.002,
+      "ci95_high": 0.022628125
+    },
+    "visconf_rwc_minus_self_certainty_rwc": {
+      "estimate": 0.009375,
+      "ci95_low": 0.002371875000000001,
+      "ci95_high": 0.016375
+    },
+    "highest_visconf_tokenwise_minus_highest_visconf": {
+      "estimate": -0.004,
+      "ci95_low": -0.009125000000000001,
+      "ci95_high": 0.001
+    },
+    "visconf_tokenwise_rwc_minus_visconf_rwc": {
+      "estimate": -0.0016250000000000001,
+      "ci95_low": -0.005375,
+      "ci95_high": 0.001874999999999999
+    }
+  },
+  "8": {
+    "first_answer_minus_self_consistency": {
+      "estimate": -0.06912499999999999,
+      "ci95_low": -0.081625,
+      "ci95_high": -0.056749999999999995
+    },
+    "highest_logprob_minus_self_consistency": {
+      "estimate": -0.08600000000000002,
+      "ci95_low": -0.10275624999999998,
+      "ci95_high": -0.07111875000000001
+    },
+    "highest_self_certainty_minus_self_consistency": {
+      "estimate": -0.0575,
+      "ci95_low": -0.07337500000000001,
+      "ci95_high": -0.04149375
+    },
+    "highest_visconf_minus_self_consistency": {
+      "estimate": -0.0425,
+      "ci95_low": -0.05738125000000001,
+      "ci95_high": -0.027496875000000004
+    },
+    "highest_visconf_tokenwise_minus_self_consistency": {
+      "estimate": -0.047874999999999994,
+      "ci95_low": -0.06312812500000001,
+      "ci95_high": -0.031996875
+    },
+    "highest_vision_minus_self_consistency": {
+      "estimate": -0.061875,
+      "ci95_low": -0.077253125,
+      "ci95_high": -0.04611875000000001
+    },
+    "self_certainty_rwc_minus_self_consistency": {
+      "estimate": 0.000625,
+      "ci95_low": -0.007875,
+      "ci95_high": 0.008624999999999999
+    },
+    "shortest_rollout_minus_self_consistency": {
+      "estimate": -0.059500000000000004,
+      "ci95_low": -0.075253125,
+      "ci95_high": -0.044125
+    },
+    "visconf_rwc_minus_self_consistency": {
+      "estimate": 0.005874999999999999,
+      "ci95_low": -0.002753125,
+      "ci95_high": 0.01525
+    },
+    "visconf_tokenwise_rwc_minus_self_consistency": {
+      "estimate": 0.007749999999999999,
+      "ci95_low": -0.0002531250000000006,
+      "ci95_high": 0.016256249999999996
+    },
+    "vision_rwc_minus_self_consistency": {
+      "estimate": -0.0007500000000000003,
+      "ci95_low": -0.009628125,
+      "ci95_high": 0.007874999999999998
+    },
+    "self_certainty_rwc_minus_highest_self_certainty": {
+      "estimate": 0.05812499999999999,
+      "ci95_low": 0.045996875,
+      "ci95_high": 0.069878125
+    },
+    "vision_rwc_minus_highest_vision": {
+      "estimate": 0.061125000000000006,
+      "ci95_low": 0.049121875,
+      "ci95_high": 0.07438437499999999
+    },
+    "visconf_rwc_minus_highest_visconf": {
+      "estimate": 0.048375,
+      "ci95_low": 0.03725,
+      "ci95_high": 0.06113124999999999
+    },
+    "highest_visconf_minus_highest_self_certainty": {
+      "estimate": 0.014999999999999998,
+      "ci95_low": 0.0007468749999999981,
+      "ci95_high": 0.03025
+    },
+    "visconf_rwc_minus_self_certainty_rwc": {
+      "estimate": 0.005250000000000001,
+      "ci95_low": -0.003125,
+      "ci95_high": 0.013875
+    },
+    "highest_visconf_tokenwise_minus_highest_visconf": {
+      "estimate": -0.005375,
+      "ci95_low": -0.012375,
+      "ci95_high": 0.0020031249999999967
+    },
+    "visconf_tokenwise_rwc_minus_visconf_rwc": {
+      "estimate": 0.001875,
+      "ci95_low": -0.0016250000000000001,
+      "ci95_high": 0.005625
+    }
+  },
+  "16": {
+    "first_answer_minus_self_consistency": {
+      "estimate": -0.0825,
+      "ci95_low": -0.09688125,
+      "ci95_high": -0.068496875
+    },
+    "highest_logprob_minus_self_consistency": {
+      "estimate": -0.113625,
+      "ci95_low": -0.13675,
+      "ci95_high": -0.094
+    },
+    "highest_self_certainty_minus_self_consistency": {
+      "estimate": -0.06875,
+      "ci95_low": -0.088503125,
+      "ci95_high": -0.04936875000000001
+    },
+    "highest_visconf_minus_self_consistency": {
+      "estimate": -0.051125000000000004,
+      "ci95_low": -0.070625,
+      "ci95_high": -0.031000000000000007
+    },
+    "highest_visconf_tokenwise_minus_self_consistency": {
+      "estimate": -0.061625,
+      "ci95_low": -0.081253125,
+      "ci95_high": -0.04199375000000001
+    },
+    "highest_vision_minus_self_consistency": {
+      "estimate": -0.0785,
+      "ci95_low": -0.10037812499999998,
+      "ci95_high": -0.057621874999999996
+    },
+    "self_certainty_rwc_minus_self_consistency": {
+      "estimate": 0.0013750000000000001,
+      "ci95_low": -0.007000000000000001,
+      "ci95_high": 0.009625
+    },
+    "shortest_rollout_minus_self_consistency": {
+      "estimate": -0.0755,
+      "ci95_low": -0.09700625000000002,
+      "ci95_high": -0.053865625
+    },
+    "visconf_rwc_minus_self_consistency": {
+      "estimate": 0.006874999999999997,
+      "ci95_low": -0.002,
+      "ci95_high": 0.0155
+    },
+    "visconf_tokenwise_rwc_minus_self_consistency": {
+      "estimate": 0.007125,
+      "ci95_low": -0.00125,
+      "ci95_high": 0.015124999999999998
+    },
+    "vision_rwc_minus_self_consistency": {
+      "estimate": 0.0016249999999999997,
+      "ci95_low": -0.007753124999999999,
+      "ci95_high": 0.010753125
+    },
+    "self_certainty_rwc_minus_highest_self_certainty": {
+      "estimate": 0.070125,
+      "ci95_low": 0.05074687499999999,
+      "ci95_high": 0.08837499999999998
+    },
+    "vision_rwc_minus_highest_vision": {
+      "estimate": 0.08012499999999999,
+      "ci95_low": 0.061625,
+      "ci95_high": 0.09850937500000001
+    },
+    "visconf_rwc_minus_highest_visconf": {
+      "estimate": 0.057999999999999996,
+      "ci95_low": 0.040496875,
+      "ci95_high": 0.075025
+    },
+    "highest_visconf_minus_highest_self_certainty": {
+      "estimate": 0.017625,
+      "ci95_low": -0.00400625,
+      "ci95_high": 0.037875
+    },
+    "visconf_rwc_minus_self_certainty_rwc": {
+      "estimate": 0.0055000000000000005,
+      "ci95_low": -0.00425,
+      "ci95_high": 0.014378124999999999
+    },
+    "highest_visconf_tokenwise_minus_highest_visconf": {
+      "estimate": -0.0105,
+      "ci95_low": -0.020625,
+      "ci95_high": -0.0003749999999999995
+    },
+    "visconf_tokenwise_rwc_minus_visconf_rwc": {
+      "estimate": 0.0002500000000000005,
+      "ci95_low": -0.0042499999999999994,
+      "ci95_high": 0.004253124999999998
+    }
+  },
+  "32": {
+    "first_answer_minus_self_consistency": {
+      "estimate": -0.09524999999999999,
+      "ci95_low": -0.11525624999999999,
+      "ci95_high": -0.075121875
+    },
+    "highest_logprob_minus_self_consistency": {
+      "estimate": -0.15,
+      "ci95_low": -0.18462812499999998,
+      "ci95_high": -0.11987187500000002
+    },
+    "highest_self_certainty_minus_self_consistency": {
+      "estimate": -0.085,
+      "ci95_low": -0.11751249999999999,
+      "ci95_high": -0.053621875
+    },
+    "highest_visconf_minus_self_consistency": {
+      "estimate": -0.05375,
+      "ci95_low": -0.08353749999999999,
+      "ci95_high": -0.024125
+    },
+    "highest_visconf_tokenwise_minus_self_consistency": {
+      "estimate": -0.06875,
+      "ci95_low": -0.09775312500000001,
+      "ci95_high": -0.040374999999999994
+    },
+    "highest_vision_minus_self_consistency": {
+      "estimate": -0.095,
+      "ci95_low": -0.128003125,
+      "ci95_high": -0.0655
+    },
+    "self_certainty_rwc_minus_self_consistency": {
+      "estimate": 0.006625000000000001,
+      "ci95_low": -0.0073750000000000005,
+      "ci95_high": 0.020874999999999998
+    },
+    "shortest_rollout_minus_self_consistency": {
+      "estimate": -0.09275000000000003,
+      "ci95_low": -0.124375,
+      "ci95_high": -0.06349687500000001
+    },
+    "visconf_rwc_minus_self_consistency": {
+      "estimate": 0.013749999999999998,
+      "ci95_low": 0.00012187500000000032,
+      "ci95_high": 0.028384374999999996
+    },
+    "visconf_tokenwise_rwc_minus_self_consistency": {
+      "estimate": 0.007499999999999999,
+      "ci95_low": -0.0072499999999999995,
+      "ci95_high": 0.022128124999999995
+    },
+    "vision_rwc_minus_self_consistency": {
+      "estimate": 0.007499999999999999,
+      "ci95_low": -0.008,
+      "ci95_high": 0.022628125
+    },
+    "self_certainty_rwc_minus_highest_self_certainty": {
+      "estimate": 0.091625,
+      "ci95_low": 0.062875,
+      "ci95_high": 0.12375
+    },
+    "vision_rwc_minus_highest_vision": {
+      "estimate": 0.1025,
+      "ci95_low": 0.07,
+      "ci95_high": 0.13125
+    },
+    "visconf_rwc_minus_highest_visconf": {
+      "estimate": 0.0675,
+      "ci95_low": 0.03875,
+      "ci95_high": 0.09503124999999997
+    },
+    "highest_visconf_minus_highest_self_certainty": {
+      "estimate": 0.03125,
+      "ci95_low": -0.00125,
+      "ci95_high": 0.06378124999999997
+    },
+    "visconf_rwc_minus_self_certainty_rwc": {
+      "estimate": 0.007124999999999999,
+      "ci95_low": -0.0075,
+      "ci95_high": 0.020874999999999998
+    },
+    "highest_visconf_tokenwise_minus_highest_visconf": {
+      "estimate": -0.015,
+      "ci95_low": -0.035,
+      "ci95_high": 0.0025312499999999715
+    },
+    "visconf_tokenwise_rwc_minus_visconf_rwc": {
+      "estimate": -0.00625,
+      "ci95_low": -0.01375,
+      "ci95_high": 0.0
+    }
+  }
+}

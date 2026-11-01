@@ -1,0 +1,21 @@
+{
+  "math_verify_version": "0.9.0",
+  "math": {
+    "questions": 1000,
+    "rollouts": 32000,
+    "alignment_problems": 0,
+    "missing_extractions": 521,
+    "correct_rollouts": 21173,
+    "retained_tokens": 20742094,
+    "capped": 523
+  },
+  "mathvista": {
+    "questions": 1000,
+    "rollouts": 32000,
+    "alignment_problems": 0,
+    "missing_extractions": 3032,
+    "correct_rollouts": 17166,
+    "retained_tokens": 8961703,
+    "capped": 487
+  }
+}

@@ -1,0 +1,35 @@
+{
+  "condition": "full_ft_l2sp",
+  "model_path": "/kaggle/working/ATML/pa3/outputs/task1/full_ft_l2sp/final",
+  "gsm8k": {
+    "flexible_exact_match": 0.640636846095527,
+    "flexible_exact_match_stderr": 0.013216456309851531,
+    "strict_exact_match": 0.0,
+    "n": 1319,
+    "truncation_rate": 0.008339651250947688,
+    "flexible_unextractable_rate": 0.0,
+    "docs_without_generation_record": 0
+  },
+  "gsm8k_seconds": 1452.0194434370005,
+  "lm_eval_version": "0.4.11",
+  "likelihood_seconds": 670.5568236899999,
+  "hellaswag": {
+    "acc": 0.374726150169289,
+    "acc_stderr": 0.004830628620180629,
+    "acc_norm": 0.46554471220872334,
+    "acc_norm_stderr": 0.004977919906875265,
+    "n": 10042
+  },
+  "boolq": {
+    "acc": 0.6605504587155964,
+    "acc_stderr": 0.00828196044607121,
+    "n": 3270
+  },
+  "arc_easy": {
+    "acc": 0.6599326599326599,
+    "acc_stderr": 0.009720765494805203,
+    "acc_norm": 0.6296296296296297,
+    "acc_norm_stderr": 0.009908978578665758,
+    "n": 2376
+  }
+}
