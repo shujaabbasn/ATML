@@ -1,0 +1,14 @@
+{
+  "images": 9262,
+  "shape": [
+    9262,
+    196,
+    768
+  ],
+  "dtype": "float16",
+  "seconds": 188.45039769700008,
+  "peak_vram_gib": 0.8595113754272461,
+  "encoder": "google/siglip-base-patch16-224",
+  "feature_bytes": 2788380672,
+  "post_layernorm_applied_once": true
+}

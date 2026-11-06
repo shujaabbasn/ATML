@@ -1,0 +1,27 @@
+{
+  "eligible_vqa_train": {
+    "yes/no": 44033,
+    "number": 10561,
+    "other": 17375
+  },
+  "eligible_vqa_val": {
+    "yes/no": 20963,
+    "number": 4923,
+    "other": 8039
+  },
+  "caption_train_examples": 18000,
+  "caption_dev": 96,
+  "grounding_dev_pairs": 24,
+  "grounding_test_pairs": 64,
+  "vqa_train_pairs": 1536,
+  "vqa_dev_pairs": 32,
+  "vqa_test_pairs": 96,
+  "isolation": {
+    "train_images": 8734,
+    "dev_images": 208,
+    "test_images": 320,
+    "train_dev_overlap": 0,
+    "train_test_overlap": 0,
+    "dev_test_overlap": 0
+  }
+}

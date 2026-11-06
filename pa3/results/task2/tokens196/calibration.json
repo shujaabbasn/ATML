@@ -1,0 +1,7 @@
+{
+  "rule": "output_scale = mean text-embedding norm / mean initial connector-output norm, first 512 caption training images",
+  "images": 512,
+  "text_embedding_norm": 0.8735020756721497,
+  "connector_output_norm_before": 15.846903800964355,
+  "scale": 0.05512130865708878
+}

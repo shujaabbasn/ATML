@@ -1,0 +1,266 @@
+{
+  "grounding_test": [
+    {
+      "rule": "follows_image",
+      "pair_id": "test_presence_0",
+      "qtype": "presence",
+      "question": "Does this image contain knife?",
+      "sides": [
+        {
+          "image": "val2014/COCO_val2014_000000265227.jpg",
+          "reference": "yes",
+          "prediction_correct_image": "yes",
+          "prediction_swapped_image": "no",
+          "score_correct_image": 1.0,
+          "nll_correct_image": 0.29345449805259705,
+          "nll_swapped_image": 3.636173725128174
+        },
+        {
+          "image": "val2014/COCO_val2014_000000016499.jpg",
+          "reference": "no",
+          "prediction_correct_image": "no",
+          "prediction_swapped_image": "yes",
+          "score_correct_image": 1.0,
+          "nll_correct_image": 0.026798803359270096,
+          "nll_swapped_image": 1.3715795278549194
+        }
+      ]
+    },
+    {
+      "rule": "same_answer",
+      "pair_id": "test_presence_6",
+      "qtype": "presence",
+      "question": "Does this image contain toothbrush?",
+      "sides": [
+        {
+          "image": "val2014/COCO_val2014_000000560474.jpg",
+          "reference": "yes",
+          "prediction_correct_image": "no",
+          "prediction_swapped_image": "no",
+          "score_correct_image": 0.0,
+          "nll_correct_image": 1.4067820310592651,
+          "nll_swapped_image": 3.8650572299957275
+        },
+        {
+          "image": "val2014/COCO_val2014_000000161622.jpg",
+          "reference": "no",
+          "prediction_correct_image": "no",
+          "prediction_swapped_image": "no",
+          "score_correct_image": 1.0,
+          "nll_correct_image": 0.02130725234746933,
+          "nll_swapped_image": 0.28178203105926514
+        }
+      ]
+    },
+    {
+      "rule": "follows_image",
+      "pair_id": "test_counting_34",
+      "qtype": "counting",
+      "question": "How many skis can you see?",
+      "sides": [
+        {
+          "image": "val2014/COCO_val2014_000000188417.jpg",
+          "reference": "3",
+          "prediction_correct_image": "3",
+          "prediction_swapped_image": "4",
+          "score_correct_image": 1.0,
+          "nll_correct_image": 0.8922456502914429,
+          "nll_swapped_image": 2.533219337463379
+        },
+        {
+          "image": "val2014/COCO_val2014_000000425790.jpg",
+          "reference": "4",
+          "prediction_correct_image": "4",
+          "prediction_swapped_image": "3",
+          "score_correct_image": 1.0,
+          "nll_correct_image": 0.15821941196918488,
+          "nll_swapped_image": 1.5641206502914429
+        }
+      ]
+    },
+    {
+      "rule": "same_answer",
+      "pair_id": "test_counting_35",
+      "qtype": "counting",
+      "question": "How many toasters can you see?",
+      "sides": [
+        {
+          "image": "val2014/COCO_val2014_000000540502.jpg",
+          "reference": "1",
+          "prediction_correct_image": "1",
+          "prediction_swapped_image": "1",
+          "score_correct_image": 1.0,
+          "nll_correct_image": 0.609298586845398,
+          "nll_swapped_image": 0.8069481253623962
+        },
+        {
+          "image": "val2014/COCO_val2014_000000175364.jpg",
+          "reference": "2",
+          "prediction_correct_image": "1",
+          "prediction_swapped_image": "1",
+          "score_correct_image": 0.0,
+          "nll_correct_image": 1.213198184967041,
+          "nll_swapped_image": 1.343673586845398
+        }
+      ]
+    }
+  ],
+  "vqa_test": [
+    {
+      "rule": "follows_image",
+      "pair_id": "vqa_161875002_118965007",
+      "qtype": "yes/no",
+      "question": "Is the smiling?",
+      "sides": [
+        {
+          "image": "val2014/COCO_val2014_000000161875.jpg",
+          "reference": "yes",
+          "prediction_correct_image": "yes",
+          "prediction_swapped_image": "no",
+          "score_correct_image": 1.0,
+          "nll_correct_image": 0.33258381485939026,
+          "nll_swapped_image": 0.8133977651596069
+        },
+        {
+          "image": "val2014/COCO_val2014_000000118965.jpg",
+          "reference": "no",
+          "prediction_correct_image": "no",
+          "prediction_swapped_image": "yes",
+          "score_correct_image": 1.0,
+          "nll_correct_image": 0.5946477651596069,
+          "nll_swapped_image": 1.2700837850570679
+        }
+      ]
+    },
+    {
+      "rule": "same_answer",
+      "pair_id": "vqa_146963002_223241074",
+      "qtype": "yes/no",
+      "question": "Is this man considered a nerd?",
+      "sides": [
+        {
+          "image": "val2014/COCO_val2014_000000146963.jpg",
+          "reference": "yes",
+          "prediction_correct_image": "yes",
+          "prediction_swapped_image": "yes",
+          "score_correct_image": 1.0,
+          "nll_correct_image": 0.5003329515457153,
+          "nll_swapped_image": 0.612128496170044
+        },
+        {
+          "image": "val2014/COCO_val2014_000000223241.jpg",
+          "reference": "no",
+          "prediction_correct_image": "yes",
+          "prediction_swapped_image": "yes",
+          "score_correct_image": 0.3,
+          "nll_correct_image": 0.784003496170044,
+          "nll_swapped_image": 0.9378329515457153
+        }
+      ]
+    },
+    {
+      "rule": "follows_image",
+      "pair_id": "vqa_418623002_405648003",
+      "qtype": "number",
+      "question": "How many suitcases are here?",
+      "sides": [
+        {
+          "image": "val2014/COCO_val2014_000000418623.jpg",
+          "reference": "3",
+          "prediction_correct_image": "3",
+          "prediction_swapped_image": "1",
+          "score_correct_image": 1.0,
+          "nll_correct_image": 0.7329597473144531,
+          "nll_swapped_image": 3.4315810203552246
+        },
+        {
+          "image": "val2014/COCO_val2014_000000405648.jpg",
+          "reference": "1",
+          "prediction_correct_image": "1",
+          "prediction_swapped_image": "3",
+          "score_correct_image": 1.0,
+          "nll_correct_image": 0.2597060799598694,
+          "nll_swapped_image": 4.826709747314453
+        }
+      ]
+    },
+    {
+      "rule": "same_answer",
+      "pair_id": "vqa_136929001_52947002",
+      "qtype": "number",
+      "question": "How many of these have been stuffed?",
+      "sides": [
+        {
+          "image": "val2014/COCO_val2014_000000136929.jpg",
+          "reference": "4",
+          "prediction_correct_image": "4",
+          "prediction_swapped_image": "4",
+          "score_correct_image": 1.0,
+          "nll_correct_image": 1.0550916194915771,
+          "nll_swapped_image": 0.8487405776977539
+        },
+        {
+          "image": "val2014/COCO_val2014_000000052947.jpg",
+          "reference": "3",
+          "prediction_correct_image": "4",
+          "prediction_swapped_image": "4",
+          "score_correct_image": 0.0,
+          "nll_correct_image": 1.536240577697754,
+          "nll_swapped_image": 1.5082166194915771
+        }
+      ]
+    },
+    {
+      "rule": "follows_image",
+      "pair_id": "vqa_99592003_208423007",
+      "qtype": "other",
+      "question": "What mode of transportation does the man have?",
+      "sides": [
+        {
+          "image": "val2014/COCO_val2014_000000099592.jpg",
+          "reference": "skateboard",
+          "prediction_correct_image": "skateboard",
+          "prediction_swapped_image": "car",
+          "score_correct_image": 1.0,
+          "nll_correct_image": 0.06765476614236832,
+          "nll_swapped_image": 2.4608981609344482
+        },
+        {
+          "image": "val2014/COCO_val2014_000000208423.jpg",
+          "reference": "car",
+          "prediction_correct_image": "car",
+          "prediction_swapped_image": "skateboard",
+          "score_correct_image": 1.0,
+          "nll_correct_image": 0.1327352523803711,
+          "nll_swapped_image": 12.673709869384766
+        }
+      ]
+    },
+    {
+      "rule": "same_answer",
+      "pair_id": "vqa_238598002_405531007",
+      "qtype": "other",
+      "question": "What color is the umbrella?",
+      "sides": [
+        {
+          "image": "val2014/COCO_val2014_000000238598.jpg",
+          "reference": "black",
+          "prediction_correct_image": "blue",
+          "prediction_swapped_image": "blue",
+          "score_correct_image": 0.0,
+          "nll_correct_image": 2.6962356567382812,
+          "nll_swapped_image": 3.8761796951293945
+        },
+        {
+          "image": "val2014/COCO_val2014_000000405531.jpg",
+          "reference": "red",
+          "prediction_correct_image": "blue",
+          "prediction_swapped_image": "blue",
+          "score_correct_image": 0.0,
+          "nll_correct_image": 2.1574296951293945,
+          "nll_swapped_image": 2.8524856567382812
+        }
+      ]
+    }
+  ]
+}

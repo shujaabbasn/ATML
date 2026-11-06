@@ -1,0 +1,34 @@
+{
+  "run": "tokens49",
+  "visual_tokens": 49,
+  "stages": [
+    {
+      "stage": "caption_alignment",
+      "updates": 2250,
+      "trainable_parameters": 1837056,
+      "seconds": 1099.5233109749997,
+      "peak_vram_gib": 1.4922428131103516,
+      "examples": 36000
+    },
+    {
+      "stage": "visual_instruction_tuning",
+      "updates": 1500,
+      "trainable_parameters": 6424576,
+      "seconds": 1084.744093145,
+      "peak_vram_gib": 1.4721922874450684,
+      "examples": 24000
+    },
+    {
+      "stage": "natural_vqa",
+      "updates": 750,
+      "trainable_parameters": 6424576,
+      "seconds": 540.0458418090002,
+      "peak_vram_gib": 1.4484567642211914,
+      "examples": 12000
+    }
+  ],
+  "total_updates": 4500,
+  "example_presentations": 72000,
+  "train_seconds": 2724.649205033,
+  "gpu": "Tesla T4"
+}
