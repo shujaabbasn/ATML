@@ -42,6 +42,14 @@ python -m task3_ttc.live_generation
 python -m task3_ttc.examples
 ```
 
+## Report figures and tables
+
+```bash
+python make_report_assets.py   # reads results/ only, no GPU or model weights needed
+```
+
+Writes the 3 report figures to `figures/` (`t1_loss.pdf`, `t2_curves.pdf`, `t3_curves.pdf`) and the LaTeX tables to `outputs/tables/`.
+
 ## Attribution
 
 - `task2_vlm/vqa_eval.py`: answer normalization from the official VQA evaluation code (https://github.com/GT-Vision-Lab/VQA).
