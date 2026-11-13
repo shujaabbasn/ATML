@@ -19,7 +19,9 @@ ROOT=Path(__file__).resolve().parent #this pa3 folder
 RESULTS=ROOT/"results" #saved experiment outputs in the repo
 TABLES=ROOT/"outputs"/"tables" #latex snippets, outputs/ is not in the repo
 FIGURES=ROOT/"figures" #pdf figures
+FULL=TABLES/"full" #complete tables with header and caption, the report inputs these
 TABLES.mkdir(parents=True,exist_ok=True) #make sure they exist
+FULL.mkdir(parents=True,exist_ok=True)
 FIGURES.mkdir(parents=True,exist_ok=True)
 
 plt.rcParams.update({"font.size":8,"axes.spines.top":False,"axes.spines.right":False,"legend.frameon":False}) #small plots for a two column width
@@ -115,7 +117,7 @@ def t1_resources_table():
             last.append(row["sft_loss"]) #final training loss level
         displacement="--"
         if "displacement_l2" in s:
-            displacement=f"{s['displacement_l2']['u1250']:.2f}" #full model displacement at final
+            displacement=f"{s['displacement_l2']['u625']:.2f} / {s['displacement_l2']['u1250']:.2f}" #full model displacement at midpoint and final (manual step 1)
         lines.append(" & ".join([NAMES[run],f"{s['trainable_parameters']/1e6:.1f}",f"{s['train_seconds']/3600:.2f}",f"{s['peak_vram_gib']:.1f}",f"{s['checkpoint_bytes']['final']/1e6:.0f}",f"{float(np.mean(last)):.3f}",displacement])+" \\\\")
     write_table("t1_resources.tex",lines)
 
@@ -251,7 +253,9 @@ def t2_final_table():
                 cells.append(pct(m["pair_accuracy"]))
                 cells.append(pct(m["identical_answer_rate"]))
                 cells.append(pct(m["matches_partner_answer_rate"]))
+                cells.append(pct(m["empty_answer_rate"])) #manual asks for the empty-answer rate too
                 cells.append(f"{m['mean_reference_nll']:.2f}")
+                cells.append(f"{m['generation_seconds_per_answer']*1000:.0f}") #manual asks for time per answer per condition
                 lines.append(" & ".join(cells)+" \\\\")
             lines.append("\\midrule")
     lines.pop() #no rule after the last suite
@@ -566,7 +570,7 @@ def t2_dev_table():
             delta_g=f"{r['grounding_dev']['delta_nll']:.2f}"
             if delta_g=="-0.00":
                 delta_g="0.00" #no signed zero
-            lines.append(" & ".join([first,f"{update:,}",f"{r['caption_ref_loss']:.2f}",f"{r['grounding_dev']['nll_correct']:.2f}",delta_g,f"{r['vqa_dev']['nll_correct']:.2f}",f"{r['vqa_dev']['delta_nll']:.2f}"])+" \\\\")
+            lines.append(" & ".join([first,f"{update:,}",f"{r['caption_ref_loss']:.2f}",f"{r['grounding_dev']['nll_correct']:.2f}",delta_g,f"{r['grounding_dev']['nll_no_image']:.2f}",f"{r['vqa_dev']['nll_correct']:.2f}",f"{r['vqa_dev']['delta_nll']:.2f}",f"{r['vqa_dev']['nll_no_image']:.2f}"])+" \\\\")
             first=""
         lines.append("\\midrule")
     lines.pop() #no rule at the end
@@ -775,6 +779,7 @@ def t3_live_detail_table():
     lines=[]
     lines.append(" & ".join(["Correct of "+str(len(rows)),"Single "+str(counts["single"]),"Refinement "+str(counts["refinement"]),"Shared initial "+str(counts["initial"]),"Parallel "+str(counts["parallel"])])+" \\\\")
     lines.append(" & ".join(["Refinement change","Wrong to correct "+str(len(changes["Wrong to correct"])),"Correct to wrong "+str(len(changes["Correct to wrong"])),"Stayed correct "+str(len(changes["Stayed correct"])),"Stayed wrong "+str(len(changes["Stayed wrong"]))])+" \\\\")
+    lines.append(" & ".join(["Wrong to correct","First response cut off with no answer "+str(len(cut)),"","",""])+" \\\\") #where refinement's fixes came from
     write_table("t3_live_detail.tex",lines)
     return {"wrong_to_correct":changes["Wrong to correct"],"correct_to_wrong":changes["Correct to wrong"],"cut_off_with_no_answer":cut}
 
@@ -791,6 +796,234 @@ def t3_further_stops_table():
                 continue #the agreement order of this question is already listed
             lines.append(" & ".join([label,row["sample_id"],str(row["order"]),str(row["stop_n"]),row["selected_answer"],row["fixed32_answer"],pct(row["pool_correct_fraction"])])+" \\\\")
     write_table("t3_further_stops.tex",lines)
+
+
+def t3_budgets_table():
+    """Accuracy of every selection method at every budget N (manual step 2 asks for all budgets)."""
+    names={"first_answer":"First answer","self_consistency":"Self-consistency","shortest_rollout":"Shortest rollout","highest_logprob":"Highest log-prob","highest_self_certainty":"Highest self-certainty","self_certainty_rwc":"Self-certainty + RWC","highest_vision":"Highest vision","vision_rwc":"Vision + RWC","highest_visconf":"Highest VisConf","visconf_rwc":"VisConf + RWC","highest_visconf_tokenwise":"Tokenwise VisConf","visconf_tokenwise_rwc":"Tokenwise VisConf + RWC"}
+    lines=[] #table body
+    for dataset,label in [("math","MATH"),("mathvista","MathVista")]:
+        summary=read_json(RESULTS/"task3"/"offline"/dataset/"summary.json")["eval"]
+        first=label
+        for method in names:
+            if method not in summary["32"]["methods"]:
+                continue #vision methods only exist for mathvista
+            cells=[first,names[method]]
+            for n in ["1","2","4","8","16","32"]:
+                cells.append(pct(summary[n]["methods"][method]["accuracy"]))
+            lines.append(" & ".join(cells)+" \\\\")
+            first=""
+        lines.append("\\midrule")
+    lines.pop() #no rule at the end
+    write_table("t3_budgets.tex",lines)
+
+
+def t3_examples_table():
+    """Selection, refinement and stopping examples from examples.json (step 6), each set cut by a fixed rule."""
+    examples=read_json(RESULTS/"task3"/"examples.json")
+    names={"math":"MATH","mathvista":"MathVista"}
+    lines=[] #table body
+    #selection: first 2 disagreements per dataset
+    seen={"math":0,"mathvista":0}
+    for row in examples["selection_disagreement"]:
+        dataset=row["dataset"]
+        if seen[dataset]<2:
+            seen[dataset]=seen[dataset]+1
+            other="self_certainty_rwc"
+            label="Self-certainty + RWC"
+            if dataset=="mathvista":
+                other="visconf_rwc"
+                label="VisConf + RWC"
+            a=row["self_consistency"]["answer"]
+            b=row[other]["answer"]
+            right=[]
+            for pick in [row["self_consistency"],row[other]]:
+                if pick["correct"]==True:
+                    right.append("yes")
+                else:
+                    right.append("no")
+            sign="$" #math answers are latex
+            if dataset=="mathvista":
+                sign="" #mathvista answers are plain letters or numbers
+            answers=sign+a+sign+" ("+str(row["group_support"][a])+") / "+sign+b+sign+" ("+str(row["group_support"][b])+")" #votes out of 32 in brackets
+            lines.append(" & ".join(["Selection",names[dataset],row["sample_id"],sign+row["gold"]+sign,"Self-consistency / "+label,answers," / ".join(right)])+" \\\\")
+    lines.append("\\midrule")
+    #refinement: all 3 saved revisions
+    for row in examples["revision"]:
+        before="none"
+        if row["initial_answer"] is not None:
+            before="$"+row["initial_answer"]+"$"
+        right="no / yes"
+        if row["kind"]=="correct_to_wrong":
+            right="yes / no"
+        lines.append(" & ".join(["Refinement","MATH",row["sample_id"],"$"+row["gold"]+"$","First response / revision",before+" / $"+row["revised_answer"]+"$",right])+" \\\\")
+    lines.append("\\midrule")
+    #stopping: first wrong early stop per rule, MATH rows come first in the file
+    taken=[]
+    for row in examples["premature_stopping"]:
+        dataset="math"
+        if row["sample_id"].startswith("test:")==False:
+            dataset="mathvista"
+        key=dataset+row["family"]
+        if key not in taken:
+            taken.append(key)
+            label="Agreement"
+            if row["family"]=="quality":
+                label="Quality-aware"
+            sign="$"
+            if dataset=="mathvista":
+                sign=""
+            lines.append(" & ".join(["Stopping",names[dataset],row["sample_id"],sign+row["gold"]+sign,label+" at "+str(row["stop_n"])+" / fixed 32",sign+row["selected_answer"]+sign+" / "+sign+row["fixed32_answer"]+sign,"no / yes"])+" \\\\")
+    write_table("t3_examples.tex",lines)
+
+
+def t2_examples_table():
+    """Example pairs picked by the fixed rule in task2_vlm/examples.py, read from examples.json."""
+    examples=read_json(RESULTS/"task2"/"examples.json") #grounding_test and vqa_test lists
+    rule_names={"follows_image":"follows","same_answer":"same answer"} #short names for the table
+    type_names={"presence":"Presence","counting":"Counting","yes/no":"Yes-no","number":"Number","other":"Other"}
+    lines=[] #table body
+    for suite in ["grounding_test","vqa_test"]: #grounding first, same order as the report
+        for example in examples[suite]:
+            first=example["sides"][0] #first image of the pair
+            second=example["sides"][1] #partner image
+            references=first["reference"]+" / "+second["reference"] #true answers
+            answers=first["prediction_correct_image"]+" / "+second["prediction_correct_image"] #model answers
+            ids=[]
+            for side in [first,second]:
+                ids.append(str(int(side["image"].split("_")[-1].split(".")[0]))) #coco image id from the file name
+            lines.append(" & ".join([type_names[example["qtype"]],example["question"]," / ".join(ids),rule_names[example["rule"]],references,answers])+" \\\\")
+    write_table("t2_examples.tex",lines)
+
+
+def full_table(name,placement,size,spacing,caption,label,columns,header):
+    """Wraps a table body from TABLES in its header, caption and label and saves it to FULL."""
+    rows=(TABLES/name).read_text().rstrip("\n") #body written by the table functions above
+    lines=["\\begin{table}["+placement+"]","\\centering","\\"+size,"\\setlength{\\tabcolsep}{"+spacing+"}"]
+    lines=lines+["\\caption{"+caption+"}","\\label{"+label+"}","\\begin{tabular}{"+columns+"}","\\toprule"]
+    lines=lines+header #column names
+    if len(header)>0:
+        lines.append("\\midrule") #rule under the column names
+    lines=lines+[rows,"\\bottomrule","\\end{tabular}","\\end{table}"]
+    (FULL/name).write_text("\n".join(lines)+"\n") #save the whole table
+    print("wrote",FULL/name)
+
+
+def t1_penalty_range():
+    """Smallest and largest lambda*omega over the L2-SP run (manual step 2 asks to record it throughout training)."""
+    values=[]
+    for row in read_jsonl(RESULTS/"task1"/"train"/"full_ft_l2sp"/"train_log.jsonl"):
+        values.append(row["lambda_omega"])
+    return f"Over training $\\lambda\\Omega$ ranged from {min(values):.3f} to {max(values):.3f}."
+
+
+def t2_caption_facts():
+    """Connector scale and generation time per answer for the t2_cost caption (manual asks to record both)."""
+    scale=read_json(RESULTS/"task2"/"tokens196"/"calibration.json")["scale"]
+    metrics=read_json(RESULTS/"task2"/"tokens196"/"final_eval"/"metrics.json")
+    with_image=[]
+    without=[]
+    for suite in ["grounding_test","vqa_test"]:
+        for condition in ["correct","complementary_swap","mismatched"]:
+            with_image.append(metrics[suite][condition]["generation_seconds_per_answer"]*1000)
+        without.append(metrics[suite]["no_image"]["generation_seconds_per_answer"]*1000)
+    return f"The connector output scale is {scale:.3f}. Generation took {min(with_image):.0f} to {max(with_image):.0f} ms per answer with an image and {min(without):.0f} to {max(without):.0f} ms without one."
+
+
+def report_tables():
+    """Headers and captions of every table in the report, in report order."""
+    full_table("t1_scores.tex","!htb","scriptsize","3pt",
+               r"""Task 1 scores (\%) with the change from baseline in points on GSM8K test (flexible exact match), HellaSwag and BoolQ validation and ARC-Easy test. HellaSwag and ARC-Easy are normalized accuracy and HS raw and ARC raw are raw accuracy. Last no.\ rescores GSM8K on the last number and Trunc.\ is the share of GSM8K responses cut off.""",
+               "tab:t1scores","lcccccccc",
+               [r"""Model & GSM8K & Last no. & HellaSwag & BoolQ & ARC-Easy & HS raw & ARC raw & Trunc. \\"""])
+    full_table("t1_resources.tex","!htb","footnotesize","4pt",
+               r"""Task 1 resources. Final loss is the mean of the last 50 updates and Moved is the distance from the pretrained weights at the midpoint / end.""",
+               "tab:t1res","lcccccc",
+               [r"""Run & Trainable (M) & Time (h) & Peak memory (GiB) & File size (MB) & Final loss & Moved \\"""])
+    full_table("t1_diagnostics.tex","!htb","scriptsize","3.5pt",
+               r"""Task 1 changes to \texttt{down\_proj} in layers 0, 13 and 27. $\rho$ is interference, $\eta$ is relative update size (\%) and $R$ is the activation ratio on math (m) and non-math (n) prompts.""",
+               "tab:t1diag","lcccccccccccc",
+               [r"""& \multicolumn{3}{c}{$\rho$} & \multicolumn{3}{c}{$\eta$ (\%)} & \multicolumn{2}{c}{$R$ L0} & \multicolumn{2}{c}{$R$ L13} & \multicolumn{2}{c}{$R$ L27} \\""", r"""Model & L0 & L13 & L27 & L0 & L13 & L27 & m & n & m & n & m & n \\"""])
+    full_table("t1_qualitative.tex","!htb","footnotesize","4pt",
+               r"""Task 1 annotation of the 42 open-question responses (6 per model, format out of 4).""",
+               "tab:t1qual","lccccccc",
+               [r"""Model & Format met & Coherent & Repeats & Severe & Math style & Inappropriate & Truncated \\"""])
+    full_table("t2_final.tex","!htb","footnotesize","2.5pt",
+               r"""Task 2 test results with 196 visual tokens (\%, NLL in nats). By type is presence / counting and yes-no / number / other and ms is generation time per answer.""",
+               "tab:t2final","llcccccccc",
+               [r"""Suite & Image shown & Accuracy & By type & Pair acc. & Identical & Follows partner & Empty & Answer NLL & ms \\"""])
+    full_table("t2_compare.tex","!htb","scriptsize","2.5pt",
+               r"""Task 2 main (196 tokens) and optional (49 tokens) runs. Adv.\ is the correct-image advantage over the swap with its 95\% interval.""",
+               "tab:t2comp","lcccccccccc",
+               [r"""& \multicolumn{4}{c}{Grounding} & \multicolumn{4}{c}{VQA} & & \\""", r"""Run & Acc. & Pair & Acc. adv. & NLL adv. & Acc. & Pair & Acc. adv. & NLL adv. & Hours & GiB \\"""])
+    full_table("t2_by_type.tex","!htb","scriptsize","3pt",
+               r"""Task 2 results by question type (accuracy in \%, NLL in nats). Says no counts ``no'' answers under mismatched images.""",
+               "tab:t2type","lccccccccc",
+               [r"""Type & Pairs & Identical & Both right & Acc.\ 196 & Acc.\ 49 & NLL correct & NLL swap & NLL mismatched & Says no \\"""])
+    full_table("t3_methods.tex","!htb","footnotesize","3pt",
+               r"""Task 3 held-out accuracy (\%) at 8 and 32 rollouts (all budgets in Table~\ref{tab:t3budgets}). Diff.\ is the difference from self-consistency at 32 in points (95\% interval).""",
+               "tab:t3methods","lcclccl",
+               [r"""& \multicolumn{3}{c}{MATH} & \multicolumn{3}{c}{MathVista} \\""", r"""Method & 8 & 32 & Diff. & 8 & 32 & Diff. \\"""])
+    full_table("t3_adaptive.tex","!htb","scriptsize","2.5pt",
+               r"""Task 3 adaptive stopping against fixed budgets on held-out questions (Acc., Stops and Wrong early in \%), simulated between finished rollouts. Each setting is the cheapest on dev within 1 point of fixed 32 (Table~\ref{tab:t3grid}). Recoverable counts wrong early stops that 32 rollouts would have fixed.""",
+               "tab:t3adaptive","lllcccccc",
+               [r"""Data & Rule & Setting & Acc. & Tokens & Rollouts & Stops at 4/8/16/32 & Wrong early & Recoverable \\"""])
+    full_table("t3_live.tex","!htb","footnotesize","4pt",
+               r"""Task 3 live generation on 50 MATH questions (accuracy, truncation and extraction in \%, the rest are means per question). Refinement costs include its first response. Peak GPU memory was """+f"{read_json(RESULTS/'task3'/'live'/'summary.json')['peak_vram_gib_this_session']:.2f}"+r""" GiB.""",
+               "tab:t3live","lcccccc",
+               [r"""Strategy & Accuracy & Input tokens & Output tokens & Seconds & Truncation & Extraction \\"""])
+    full_table("t1_gsm8k_checks.tex","H","footnotesize","4pt",
+               r"""Task 1 GSM8K responses and BoolQ yes rate. \texttt{\$\$} taken counts responses scored on \texttt{\$\$} and Marker counts those containing ``The answer is:''.""",
+               "tab:t1checks","lcccc",
+               [r"""Model & \texttt{\$\$} taken & Marker & Tokens & BoolQ yes rate (\%) \\"""])
+    full_table("t1_overhead.tex","H","scriptsize","3pt",
+               r"""Task 1 method overhead and checks. Merge columns compare merged and unmerged outputs. $\Omega$ and $\lambda\Omega$ are at the final update. """+t1_penalty_range(),
+               "tab:t1over","lcccc l",
+               [r"""Run & Extra storage (MB) & Extra time (s) & Merge top-1 (\%) & Max diff & Method check \\"""])
+    full_table("t2_cost.tex","H","footnotesize","3pt",
+               r"""Task 2 training time (s) and peak GPU memory (GiB) per step for the 196 and 49-token runs. """+t2_caption_facts(),
+               "tab:t2cost","lcccccc",
+               [r"""Step & Updates & Trainable (M) & 196: seconds & 196: GiB & 49: seconds & 49: GiB \\"""])
+    full_table("t2_examples.tex","H","scriptsize","3pt",
+               r"""Task 2 example pairs (first image / second image, COCO ids). For each question type the follows row is the first test pair where both correct-image answers are right and both swapped answers follow the partner. Same answer is the first pair where the model gives 1 answer for both images.""",
+               "tab:t2ex","lllllcc",
+               [r"""Type & Question & Images & Rule & True answers & Model answers \\"""])
+    full_table("t3_decomposition.tex","H","footnotesize","4pt",
+               r"""Task 3 decomposition on held-out questions (\%). Missed has a correct rollout that self-consistency did not pick and Groups is the mean number of distinct answers.""",
+               "tab:t3decomp","lcccccc",
+               [r"""Measure & $N$=1 & $N$=2 & $N$=4 & $N$=8 & $N$=16 & $N$=32 \\"""])
+    full_table("t3_signals.tex","H","footnotesize","4pt",
+               r"""Task 3 signals at $N=32$. Gap is the correctness difference (points) between the top and bottom quarter of rollouts by score and Spearman is the correlation with length.""",
+               "tab:t3signals","llcccc",
+               [r"""Data & Signal & Gap (all) & Gap (mixed) & Mixed questions & Spearman \\"""])
+    full_table("t3_trajectories.tex","H","footnotesize","4pt",
+               r"""Task 3 first 3 held-out MathVista questions where highest VisConf and self-consistency disagree at $N=32$.""",
+               "tab:t3traj","lllcccccc",
+               [r"""Question & Gold & Pick & Answer & Outcome & Tokens & Vision, first & Vision, second & Corr. \\"""])
+    full_table("t3_examples.tex","H","scriptsize","3pt",
+               r"""Task 3 examples. Selection is the first 2 held-out questions per dataset where self-consistency and the RWC rule disagree at $N=32$ (votes out of 32 in brackets), refinement is every saved revision and stopping is the first wrong early stop per rule that fixed 32 got right. Right says whether each answer is correct.""",
+               "tab:t3ex","llllllc",
+               [r"""Case & Data & Question & Gold & Compared & Answers & Right \\"""])
+    full_table("t3_stops.tex","H","scriptsize","2pt",
+               r"""Task 3 adaptive stopping in detail. Minus fixed-32 is accuracy in points (95\% interval) and Share is the \% of fixed-32's tokens. Support and Acc.\ (\%) describe runs stopping at $N=4$ and runs reaching 32. Pool is the mean share (\%) of correct rollouts among all 32 for correct, wrong and recoverable early stops. Wrong and Recov.\ count early stops.""",
+               "tab:t3stops","llccccccccccc",
+               [r"""& & & & \multicolumn{2}{c}{$N=4$} & \multicolumn{2}{c}{$N=32$} & \multicolumn{3}{c}{Pool} & & \\""", r"""Data & Rule & Minus fixed-32 & Share & Support & Acc. & Support & Acc. & Correct & Wrong & Recov. & Wrong & Recov. \\"""])
+    full_table("t3_grid.tex","H","footnotesize","4pt",
+               r"""Task 3 dev results for the adaptive settings (accuracy \%, mean tokens). The grid is $\tau\in\{0.5, 0.625, 0.75, 0.875, 1.0\}$ and, for quality-aware, $\gamma\in\{0, 0.1, 0.25, 0.5\}$ (only $\tau=0.5$ rows shown). The chosen setting is the cheapest within 1 point of fixed 32 with ties broken by accuracy, then smaller $\tau$ and $\gamma$.""",
+               "tab:t3grid","lcccccc",
+               [r"""Rule & $\tau$ & $\gamma$ & MATH acc. & MATH tokens & MathVista acc. & MathVista tokens \\"""])
+    full_table("t3_budgets.tex","H","footnotesize","4pt",
+               r"""Task 3 held-out accuracy (\%) of every selection method at every budget $N$, averaged over the 10 orders.""",
+               "tab:t3budgets","llcccccc",
+               [r"""Data & Method & $N$=1 & $N$=2 & $N$=4 & $N$=8 & $N$=16 & $N$=32 \\"""])
+    full_table("t2_dev.tex","H","footnotesize","3pt",
+               r"""Task 2 dev answer NLL (nats) by update for the correct image, the swap penalty $\Delta$ and no image. Stage~1 ends at update 2,250 and Stage~2 at 3,750.""",
+               "tab:t2dev","llccccccc",
+               [r"""& & & \multicolumn{3}{c}{Grounding} & \multicolumn{3}{c}{VQA} \\""", r"""Run & Update & Caption loss & Correct & $\Delta$ & No image & Correct & $\Delta$ & No image \\"""])
+    full_table("t3_live_detail.tex","H","footnotesize","4pt",
+               r"""Task 3 live generation counts on 50 MATH questions.""",
+               "tab:t3livedetail","lcccc",
+               [])
 
 
 def main():
@@ -821,6 +1054,11 @@ def main():
     t3_grid_table()
     live_changes=t3_live_detail_table()
     t3_further_stops_table()
+    t3_examples_table()
+    t3_budgets_table()
+    t2_dev_table()
+    t2_examples_table()
+    report_tables()
     print("gold yes",gold_yes,"live changes",live_changes)
     facts={"t1_qualitative":qualitative,"t1_l2sp":t1_l2sp_facts(),"t1_boolq_yes":t1_boolq_yes_rates(),"t2":t2_facts(),"t3":t3_facts()}
     (TABLES/"facts.json").write_text(json.dumps(facts,indent=2))
