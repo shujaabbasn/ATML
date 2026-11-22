@@ -1,0 +1,77 @@
+# Task 2 - efficient attention and context memory. Numbers from the PA4 manual unless marked "ours".
+seed: 6304
+results_dir: results/task2
+
+attention:                       # part A
+  batch: 2
+  heads: 4
+  head_dim: 64
+  lengths: [256, 512, 1024, 2048, 4096, 8192]
+  dtypes: [float16, float32]
+  tile: 128                      # ours, query and key tile size for the online-softmax version
+  tile_sweep: [32, 64, 128, 256] # ours, A2 "verify outputs across tile sizes"
+  tile_sweep_length: 1024        # ours
+  reference_max_length: 4096     # ours, longest length where the fp32 dense reference (and its gradient) is checked
+  tiled_max_length: 4096         # ours, python tiled loops get slow past this, longer lengths are recorded as skipped
+  warmup: 3
+  repeats: 10
+
+mqar:                            # part B
+  sequence_length: 256
+  vocab: 256
+  hidden: 128
+  heads: 4
+  layers: 2
+  mlp_ratio: 4
+  window: 64
+  dilation: 4
+  batch: 32
+  updates: 4500
+  lr: 8.0e-4                      # manual: peak LR 8e-4
+  weight_decay: 0.01
+  warmup: 200
+  final_lr_fraction: 0.15
+  clip: 1.0
+  checkpoints: [500, 1000, 1500, 2000, 3000, 4500]
+  seeds: [6304, 6305, 6306]
+  runs:                          # manual B1/B2/B3, every model trains at ONE K and ONE regime, x3 seeds
+    - {arch: dense, k: 4, regime: mixed}     # B1 dense
+    - {arch: dense, k: 8, regime: mixed}
+    - {arch: dense, k: 16, regime: mixed}
+    - {arch: dense, k: 16, regime: near}     # B1 dense near-only control
+    - {arch: local, k: 4, regime: near}      # B1 W=64 window, near-only
+    - {arch: local, k: 8, regime: near}
+    - {arch: local, k: 16, regime: near}
+    - {arch: local, k: 16, regime: mixed}    # B1 window on mixed
+    - {arch: linear, k: 4, regime: mixed}    # B2 ELU+1 linear
+    - {arch: linear, k: 8, regime: mixed}
+    - {arch: linear, k: 16, regime: mixed}
+    - {arch: dilated, k: 4, regime: mixed}   # B2 local/dilated, manual gives K=4,16 but no regime: ours = mixed
+    - {arch: dilated, k: 16, regime: mixed}
+    - {arch: hybrid, k: 16, regime: mixed}   # B3 at K=16, regime ours = mixed (same as its linear comparator)
+  mask_control: {arch: dense, k: 16, regime: mixed, against: local}   # B1 isolation control: dense K16 with the W=64 mask at test time only
+  b3_comparator: {arch: linear, k: 16, regime: mixed}                 # manual: match state bytes to the linear comparator
+  hybrid_window: 16              # ours, fixed before any run: largest W with hybrid state bytes <= linear state bytes (see b3_rule)
+  hybrid_state_dtype: float16    # ours, the precision adjustment the manual allows: hybrid local buffer + linear state kept in fp16
+  b3_rule: "No development search. W and the fp16 state are fixed in advance by the state-byte equality with the fp32 ELU+1 linear model (per head: 2*(2*d*W + d*d + d) <= 4*(d*d + d) -> W=16). Development accuracy is logged at the checkpoints but chooses nothing; the final 4,500-update checkpoint is reported."
+  b3_prediction: "Written before evaluation: the hybrid will beat the K=16 linear model on near queries (exact softmax inside 16 tokens plus a gate) and match it on far queries, since both rely on the same d x d linear memory for anything outside the window."
+  inference_lengths: [256, 1024, 4096, 8192]   # manual forward-only sweep
+  inference_batch: 1             # ours, dense 8192x8192 fp32 scores fit on a T4 only at batch 1
+  eval_batch: 256                # ours
+
+kv:                              # part C
+  model: Qwen/Qwen2.5-1.5B-Instruct
+  cases: kv_retrieval/kv_retrieval_cases.jsonl.gz
+  max_new_tokens: 8              # ours, a five-digit code needs at most ~6 tokens
+  group: 64                      # quantization group size
+  bits: 4
+  sinks: 8
+  recent: 64
+  hybrid_bits: 2                 # manual C4: the non-fp16 positions are channel-wise-K / token-wise-V INT2
+  index_bytes: 4                 # ours, one int32 position per fp16 token kept by eviction or the hybrid, counted in the budget
+  c1_cases: 180                  # cases used for the no-cache recomputation check
+  timing_cases_per_length: 2     # ours
+  timing_batches: [1, 8]         # manual C5: packed encode/decode at batch 1 and 8, both context lengths
+  warmup: 3
+  repeats: 10                    # manual: at least ten warmed-up repetitions
+  bootstrap: 2000                # manual: at least 2,000 paired resamples

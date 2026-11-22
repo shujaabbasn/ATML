@@ -1,0 +1,48 @@
+# Task 1 - pruning and weight quantization. Numbers from the PA4 manual unless marked "ours".
+seed: 6304
+model: Qwen/Qwen2.5-1.5B            # base checkpoint, not the instruct one
+eligible: [q_proj, k_proj, v_proj, o_proj, gate_proj, up_proj, down_proj]
+results_dir: results/task1
+
+data:                                # all made by the staff setup_data.py --public
+  calibration: data/public_locked/c4_calibration_locked.jsonl.gz     # 128 x 512
+  development: data/public_locked/c4_development_locked.jsonl.gz     # 32 x 512
+  wikitext: data/public_locked/wikitext2_test_windows_locked.jsonl.gz
+  c4_val: data/public_locked/c4_validation_windows_locked.jsonl.gz
+  hellaswag: data/public_locked/hellaswag_val_locked.jsonl.gz        # 2000, first 512 = diagnostic
+
+eval:
+  ppl_batch: 8                       # ours, windows per forward
+  hellaswag_batch: 16                # ours, (context, ending) pairs per forward
+  hellaswag_examples: 2000
+  hellaswag_diagnostic: 512
+  bootstrap: 2000                    # ours
+
+calibration:
+  sample_tokens: 4096                # ours, tokens kept per linear input for reconstruction losses
+  batch: 8                           # ours, calibration sequences per forward
+
+pruning:
+  sparsities: [0.25, 0.50, 0.75]     # P1 and P2
+  adaptive_targets: [0.50, 0.75]     # P3
+  min_sparsity: 0.10                 # P3 bound per unit
+  max_sparsity: 0.85
+  owl_threshold: 5.0                 # ours, OWL paper default M=5
+  owl_lambdas: [0.04, 0.08, 0.12, 0.16]   # ours, chosen on the 32-sequence development set only
+
+quant:
+  bits: [8, 4, 3]                    # Q1 and Q2
+  group_size: 128
+  awq_grid: 20                       # ours, alpha in {0, 1/20, ..., 1} like the AWQ paper
+  mixed_bits: [2, 3, 4, 8]           # Q3 allowed widths
+  mixed_targets: [4, 3]              # Q3 budgets = packed bytes of Q2 INT4 and Q2 INT3
+
+timing:
+  prefill_lengths: [512, 2048]
+  decode_tokens: 64
+  warmup: 2
+  repeats: 5                         # manual: at least five warmed-up timing repetitions
+
+diagnostic:
+  dev_sequences: 8                   # ours, dev sequences for the per-layer error diagnostic
+  calibration_sequences: 8           # ours, calibration sequences for the per-block output error (manual P1)

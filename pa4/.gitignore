@@ -1,0 +1,8 @@
+# staff data repo is cloned here by the notebooks, never committed
+data_repo/
+# large generated files
+results/task2/part_b/train_stream*.npz
+results/task2/part_b/*/model_update*.pt
+results/task3/drafts/*/merged/
+# half-written result files from a session that was cut off
+*.part

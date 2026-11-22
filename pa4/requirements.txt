@@ -1,0 +1,11 @@
+torch>=2.4
+transformers==4.57.1
+huggingface_hub==0.36.2
+accelerate>=1.0,<2
+datasets>=3,<5
+peft>=0.13
+safetensors>=0.4
+numpy>=1.26
+scipy>=1.11
+pyyaml>=6.0
+matplotlib>=3.8

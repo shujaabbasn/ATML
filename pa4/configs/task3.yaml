@@ -1,0 +1,55 @@
+# Task 3 - policy distillation and speculative decoding. Numbers from the PA4 manual unless marked "ours".
+seed: 6304
+results_dir: results/task3
+target: Qwen/Qwen2.5-1.5B-Instruct       # fixed teacher and speculative target
+draft: Qwen/Qwen2.5-0.5B-Instruct        # original draft / student
+
+data:
+  gsm8k_train: data/public_locked/gsm8k_train_locked.jsonl.gz   # 500
+  gsm8k_test: data/public_locked/gsm8k_test_locked.jsonl.gz     # 60
+  short_train: data/short_form/short_train.jsonl                # 300
+  short_test: data/short_form/short_test.jsonl                  # 60 (30 familiar, 30 shifted)
+  prefix_banks: data/prefix_banks/prefix_banks_locked.jsonl.gz  # staff script --prefix-banks
+
+sampler_tests:
+  trials: 100000                 # manual: 100,000-trial multi-step markov check
+  length: 3                      # ours, 3 tokens over a 3-token vocabulary = 27 outcomes
+  gamma: 2
+  alpha: 0.01
+  min_expected: 10               # manual: cells with expected count >= 10
+  real_prompts: 3                # ours, prompts for the real-model cache/rollback checks
+  real_tokens: 48
+
+distill:
+  seeds: [6304, 6305]
+  methods: [off_policy, on_policy]
+  quota_math: 30000              # teacher-scored response tokens per method per seed
+  quota_short: 10000
+  cap_math: 192
+  cap_short: 32
+  temperature: 1.0
+  tokens_per_update: 256
+  lr: 3.0e-4
+  weight_decay: 0.01             # manual
+  clip: 1.0
+  lora_r: 8
+  lora_alpha: 16
+  lora_dropout: 0.0
+  lora_targets: [q_proj, k_proj, v_proj, o_proj]
+  merge_check_prompts: 4         # ours
+
+evaluation:
+  gammas: [2, 4]
+  seeds_per_prompt: 2            # two paired repetitions, identical seeds for every draft
+  speed_cap: 64                  # manual: primary EOS-aware speed benchmark, 64 new tokens
+  cap_math: 512                  # manual: separate answer-quality evaluation, 512 for mathematics
+  cap_short: 32                  # manual: 32 for extraction
+  throughput_tokens: 64          # manual: fixed-64-token diagnostic, EOS ignored for timing only
+  throughput_prompts: 24         # manual: 24 mathematics prompts (the first 24 GSM8K test ids)
+  latency_prompt_lengths: [128, 512, 1024]   # ours, "several prompt lengths" for isolated draft/target decode cost
+  warmup: 2
+  repeats: 5
+  bootstrap: 2000                # ours
+  unmerged_draft: off_policy_s6304   # ours, the one adapter timed unmerged (wrapper overhead only)
+  bank_gamma: 4                  # exact speculative bank uses the original draft at gamma 4
+  bank_cap: 192
