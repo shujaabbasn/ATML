@@ -26,7 +26,7 @@ Keep `data_repo/data/local_source_revisions.json`. It pins the Hugging Face comm
 
 ## Running
 
-Every command runs from `pa4/`. The notebooks in `kaggle_runs/` only launch these commands, one Kaggle session each. Each notebook clones this repo and the staff data repo, then `kaggle_runs/attach_inputs.py` merges the prepared data and the results of any earlier notebook attached as an input. Speed and quality runs write `<condition>.jsonl.part` and rename it only when every prompt is done, so a session cut off by the time limit can be rerun and redoes only the unfinished condition.
+Every command runs from `pa4/`. The notebooks in `kaggle_runs/` only launch these commands, one Kaggle session each. Each notebook clones this repo and the staff data repo, then `kaggle_runs/attach_inputs.py` merges the prepared data and the results of any earlier notebook attached as an input. Speed and quality runs write `<condition>.jsonl.part` and rename it only when every prompt is done, so a session cut off by the time limit can be rerun and redoes only the unfinished condition. The staff prefix banks are built by `kaggle_runs/staff_prefix_banks.py`, which runs the staff `setup_data.py --prefix-banks` unchanged except that the `generator=` argument it passes to `model.generate` (rejected by transformers 4.57.1) is replaced by seeding torch with that generator's seed, so each prompt keeps the staff seed 6304 + 10007·j (+123 for the draft).
 
 ```bash
 # Task 1
