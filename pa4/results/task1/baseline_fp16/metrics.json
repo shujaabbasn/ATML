@@ -1,0 +1,144 @@
+{
+  "condition": "baseline_fp16",
+  "kind": "dense",
+  "wikitext2_ppl": {
+    "ppl": 16.106515961485243,
+    "scored_tokens": 50000,
+    "mean_nll": 2.779224157333374
+  },
+  "c4_val_ppl": {
+    "ppl": 14.962073693669836,
+    "scored_tokens": 50000,
+    "mean_nll": 2.7055187225341797
+  },
+  "hellaswag": {
+    "acc": 0.504,
+    "acc_norm": 0.694,
+    "examples": 2000
+  },
+  "hellaswag_diagnostic512": {
+    "acc": 0.462890625,
+    "acc_norm": 0.583984375,
+    "examples": 512
+  },
+  "dev_ppl": 12.512580642824094,
+  "achieved_sparsity_eligible": 2.224095204488045e-06,
+  "storage": {
+    "format": "fp16",
+    "eligible_packed_bytes": 2620391424,
+    "bits_per_eligible_weight": 16.0,
+    "fp16_outside_bytes": 467037184,
+    "total_packed_bytes": 3087428608,
+    "compression_ratio_total": 1.0,
+    "compression_ratio_eligible": 1.0,
+    "in_memory_representation": "dense fp16 tensors (zero-masked or fake-quantized), no sparse/low-bit kernel executed",
+    "in_memory_eligible_bytes": 2620391424
+  },
+  "layer_relative_error_dev": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+  ],
+  "layer_relative_error_calibration": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+  ],
+  "resources": {
+    "prefill_512": {
+      "mean_ms": 115.8876220703125,
+      "std_ms": 3.137785806857257,
+      "median_ms": 116.7903060913086,
+      "repeats": 5,
+      "all_ms": [
+        116.7903060913086,
+        119.90630340576172,
+        116.8404769897461,
+        110.29507446289062,
+        115.60594940185547
+      ],
+      "peak_mb": 3104.53076171875
+    },
+    "prefill_2048": {
+      "mean_ms": 487.0035888671875,
+      "std_ms": 1.756790581733179,
+      "median_ms": 486.30059814453125,
+      "repeats": 5,
+      "all_ms": [
+        484.9314880371094,
+        486.30059814453125,
+        489.18115234375,
+        485.6106872558594,
+        488.9940185546875
+      ],
+      "peak_mb": 3554.41748046875
+    },
+    "decode_64": {
+      "mean_ms": 2219.4679168701173,
+      "std_ms": 59.58355173106942,
+      "median_ms": 2183.3023681640625,
+      "repeats": 5,
+      "all_ms": [
+        2269.3204040527344,
+        2168.4195098876953,
+        2165.1626892089844,
+        2183.3023681640625,
+        2311.1346130371094
+      ],
+      "per_token_ms": 34.67918620109558,
+      "peak_mb": 3126.892578125
+    }
+  },
+  "eligible_matrices": 196,
+  "eval_seconds": 251.21416211128235
+}
