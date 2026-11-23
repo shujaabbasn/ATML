@@ -53,6 +53,7 @@ mqar:                            # part B
   b3_comparator: {arch: linear, k: 16, regime: mixed}                 # manual: match state bytes to the linear comparator
   hybrid_window: 16              # ours, fixed before any run: largest W with hybrid state bytes <= linear state bytes (see b3_rule)
   hybrid_state_dtype: float16    # ours, the precision adjustment the manual allows: hybrid local buffer + linear state kept in fp16
+                                 # linear state stored as the running mean S_i/i, z_i/i (same output, same bytes): the first runs stored the sum, it passed 65504 and went NaN
   b3_rule: "No development search. W and the fp16 state are fixed in advance by the state-byte equality with the fp32 ELU+1 linear model (per head: 2*(2*d*W + d*d + d) <= 4*(d*d + d) -> W=16). Development accuracy is logged at the checkpoints but chooses nothing; the final 4,500-update checkpoint is reported."
   b3_prediction: "Written before evaluation: the hybrid will beat the K=16 linear model on near queries (exact softmax inside 16 tokens plus a gate) and match it on far queries, since both rely on the same d x d linear memory for anything outside the window."
   inference_lengths: [256, 1024, 4096, 8192]   # manual forward-only sweep

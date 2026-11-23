@@ -1,0 +1,179 @@
+{
+  "seed": 6304,
+  "results_dir": "results/task2",
+  "attention": {
+    "batch": 2,
+    "heads": 4,
+    "head_dim": 64,
+    "lengths": [
+      256,
+      512,
+      1024,
+      2048,
+      4096,
+      8192
+    ],
+    "dtypes": [
+      "float16",
+      "float32"
+    ],
+    "tile": 128,
+    "tile_sweep": [
+      32,
+      64,
+      128,
+      256
+    ],
+    "tile_sweep_length": 1024,
+    "reference_max_length": 4096,
+    "tiled_max_length": 4096,
+    "warmup": 3,
+    "repeats": 10
+  },
+  "mqar": {
+    "sequence_length": 256,
+    "vocab": 256,
+    "hidden": 128,
+    "heads": 4,
+    "layers": 2,
+    "mlp_ratio": 4,
+    "window": 64,
+    "dilation": 4,
+    "batch": 32,
+    "updates": 4500,
+    "lr": 0.0008,
+    "weight_decay": 0.01,
+    "warmup": 200,
+    "final_lr_fraction": 0.15,
+    "clip": 1.0,
+    "checkpoints": [
+      500,
+      1000,
+      1500,
+      2000,
+      3000,
+      4500
+    ],
+    "seeds": [
+      6304,
+      6305,
+      6306
+    ],
+    "runs": [
+      {
+        "arch": "dense",
+        "k": 4,
+        "regime": "mixed"
+      },
+      {
+        "arch": "dense",
+        "k": 8,
+        "regime": "mixed"
+      },
+      {
+        "arch": "dense",
+        "k": 16,
+        "regime": "mixed"
+      },
+      {
+        "arch": "dense",
+        "k": 16,
+        "regime": "near"
+      },
+      {
+        "arch": "local",
+        "k": 4,
+        "regime": "near"
+      },
+      {
+        "arch": "local",
+        "k": 8,
+        "regime": "near"
+      },
+      {
+        "arch": "local",
+        "k": 16,
+        "regime": "near"
+      },
+      {
+        "arch": "local",
+        "k": 16,
+        "regime": "mixed"
+      },
+      {
+        "arch": "linear",
+        "k": 4,
+        "regime": "mixed"
+      },
+      {
+        "arch": "linear",
+        "k": 8,
+        "regime": "mixed"
+      },
+      {
+        "arch": "linear",
+        "k": 16,
+        "regime": "mixed"
+      },
+      {
+        "arch": "dilated",
+        "k": 4,
+        "regime": "mixed"
+      },
+      {
+        "arch": "dilated",
+        "k": 16,
+        "regime": "mixed"
+      },
+      {
+        "arch": "hybrid",
+        "k": 16,
+        "regime": "mixed"
+      }
+    ],
+    "mask_control": {
+      "arch": "dense",
+      "k": 16,
+      "regime": "mixed",
+      "against": "local"
+    },
+    "b3_comparator": {
+      "arch": "linear",
+      "k": 16,
+      "regime": "mixed"
+    },
+    "hybrid_window": 16,
+    "hybrid_state_dtype": "float16",
+    "b3_rule": "No development search. W and the fp16 state are fixed in advance by the state-byte equality with the fp32 ELU+1 linear model (per head: 2*(2*d*W + d*d + d) <= 4*(d*d + d) -> W=16). Development accuracy is logged at the checkpoints but chooses nothing; the final 4,500-update checkpoint is reported.",
+    "b3_prediction": "Written before evaluation: the hybrid will beat the K=16 linear model on near queries (exact softmax inside 16 tokens plus a gate) and match it on far queries, since both rely on the same d x d linear memory for anything outside the window.",
+    "inference_lengths": [
+      256,
+      1024,
+      4096,
+      8192
+    ],
+    "inference_batch": 1,
+    "eval_batch": 256
+  },
+  "kv": {
+    "model": "Qwen/Qwen2.5-1.5B-Instruct",
+    "cases": "kv_retrieval/kv_retrieval_cases.jsonl.gz",
+    "max_new_tokens": 8,
+    "group": 64,
+    "bits": 4,
+    "sinks": 8,
+    "recent": 64,
+    "hybrid_bits": 2,
+    "index_bytes": 4,
+    "c1_cases": 180,
+    "timing_cases_per_length": 2,
+    "timing_batches": [
+      1,
+      8
+    ],
+    "warmup": 3,
+    "repeats": 10,
+    "bootstrap": 2000
+  },
+  "limit": null
+}

@@ -109,7 +109,7 @@ Each row pairs a manual requirement (paraphrased from the full PA4 manual text) 
 ## Choices the manual leaves open
 
 1. Dilated (K=4 and 16) and hybrid (K=16) runs train on the mixed regime. The manual gives their K but not the regime; mixed matches their linear comparator.
-2. B3 hybrid window W=16 with fp16 buffer and state, fixed in advance by the state-byte match with the fp32 ELU+1 linear model (16,640 vs 16,896 bytes per layer). No dev search.
+2. B3 hybrid window W=16 with fp16 buffer and state, fixed in advance by the state-byte match with the fp32 ELU+1 linear model (16,640 vs 16,896 bytes per layer). No dev search. The linear state is stored as a running mean, not a running sum. The sum overflowed fp16 in the first three hybrid runs (NaN), so only those were rerun after the fix (logs kept in `results/task2/hybrid_fp16_sum_overflow/`).
 3. Question-aware scores are summed over question tokens and the GQA query heads, and kept separately per layer and per kv head.
 4. KV position indices for per-head FP16 retention are counted as int32 (4 bytes).
 5. Isolated decode-cost prefix lengths 128 / 512 / 1024; the unmerged adapter timed is `off_policy_s6304`.

@@ -117,12 +117,18 @@ def elu_feature(x):
 
 def linear_attention(q,k,v,state_fp16=False):
     """Causal linear attention in its recurrent (prefix-sum) form: out_i = phi(q_i)S_i / (phi(q_i).z_i),
-    S_i = sum_{j<=i} phi(k_j) v_j^T, z_i = sum_{j<=i} phi(k_j). The state is d x d + d per head, independent of i."""
+    S_i = sum_{j<=i} phi(k_j) v_j^T, z_i = sum_{j<=i} phi(k_j). The state is d x d + d per head, independent of i.
+    With state_fp16 (hybrid) the stored state is the running mean S_i/i, z_i/i instead of the sum: the output is a
+    ratio so dividing top and bottom by i changes nothing, but a running sum grows with i and passed fp16's 65504
+    in the first hybrid runs (inf then NaN), while a mean stays at the size of one phi(k)v^T term."""
     phi_q=elu_feature(q)
     phi_k=elu_feature(k)
     state=torch.cumsum(phi_k.unsqueeze(-1)*v.unsqueeze(-2),dim=2) #(B,H,T,d,d)
     normalizer=torch.cumsum(phi_k,dim=2) #(B,H,T,d)
     if state_fp16==True:
+        count=torch.arange(1,q.shape[2]+1,device=q.device,dtype=state.dtype).view(1,1,-1,1) #tokens summed so far at each position
+        state=state/count.unsqueeze(-1) #running mean, same 2 bytes per number as the sum
+        normalizer=normalizer/count #same division as the state so numerator/denominator is unchanged
         state=state.half().float() #hybrid only: the stored state is rounded to fp16 (b3 precision adjustment)
         normalizer=normalizer.half().float()
     numerator=(phi_q.unsqueeze(-2)@state).squeeze(-2) #(B,H,T,d)
