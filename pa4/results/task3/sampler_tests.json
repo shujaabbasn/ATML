@@ -1,0 +1,137 @@
+{
+  "config": {
+    "trials": 100000,
+    "length": 3,
+    "gamma": 2,
+    "alpha": 0.01,
+    "min_expected": 10,
+    "real_prompts": 3,
+    "real_tokens": 48
+  },
+  "toy_tables": {
+    "P0": [
+      0.5,
+      0.30000001192092896,
+      0.20000000298023224
+    ],
+    "P": [
+      [
+        0.6000000238418579,
+        0.30000001192092896,
+        0.10000000149011612
+      ],
+      [
+        0.20000000298023224,
+        0.5,
+        0.30000001192092896
+      ],
+      [
+        0.30000001192092896,
+        0.30000001192092896,
+        0.4000000059604645
+      ]
+    ],
+    "Q0": [
+      0.20000000298023224,
+      0.4000000059604645,
+      0.4000000059604645
+    ],
+    "Q": [
+      [
+        0.30000001192092896,
+        0.30000001192092896,
+        0.4000000059604645
+      ],
+      [
+        0.5,
+        0.20000000298023224,
+        0.30000001192092896
+      ],
+      [
+        0.10000000149011612,
+        0.6000000238418579,
+        0.30000001192092896
+      ]
+    ]
+  },
+  "toy": {
+    "exact_sampler": {
+      "statistic": 14.666733721970765,
+      "p_value": 0.9631284044536529,
+      "cells": 27,
+      "min_expected": 599.9999988079072,
+      "passes": true
+    },
+    "negative_control_sample_from_p": {
+      "statistic": 17285.33916518043,
+      "p_value": 0.0,
+      "cells": 27,
+      "min_expected": 599.9999988079072,
+      "rejected": true
+    },
+    "bonus_token_q_equals_p": {
+      "rounds": 4000,
+      "rounds_all_accepted": 4000,
+      "passes": true
+    }
+  },
+  "real": [
+    {
+      "prompt_id": "GSM8K-0000",
+      "prefill_max_abs_logit_diff": 0.025390625,
+      "rollback_max_abs_prob_diff": 0.002785719931125641,
+      "final_cache_max_abs_logit_diff": 0.04638671875,
+      "spec_tokens": 48,
+      "spec_rounds": 12,
+      "cap5_length": 5,
+      "cap5_ok": true,
+      "draft_equals_target_acceptance": 1.0,
+      "target_only_seed_repeatable": true,
+      "eos_stop_ok": true,
+      "gamma1_ok": true,
+      "variable_proposal_lengths_seen": [
+        1,
+        4
+      ],
+      "padding": "not applicable: batch 1, no padded positions"
+    },
+    {
+      "prompt_id": "GSM8K-0001",
+      "prefill_max_abs_logit_diff": 0.0234375,
+      "rollback_max_abs_prob_diff": 0.005017638206481934,
+      "final_cache_max_abs_logit_diff": 0.03125,
+      "spec_tokens": 48,
+      "spec_rounds": 13,
+      "cap5_length": 5,
+      "cap5_ok": true,
+      "draft_equals_target_acceptance": 1.0,
+      "target_only_seed_repeatable": true,
+      "eos_stop_ok": true,
+      "gamma1_ok": true,
+      "variable_proposal_lengths_seen": [
+        0,
+        1,
+        4
+      ],
+      "padding": "not applicable: batch 1, no padded positions"
+    },
+    {
+      "prompt_id": "SHORT-shifted-0029",
+      "prefill_max_abs_logit_diff": 0.029296875,
+      "rollback_max_abs_prob_diff": 0.00016763806343078613,
+      "final_cache_max_abs_logit_diff": 0.03515625,
+      "spec_tokens": 2,
+      "spec_rounds": 1,
+      "cap5_length": 5,
+      "cap5_ok": true,
+      "draft_equals_target_acceptance": 1.0,
+      "target_only_seed_repeatable": true,
+      "eos_stop_ok": true,
+      "gamma1_ok": true,
+      "variable_proposal_lengths_seen": [
+        4
+      ],
+      "padding": "not applicable: batch 1, no padded positions"
+    }
+  ]
+}

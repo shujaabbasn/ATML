@@ -1,0 +1,11 @@
+{
+  "seconds": 3920.263750261999,
+  "responses": 800,
+  "generated_tokens": 95259,
+  "versions": {
+    "torch": "2.11.0+cu130",
+    "transformers": "4.57.1",
+    "cuda": "13.0",
+    "gpu": "Tesla T4"
+  }
+}

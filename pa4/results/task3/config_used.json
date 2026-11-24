@@ -1,0 +1,74 @@
+{
+  "seed": 6304,
+  "results_dir": "results/task3",
+  "target": "Qwen/Qwen2.5-1.5B-Instruct",
+  "draft": "Qwen/Qwen2.5-0.5B-Instruct",
+  "data": {
+    "gsm8k_train": "data/public_locked/gsm8k_train_locked.jsonl.gz",
+    "gsm8k_test": "data/public_locked/gsm8k_test_locked.jsonl.gz",
+    "short_train": "data/short_form/short_train.jsonl",
+    "short_test": "data/short_form/short_test.jsonl",
+    "prefix_banks": "data/prefix_banks/prefix_banks_locked.jsonl.gz"
+  },
+  "sampler_tests": {
+    "trials": 100000,
+    "length": 3,
+    "gamma": 2,
+    "alpha": 0.01,
+    "min_expected": 10,
+    "real_prompts": 3,
+    "real_tokens": 48
+  },
+  "distill": {
+    "seeds": [
+      6304,
+      6305
+    ],
+    "methods": [
+      "off_policy",
+      "on_policy"
+    ],
+    "quota_math": 30000,
+    "quota_short": 10000,
+    "cap_math": 192,
+    "cap_short": 32,
+    "temperature": 1.0,
+    "tokens_per_update": 256,
+    "lr": 0.0003,
+    "weight_decay": 0.01,
+    "clip": 1.0,
+    "lora_r": 8,
+    "lora_alpha": 16,
+    "lora_dropout": 0.0,
+    "lora_targets": [
+      "q_proj",
+      "k_proj",
+      "v_proj",
+      "o_proj"
+    ],
+    "merge_check_prompts": 4
+  },
+  "evaluation": {
+    "gammas": [
+      2,
+      4
+    ],
+    "seeds_per_prompt": 2,
+    "speed_cap": 64,
+    "cap_math": 512,
+    "cap_short": 32,
+    "throughput_tokens": 64,
+    "throughput_prompts": 24,
+    "latency_prompt_lengths": [
+      128,
+      512,
+      1024
+    ],
+    "warmup": 2,
+    "repeats": 5,
+    "bootstrap": 2000,
+    "unmerged_draft": "off_policy_s6304",
+    "bank_gamma": 4,
+    "bank_cap": 192
+  }
+}
