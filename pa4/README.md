@@ -42,6 +42,7 @@ python -m task2_attention.kv_cache --step c1           # then eval, timing, summ
 # Task 3
 python -m task3_speculative.sampler_tests
 python -m task3_speculative.banks --bank exact_spec
+python -m task3_speculative.banks --bank target_plain
 python -m task3_speculative.banks --bank consistency
 python -m task3_speculative.distill --step teacher_bank
 python -m task3_speculative.distill --step train --method off_policy --seed 6304   # x2 methods x2 seeds
@@ -81,6 +82,8 @@ python -m task3_speculative.spec_eval --mode summary
 - Distillation: LoRA r=8, α=16 on q/k/v/o, fp32 adapters, fp16 frozen backbone, GradScaler (skipped updates are logged). Every optimizer update holds exactly 256 teacher-scored tokens, and the 40,000-token quota leaves a final update of 64. A response that crosses an update boundary is re-forwarded with the new weights for its remaining positions. Off-policy runs are charged the teacher-bank generation time.
 - Every presentation (source id, rollout seed, response ids, termination, teacher-scored tokens) is logged in `presentations.jsonl`. Teacher scoring, student forward/backward and merging are timed separately.
 - Held-out evaluation: the primary speed benchmark uses a 64-token cap with EOS, γ = 2 and 4, two paired seeds per prompt, and an adjacent target-only run on the same prompt and seed whose order alternates (counterbalanced). Answer quality is a separate run of the target and each standalone student at 512 (math) / 32 (short) tokens, with extractable and truncated flags. The fixed-64-token diagnostic ignores EOS on the first 24 GSM8K test prompts.
+- Before each speed condition, one speculative run and one target-only run on the first prompt are timed as warm setup and saved apart (`speed/<condition>.warmup.json`), so no benchmark row includes CUDA warm-up.
+- Consistency control: the staff script samples its teacher and original-draft banks with `model.generate(temperature=1, top_p=1, top_k=0)` but does not set `repetition_penalty`, so generate takes 1.1 from Qwen's `generation_config.json`. The staff teacher bank is therefore not the plain temperature-1 target law. We sample our own target-only bank (`target_plain`) with the same plain sampler and settings as the exact speculative bank and use it as the reference. The staff banks are still used as fixed common prefixes in step 5, and `consistency.json` also reports the staff teacher bank against the reference, with the repeated-token fraction that the penalty lowers.
 - Every speculative round is timed as draft proposal, target verification, accept/residual sampling and cache rollback; prefill and host overhead are kept apart. α comes from full rounds, c from isolated single-step latencies at 128/512/1024-token prefixes, v_γ from a (γ+1)-token verification forward; Ŝ = (1 + Σ α^j)/(γc + v_γ) and the break-even α follow the manual's formula.
 
 ## Overlap check, report assets, compliance

@@ -162,6 +162,8 @@ def real_tests(config):
                 if diff>worst:
                     worst=diff
         #3. the final target cache: feeding the uncached tail must give the full-forward last row
+        if t_state.cached>=len(full_sequence):
+            t_state.crop(len(full_sequence)-1) #cache already holds every token (run ended on an accepted eos), an empty tail would crash, so step the last token again
         tail_logits=t_state.feed(full_sequence[t_state.cached:],device)[-1].float()
         cache_diff=float((tail_logits-full_logits[-1]).abs().max())
         #4. cap: gamma 4 with a 5-token cap never returns more than 5 tokens

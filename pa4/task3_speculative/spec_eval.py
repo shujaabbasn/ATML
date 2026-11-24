@@ -80,6 +80,19 @@ def speed(config,drafts):
             part=out_dir/f"{condition}.jsonl.part" #rows go here first, renamed only when every prompt is done
             if part.exists():
                 part.unlink() #left by a session that was cut off, redo the whole condition
+            #warm setup, timed apart from the benchmark (manual step 2): the first calls after loading pay for cuda kernel
+            #selection and allocator growth, so one untracked spec run and one target run go first and are saved separately
+            warm_ids=chat_ids(tokenizer,prompts[0]["prompt"])
+
+            def warm_spec():
+                return speculative_generate(target,draft,warm_ids,gamma,cap,eos_list,make_generator(device,config["seed"]-1))
+
+            def warm_target():
+                return plain_generate(target,warm_ids,cap,eos_list,make_generator(device,config["seed"]-1))
+
+            unused_response,unused_stats,warm_spec_seconds,unused_peak=timed_run(warm_spec)
+            unused_response,unused_stats,warm_target_seconds,unused_peak=timed_run(warm_target)
+            save_json(out_dir/f"{condition}.warmup.json",{"condition":condition,"prompt":prompts[0]["id"],"spec_seconds":warm_spec_seconds,"target_seconds":warm_target_seconds})
             for index in range(len(prompts)):
                 item=prompts[index]
                 prompt_ids=chat_ids(tokenizer,item["prompt"])
@@ -452,10 +465,13 @@ def paired_difference(rows_a,rows_b,function,evaluation,seed):
 def summary(config):
     evaluation=config["evaluation"]
     root=repo_path(config["results_dir"])
-    out={"speed":{},"speed_differences":{},"quality":{},"deployment":{}}
+    out={"speed":{},"speed_differences":{},"quality":{},"deployment":{},"warm_setup":{}}
     speed_rows={}
     for path in sorted((root/"speed").glob("*.jsonl")):
         speed_rows[path.stem]=read_jsonl(path)
+    for path in sorted((root/"speed").glob("*.warmup.json")):
+        warm=load_json(path)
+        out["warm_setup"][warm["condition"]]=warm #first run after loading, kept out of every benchmark row
     for condition in speed_rows:
         rows=speed_rows[condition]
         groups={"all":rows}

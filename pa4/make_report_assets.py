@@ -583,10 +583,12 @@ def task3(root):
     if (root/"banks"/"consistency.json").exists():
         c=load_json(root/"banks"/"consistency.json")
         rows=[]
-        for key in ["teacher_vs_spec","teacher_vs_original"]:
-            e=c[key]
-            rows.append([key,e["mean_teacher_length"],e["mean_other_length"],e["length_ks_p"],e["mean_teacher_nll"],e["mean_other_nll"],e["nll_wilcoxon_p"]])
-        write_table("t3_bank_consistency",["comparison","teacher len","other len","KS p","teacher NLL","other NLL","Wilcoxon p"],rows,4,"exact_spec should match teacher; original_draft is the positive control")
+        for other in ["spec","teacher","original"]:
+            e=c[f"target_plain_vs_{other}"]
+            rows.append([other,e["mean_reference_length"],e["mean_other_length"],e["length_ks_p"],e["mean_reference_nll"],e["mean_other_nll"],e["nll_wilcoxon_p"],
+                e["mean_reference_repeat"],e["mean_other_repeat"],e["repeat_wilcoxon_p"]])
+        write_table("t3_bank_consistency",["bank vs target_plain","ref len","len","KS p","ref NLL","NLL","Wilcoxon p","ref repeat","repeat","Wilcoxon p"],rows,4,
+            "reference = target sampled alone at temperature 1; exact spec should match it; staff teacher bank used repetition_penalty 1.1; original draft is the positive control")
     drafts=root/"drafts"
     if drafts.exists():
         rows=[]
