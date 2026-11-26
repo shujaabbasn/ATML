@@ -1,20 +1,20 @@
 \scriptsize
 \setlength{\tabcolsep}{3.5pt}
-\captionof{table}{Task 1 resources per method family (range over its sparsities or widths, every condition in \texttt{outputs/tables/t1\_resources.csv}). Zeros is achieved sparsity (\%). Packed is the computed storage of the eligible weights and In memory what the GPU held. Prefill is a 2,048-token prompt, decode is per token after a 512-token prompt, peak is allocated memory and time is compression plus calibration. Batch 1, mean of 5 repeats.}
+\captionof{table}{Task 1 resources per method family (range over its sparsities or widths, every condition in \texttt{outputs/tables/t1\_resources.csv}). Zeros is achieved sparsity (\%). Packed is the computed storage of the eligible weights and In memory what the GPU held. Prefill is a 512 or 2,048-token prompt. Decode 64 is the whole 64-token generation after a 512-token prompt and ms/tok is per token with the prefill taken out. Peak is allocated memory and time is compression plus calibration. Batch 1, mean of 5 warmed-up repeats.}
 \label{tab:t1ressum}
 \begin{adjustbox}{max width=\linewidth}
-\begin{tabular}{lrrrrrrr}
+\begin{tabular}{lrrrrrrrrr}
 \toprule
-Method & Zeros & Packed MiB & In memory MiB & Prefill (ms) & Decode (ms/tok) & Peak MiB & Time (s) \\
+Method & Zeros & Packed MiB & In memory MiB & Prefill 512 (ms) & Prefill 2048 (ms) & Decode 64 (ms) & Decode (ms/tok) & Peak MiB & Time (s) \\
 \midrule
-FP16 & 0.0 & 2499 & 2499 & 487.0 & 34.68 & 3127 & -- \\
-P1 magnitude & 25.0--75.0 & 781--2030 & 2499 & 459.7--483.5 & 35.62--36.45 & 3127 & 1.2 \\
-P2 Wanda & 25.0--75.0 & 781--2030 & 2499 & 457.4--487.5 & 34.16--35.04 & 3127 & 158.0--171.3 \\
-P3 OWL & 50.0--75.0 & 781--1406 & 2499 & 454.5--475.6 & 35.25--35.28 & 3128 & 157.5--164.5 \\
-2:4 Wanda & 50.0 & 1406 & 2499 & 478.8 & 35.44 & 3127 & 166.5 \\
-Q1 RTN & 0.9--31.1 & 492--1279 & 2499 & 475.3--490.8 & 35.01--35.39 & 3127 & 0.3 \\
-Q2 AWQ & 1.0--32.6 & 492--1279 & 2499 & 481.1--487.9 & 35.93--36.02 & 3127 & 312.0--320.6 \\
-Q3 mixed & 19.5--35.4 & 492--648 & 2499 & 473.9--483.3 & 36.25--36.41 & 3127 & 310.7--315.7 \\
+FP16 & 0.0 & 2499 & 2499 & 115.9 & 487.0 & 2219 & 34.68 & 3127 & -- \\
+P1 magnitude & 25.0--75.0 & 781--2030 & 2499 & 105.1--114.1 & 459.7--483.5 & 2279--2333 & 35.62--36.45 & 3127 & 1.2 \\
+P2 Wanda & 25.0--75.0 & 781--2030 & 2499 & 107.8--116.3 & 457.4--487.5 & 2187--2242 & 34.16--35.04 & 3127 & 158.0--171.3 \\
+P3 OWL & 50.0--75.0 & 781--1406 & 2499 & 104.3--110.7 & 454.5--475.6 & 2256--2258 & 35.25--35.28 & 3128 & 157.5--164.5 \\
+2:4 Wanda & 50.0 & 1406 & 2499 & 111.8 & 478.8 & 2268 & 35.44 & 3127 & 166.5 \\
+Q1 RTN & 0.9--31.1 & 492--1279 & 2499 & 110.6--116.1 & 475.3--490.8 & 2241--2265 & 35.01--35.39 & 3127 & 0.3 \\
+Q2 AWQ & 1.0--32.6 & 492--1279 & 2499 & 112.5--115.1 & 481.1--487.9 & 2299--2305 & 35.93--36.02 & 3127 & 312.0--320.6 \\
+Q3 mixed & 19.5--35.4 & 492--648 & 2499 & 110.3--113.6 & 473.9--483.3 & 2320--2330 & 36.25--36.41 & 3127 & 310.7--315.7 \\
 \bottomrule
 \end{tabular}
 \end{adjustbox}

@@ -7,7 +7,7 @@ from __future__ import annotations
 
 import csv
 
-from common.utils import load_json, repo_path
+from common.utils import load_json, read_jsonl, repo_path
 
 
 TABLES=repo_path("outputs/tables")
@@ -200,21 +200,31 @@ def task1():
     for row in read_csv("t1_resources"):
         resources[row["condition"]]=row
     rows=[]
+    scored=[] #scored tokens per suite, the same for every condition
     for condition in T1_ORDER:
         if condition not in quality:
             continue
         q=quality[condition]
+        metrics=load_json(repo_path(f"results/task1/{condition}/metrics.json"))
+        wiki_nll=number(metrics["wikitext2_ppl"]["mean_nll"],3) #mean nll per scored token
+        c4_nll=number(metrics["c4_val_ppl"]["mean_nll"],3)
+        for suite in ["wikitext2_ppl","c4_val_ppl"]:
+            if metrics[suite]["scored_tokens"] not in scored:
+                scored.append(metrics[suite]["scored_tokens"])
         if condition=="baseline_fp16":
-            cells=[t1_name(condition),number(q["total MiB"],0),number(q["bits/weight (packed)"],2),ppl(q["WikiText-2 PPL"]),"--",ppl(q["C4 PPL"]),"--",number(100*float(q["HS acc"]),1),"--",number(100*float(q["HS acc_norm"]),1),"--"]
+            cells=[t1_name(condition),number(q["total MiB"],0),number(q["bits/weight (packed)"],2),ppl(q["WikiText-2 PPL"]),wiki_nll,"--",ppl(q["C4 PPL"]),c4_nll,"--",number(100*float(q["HS acc"]),1),"--",number(100*float(q["HS acc_norm"]),1),"--"]
         else:
             c=change[condition]
-            cells=[t1_name(condition),number(q["total MiB"],0),number(q["bits/weight (packed)"],2),ppl(q["WikiText-2 PPL"]),signed_ppl(c["d WikiText-2 PPL"]),ppl(q["C4 PPL"]),signed_ppl(c["d C4 PPL"]),
+            cells=[t1_name(condition),number(q["total MiB"],0),number(q["bits/weight (packed)"],2),ppl(q["WikiText-2 PPL"]),wiki_nll,signed_ppl(c["d WikiText-2 PPL"]),ppl(q["C4 PPL"]),c4_nll,signed_ppl(c["d C4 PPL"]),
                 number(100*float(q["HS acc"]),1),signed(c["d HS acc (pp)"],1),number(100*float(q["HS acc_norm"]),1),signed(c["d HS acc_norm (pp)"],1)]
         rows.append(cells)
         if condition in ["baseline_fp16","nm24_wanda_s50"]:
             rows.append("midrule")
-    write_full("t1_main","Task 1 quality on Qwen2.5-1.5B. Packed MiB counts every stored byte including metadata and the FP16 rest. Perplexity on 50k scored tokens each, HellaSwag acc and length-normalized acc (\\%) on 2,000 examples. $\\Delta$ is the change from FP16 (pp for HellaSwag).",
-        "tab:t1main",["Condition","Packed MiB","Bits/weight","WikiText-2","$\\Delta$","C4 val","$\\Delta$","HS acc","$\\Delta$","HS norm","$\\Delta$"],rows,"lrrrrrrrrrr")
+    counts=[]
+    for value in scored:
+        counts.append(f"{int(value):,}")
+    write_full("t1_main","Task 1 quality on Qwen2.5-1.5B. Packed MiB counts every stored byte including metadata and the FP16 rest. Perplexity and mean NLL per token on N = "+" / ".join(counts)+" scored tokens per suite (the same tokens for every condition). HellaSwag acc and length-normalized acc (\\%) on all 2,000 examples for every condition. $\\Delta$ is the change from FP16 (pp for HellaSwag).",
+        "tab:t1main",["Condition","Packed MiB","Bits/weight","WikiText-2","NLL","$\\Delta$","C4 val","NLL","$\\Delta$","HS acc","$\\Delta$","HS norm","$\\Delta$"],rows,"lrrrrrrrrrrrr")
     #paired bootstrap
     rows=[]
     names={"p3_owl_s50 - p2_wanda_s50":"P3 OWL $-$ P2 Wanda, 50\\%","p3_owl_s75 - p2_wanda_s75":"P3 OWL $-$ P2 Wanda, 75\\%",
@@ -245,7 +255,7 @@ def task1():
     families=[["baseline","FP16"],["p1","P1 magnitude"],["p2","P2 Wanda"],["p3","P3 OWL"],["nm24","2:4 Wanda"],["q1","Q1 RTN"],["q2","Q2 AWQ"],["q3","Q3 mixed"]]
     rows=[]
     for family in families:
-        values={"zeros":[],"packed":[],"memory":[],"prefill":[],"decode":[],"peak":[],"time":[]}
+        values={"zeros":[],"packed":[],"memory":[],"prefill512":[],"prefill":[],"decode64":[],"decode":[],"peak":[],"time":[]}
         for condition in T1_ORDER:
             if condition.startswith(family[0])==False or condition not in resources:
                 continue
@@ -253,17 +263,19 @@ def task1():
             values["zeros"].append(100*float(quality[condition]["zero fraction"]))
             values["packed"].append(float(r["packed eligible MiB"]))
             values["memory"].append(float(r["in-memory eligible MiB (fp16)"]))
+            values["prefill512"].append(float(r["prefill_512 ms"]))
             values["prefill"].append(float(r["prefill_2048 ms"]))
+            values["decode64"].append(float(r["decode_64 ms"]))
             values["decode"].append(float(r["decode ms/token"]))
             values["peak"].append(float(r["peak MiB"]))
             if condition in change:
                 values["time"].append(float(change[condition]["compression + calibration s"]))
         cells=[family[1]]
-        for key,digits in [["zeros",1],["packed",0],["memory",0],["prefill",1],["decode",2],["peak",0],["time",1]]:
+        for key,digits in [["zeros",1],["packed",0],["memory",0],["prefill512",1],["prefill",1],["decode64",0],["decode",2],["peak",0],["time",1]]:
             cells.append(span(values[key],digits))
         rows.append(cells)
-    write_full("t1_res_summary","Task 1 resources per method family (range over its sparsities or widths, every condition in \\texttt{outputs/tables/t1\\_resources.csv}). Zeros is achieved sparsity (\\%). Packed is the computed storage of the eligible weights and In memory what the GPU held. Prefill is a 2,048-token prompt, decode is per token after a 512-token prompt, peak is allocated memory and time is compression plus calibration. Batch 1, mean of 5 repeats.",
-        "tab:t1ressum",["Method","Zeros","Packed MiB","In memory MiB","Prefill (ms)","Decode (ms/tok)","Peak MiB","Time (s)"],rows,"lrrrrrrr")
+    write_full("t1_res_summary","Task 1 resources per method family (range over its sparsities or widths, every condition in \\texttt{outputs/tables/t1\\_resources.csv}). Zeros is achieved sparsity (\\%). Packed is the computed storage of the eligible weights and In memory what the GPU held. Prefill is a 512 or 2,048-token prompt. Decode 64 is the whole 64-token generation after a 512-token prompt and ms/tok is per token with the prefill taken out. Peak is allocated memory and time is compression plus calibration. Batch 1, mean of 5 warmed-up repeats.",
+        "tab:t1ressum",["Method","Zeros","Packed MiB","In memory MiB","Prefill 512 (ms)","Prefill 2048 (ms)","Decode 64 (ms)","Decode (ms/tok)","Peak MiB","Time (s)"],rows,"lrrrrrrrrr")
     #matched-budget checks
     rows=[]
     for row in read_csv("t1_q3_budget"):
@@ -443,15 +455,28 @@ def task2():
         "tab:t2cc1",["Cases","Argmax agree","Greedy equal","Finite","Full-cache EM (\\%)","Worst logit diff"],[[c1["cases"],c1["argmax agree"],c1["greedy equal"],c1["finite"],number(100*float(c1["full-cache EM"]),1),number(c1["worst max abs logit diff"],3)]],"rrrrrr")
     #C: fidelity
     names={"full":"Full FP16","sink_recent":"Sink + recent","question_aware":"Question-aware","int4_tokenwise":"INT4 token-wise","int4_kivi":"INT4 channel-K/token-V","hybrid":"Hybrid FP16 + INT2"}
+    #C3: key and value reconstruction error of the two INT4 layouts, mean over the 180 cases
+    errors={}
+    for record in read_jsonl(repo_path("results/task2/part_c/c_eval_rows.jsonl")):
+        if "k_relative_error" in record:
+            if record["method"] not in errors:
+                errors[record["method"]]=[[],[]]
+            errors[record["method"]][0].append(record["k_relative_error"])
+            errors[record["method"]][1].append(record["v_relative_error"])
     rows=[]
     for row in read_csv("t2c_fidelity"):
         evidence_fp16="--"
         if row["evidence in FP16"]!="":
             evidence_fp16=number(100*float(row["evidence in FP16"]),1)
+        k_error="--"
+        v_error="--"
+        if row["cache"] in errors:
+            k_error=number(sum(errors[row["cache"]][0])/len(errors[row["cache"]][0]),3)
+            v_error=number(sum(errors[row["cache"]][1])/len(errors[row["cache"]][1]),3)
         rows.append([names[row["cache"]],number(row["EM (%)"],1),number(row["EM | ref correct (%)"],1),number(row["gold log-prob"],3),number(row["KL to full (gold pos.)"],4),number(100*float(row["evidence retained"]),1),evidence_fp16,
-            number(row["packed MiB"],2),number(row["fraction of FP16"],3),row["distractor answers"],row["other wrong"]])
-    write_full("t2c_fid","KV fidelity on 180 cases at the packed INT4 budget. EM (\\%) unconditional and given a correct FP16 reference. Gold log-p and KL to the full cache at the answer positions. Evidence (\\%) kept at any precision and in FP16. MiB and Fraction are packed size and its share of FP16. The last columns count wrong answers naming a distractor code or something else.",
-        "tab:t2cfid",["Cache","EM","EM | ref","Gold log-p","KL","Evidence","Evid. FP16","MiB","Fraction","Distr.","Other"],rows,"lrrrrrrrrrr")
+            k_error,v_error,number(row["packed MiB"],2),number(row["fraction of FP16"],3),number(row["live MiB (+question/decode)"],2),row["distractor answers"],row["other wrong"]])
+    write_full("t2c_fid","KV fidelity on 180 cases at the INT4 byte budget. EM (\\%) overall and given a correct FP16 reference, gold log-p and KL to the full cache at the answer, evidence kept (\\%) at any precision and in FP16, relative K and V reconstruction error, packed MiB and its share of FP16, live MiB with the shared question and generated tokens, and wrong answers naming a distractor or something else.",
+        "tab:t2cfid",["Cache","EM","EM | ref","Gold log-p","KL","Evidence","Evid. FP16","K err","V err","MiB","Fraction","Live MiB","Distr.","Other"],rows,"lrrrrrrrrrrrrr")
     rows=[]
     order=["full","sink_recent","question_aware","int4_tokenwise","int4_kivi","hybrid"]
     factors={}
@@ -569,19 +594,32 @@ def task3():
     drafts=["original","off_policy_s6304","off_policy_s6305","on_policy_s6304","on_policy_s6305"]
     rows=[]
     for draft in drafts:
-        own=draft
-        if draft=="original":
-            own="original_draft"
         cells=[t3_name(draft)]
-        for bank in ["teacher","original_draft","exact_spec_original_gamma4",own]:
+        for bank in ["teacher","original_draft","exact_spec_original_gamma4"]:
             r=table[(draft,bank,"all")]
             cells.append(number(r["fwd KL"],3))
             cells.append(number(r["rev KL"],3))
             cells.append(number(r["1-TV"],3))
+            cells.append(number(r["top-1 agree"],3))
         rows.append(cells)
-    write_full("t3_dist","Draft against target on frozen prefixes. F forward KL(target$\\|$draft), R reverse KL, A expected acceptance 1$-$TV (TV = 1$-$A) on the staff teacher and original-draft banks, our speculative bank and each draft's own rollouts.",
-        "tab:t3dist",["","\\multicolumn{3}{c}{Teacher}","\\multicolumn{3}{c}{Original draft}","\\multicolumn{3}{c}{Speculative}","\\multicolumn{3}{c}{Own rollouts}"],
-        [["Draft","F","R","A","F","R","A","F","R","A","F","R","A"],"midrule"]+rows,"lrrrrrrrrrrrr")
+    write_full("t3_dist","Draft against target on the 3 shared frozen prefix banks (staff teacher, staff original draft and our exact speculative bank). F forward KL(target$\\|$draft), R reverse KL, A expected acceptance 1$-$TV (TV = 1$-$A) and G greedy next-token agreement.",
+        "tab:t3dist",["","\\multicolumn{4}{c}{Teacher}","\\multicolumn{4}{c}{Original draft}","\\multicolumn{4}{c}{Speculative}"],
+        [["Draft","F","R","A","G","F","R","A","G","F","R","A","G"],"midrule"]+rows,"lrrrrrrrrrrrr")
+    #every draft on every trained student's frozen rollouts, the diagonal is each student on its own rollouts
+    student_banks=["off_policy_s6304","off_policy_s6305","on_policy_s6304","on_policy_s6305"]
+    rows=[]
+    for draft in drafts:
+        cells=[t3_name(draft)]
+        for bank in student_banks:
+            r=table[(draft,bank,"all")]
+            cells.append(number(r["fwd KL"],3))
+            cells.append(number(r["1-TV"],3))
+        rows.append(cells)
+    header_banks=[""]
+    for bank in student_banks:
+        header_banks.append("\\multicolumn{2}{c}{"+t3_name(bank)+" bank}")
+    write_full("t3_studentbanks","Every draft on each trained student's frozen rollout bank (F forward KL, A 1$-$TV). The diagonal is a student on its own rollouts and the other cells are cross-evaluations.",
+        "tab:t3studentbanks",header_banks,[["Draft","F","A","F","A","F","A","F","A"],"midrule"]+rows,"lrrrrrrrr")
     rows=[]
     for draft in drafts:
         cells=[t3_name(draft)]
@@ -631,14 +669,27 @@ def task3():
             continue
         r=rounds[row["condition"]]
         rows.append([t3_name(row["condition"]),number(row["tokens/s (64, EOS ignored)"],2),row["measured S [95% CI]"],number(row["c"],3),number(row["alpha"],3),number(row["predicted S_hat"],3),number(row["break-even alpha"],3),
-            number(r["draft ms/round"],1),number(r["verify ms/round"],1),number(r["accept/residual ms/round"],2),number(r["rollback ms/round"],2)])
+            number(r["prefill ms/round"],1),number(r["draft ms/round"],1),number(r["verify ms/round"],1),number(r["accept/residual ms/round"],2),number(r["rollback ms/round"],2),number(r["host ms/round"],3)])
     target=None
     for row in read_csv("t3_speedup"):
         if row["condition"]=="target_only":
             target=row
+    #isolated one-token decode step of each model at 3 prompt lengths
+    latency=load_json(repo_path("results/task3/throughput.json"))["latency"]
+    lengths=list(latency["target"].keys())
+    steps=[]
+    for length in lengths:
+        steps.append(number(latency["target"][length]["mean_ms"],1))
+    draft_steps=[]
+    for draft in latency["drafts"]:
+        values=[]
+        for length in lengths:
+            values.append(number(latency["drafts"][draft][length]["mean_ms"],1))
+        draft_steps.append(t3_name(draft)+" "+"/".join(values))
     write_full("t3_speedup",f"Fixed-64-token diagnostic on the first 24 GSM8K prompts (EOS ignored for timing). Target only runs at {float(target['tokens/s (64, EOS ignored)']):.2f} tokens/s. S is measured speedup with a paired 95\\% interval. c is draft over target cost per forward and $\\alpha$ the measured acceptance. "
-        "$\\hat S=(1-\\alpha^{\\gamma+1})/((1-\\alpha)(\\gamma c+v_\\gamma))$ with $v_\\gamma$ the verify cost over one target step, and break-even is the $\\alpha$ where $\\hat S=1$. The last 4 columns split one round into draft, verify, accept/residual and rollback time (ms).",
-        "tab:t3speedup",["Draft","Tok/s","Measured S [95\\% CI]","c","$\\alpha$","$\\hat S$","Break-even $\\alpha$","Draft","Verify","Accept","Rollback"],rows,"lrlrrrrrrrr")
+        "$\\hat S=(1-\\alpha^{\\gamma+1})/((1-\\alpha)(\\gamma c+v_\\gamma))$ with $v_\\gamma$ the verify cost over one target step, and break-even is the $\\alpha$ where $\\hat S=1$. The last 6 columns split one round into prefill (amortized), draft, verify, accept/residual, rollback and host time (ms). "
+        "Isolated one-token decode step (ms) at "+"/".join(lengths)+"-token prompts is "+"/".join(steps)+" for the target and "+", ".join(draft_steps)+".",
+        "tab:t3speedup",["Draft","Tok/s","Measured S [95\\% CI]","c","$\\alpha$","$\\hat S$","Break-even $\\alpha$","Prefill","Draft","Verify","Accept","Rollback","Host"],rows,"lrlrrrrrrrrrr")
     #seed means per method for the main text (per-seed tables above go to the appendix)
     speedup={}
     for row in read_csv("t3_speedup"):
@@ -649,7 +700,7 @@ def task3():
     for gamma in ["2","4"]:
         for method in methods:
             fields={"exam":[],"prop":[],"prefix":[],"target":[],"draft":[],"spec":[],"plain":[],"ratio":[],"eos":[],"peak":[]}
-            cost={"S":[],"c":[],"alpha":[],"hat":[],"even":[],"dms":[],"vms":[],"ams":[],"rms":[]}
+            cost={"S":[],"c":[],"alpha":[],"hat":[],"even":[],"pms":[],"dms":[],"vms":[],"ams":[],"rms":[],"hms":[]}
             for draft in method[2]:
                 condition=f"spec_{draft}_g{gamma}"
                 r=speed[(condition,"all")]
@@ -670,26 +721,28 @@ def task3():
                 cost["alpha"].append(float(u["alpha"]))
                 cost["hat"].append(float(u["predicted S_hat"]))
                 cost["even"].append(float(u["break-even alpha"]))
+                cost["pms"].append(float(t["prefill ms/round"]))
                 cost["dms"].append(float(t["draft ms/round"]))
                 cost["vms"].append(float(t["verify ms/round"]))
                 cost["ams"].append(float(t["accept/residual ms/round"]))
                 cost["rms"].append(float(t["rollback ms/round"]))
+                cost["hms"].append(float(t["host ms/round"]))
             cells=[method[1],gamma]
             for key,digits in [["exam",3],["prop",3],["prefix",2],["target",3],["draft",3],["spec",1],["plain",1],["ratio",3],["eos",3],["peak",0]]:
                 cells.append(number(sum(fields[key])/len(fields[key]),digits))
             rows.append(cells)
             cells=[method[1],gamma]
-            for key,digits in [["S",3],["c",3],["alpha",3],["hat",3],["even",3],["dms",1],["vms",1],["ams",2],["rms",2]]:
+            for key,digits in [["S",3],["c",3],["alpha",3],["hat",3],["even",3],["pms",1],["dms",1],["vms",1],["ams",2],["rms",2],["hms",3]]:
                 cells.append(number(sum(cost[key])/len(cost[key]),digits))
             rows_cost.append(cells)
         if gamma=="2":
             rows.append("midrule")
             rows_cost.append("midrule")
-    write_full("t3_speed_mean","Speculative decoding on 120 held-out prompts (64-token cap with EOS, 2 seeds per prompt), mean over the 2 training seeds (each seed with intervals in Table~\\ref{tab:t3speed}). Examined counts proposals up to the first rejection. Ratio is per-prompt speculative over adjacent target-only throughput. Peak is allocated MiB.",
+    write_full("t3_speed_mean","Speculative decoding on 120 held-out prompts (64-token cap with EOS, 2 seeds per prompt), mean over training seeds (per seed with intervals in Table~\\ref{tab:t3speed}). Ratio is per-prompt speculative over adjacent target-only throughput.",
         "tab:t3speedmean",["Draft","$\\gamma$","Acc/exam.","Acc/prop.","Prefix/verify","Target/token","Draft/token","Spec tok/s","Target tok/s","Ratio","EOS","Peak MiB"],rows,"lrrrrrrrrrrr")
-    write_full("t3_speedup_mean",f"Fixed-64-token test on 24 GSM8K prompts, mean over training seeds (each seed with intervals in Table~\\ref{{tab:t3speedup}}). Target only runs at {float(target['tokens/s (64, EOS ignored)']):.2f} tokens/s. S is measured speedup, c draft over target cost per forward, $\\alpha$ measured acceptance, "
-        "$\\hat S=(1-\\alpha^{{\\gamma+1}})/((1-\\alpha)(\\gamma c+v_\\gamma))$ and break-even the $\\alpha$ where $\\hat S=1$. The last 4 columns split a round into draft, verify, accept/residual and rollback time (ms).",
-        "tab:t3speedupmean",["Draft","$\\gamma$","S","c","$\\alpha$","$\\hat S$","Break-even","Draft","Verify","Accept","Rollback"],rows_cost,"lrrrrrrrrrr")
+    write_full("t3_speedup_mean",f"Fixed-64-token test on 24 GSM8K prompts, mean over training seeds (each seed with intervals and the isolated decode-step latency in Table~\\ref{{tab:t3speedup}}). Target only runs at {float(target['tokens/s (64, EOS ignored)']):.2f} tokens/s. S is measured speedup, c draft over target cost per forward, $\\alpha$ measured acceptance, "
+        "$\\hat S=(1-\\alpha^{{\\gamma+1}})/((1-\\alpha)(\\gamma c+v_\\gamma))$ and break-even the $\\alpha$ where $\\hat S=1$. The last 6 columns split a round into prefill (amortized), draft, verify, accept/residual, rollback and host time (ms).",
+        "tab:t3speedupmean",["Draft","$\\gamma$","S","c","$\\alpha$","$\\hat S$","Break-even","Prefill","Draft","Verify","Accept","Rollback","Host"],rows_cost,"lrrrrrrrrrrrr")
     rows=[]
     for values in read_lists("t3_speed_bootstrap"):
         comparison=values[0]

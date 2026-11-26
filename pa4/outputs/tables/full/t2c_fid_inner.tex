@@ -1,18 +1,18 @@
 \scriptsize
 \setlength{\tabcolsep}{3.5pt}
-\captionof{table}{KV fidelity on 180 cases at the packed INT4 budget. EM (\%) unconditional and given a correct FP16 reference. Gold log-p and KL to the full cache at the answer positions. Evidence (\%) kept at any precision and in FP16. MiB and Fraction are packed size and its share of FP16. The last columns count wrong answers naming a distractor code or something else.}
+\captionof{table}{KV fidelity on 180 cases at the INT4 byte budget. EM (\%) overall and given a correct FP16 reference, gold log-p and KL to the full cache at the answer, evidence kept (\%) at any precision and in FP16, relative K and V reconstruction error, packed MiB and its share of FP16, live MiB with the shared question and generated tokens, and wrong answers naming a distractor or something else.}
 \label{tab:t2cfid}
 \begin{adjustbox}{max width=\linewidth}
-\begin{tabular}{lrrrrrrrrrr}
+\begin{tabular}{lrrrrrrrrrrrrr}
 \toprule
-Cache & EM & EM | ref & Gold log-p & KL & Evidence & Evid. FP16 & MiB & Fraction & Distr. & Other \\
+Cache & EM & EM | ref & Gold log-p & KL & Evidence & Evid. FP16 & K err & V err & MiB & Fraction & Live MiB & Distr. & Other \\
 \midrule
-Full FP16 & 100.0 & 100.0 & -0.005 & 0.0000 & 100.0 & -- & 107.25 & 1.000 & 0 & 0 \\
-Sink + recent & 33.3 & 33.3 & -9.160 & 1.8293 & 33.3 & 33.3 & 30.72 & 0.287 & 32 & 88 \\
-Question-aware & 98.3 & 98.3 & -0.050 & 0.0092 & 93.3 & 93.3 & 30.72 & 0.287 & 0 & 3 \\
-INT4 token-wise & 0.0 & 0.0 & -22.056 & 4.4094 & 100.0 & -- & 30.73 & 0.287 & 0 & 180 \\
-INT4 channel-K/token-V & 100.0 & 100.0 & -0.008 & 0.0005 & 100.0 & -- & 30.73 & 0.287 & 0 & 0 \\
-Hybrid FP16 + INT2 & 100.0 & 100.0 & -0.014 & 0.0014 & 100.0 & 87.2 & 29.85 & 0.279 & 0 & 0 \\
+Full FP16 & 100.0 & 100.0 & -0.005 & 0.0000 & 100.0 & -- & -- & -- & 107.25 & 1.000 & 108.31 & 0 & 0 \\
+Sink + recent & 33.3 & 33.3 & -9.160 & 1.8293 & 33.3 & 33.3 & -- & -- & 30.72 & 0.287 & 31.78 & 32 & 88 \\
+Question-aware & 98.3 & 98.3 & -0.050 & 0.0092 & 93.3 & 93.3 & -- & -- & 30.72 & 0.287 & 31.78 & 0 & 3 \\
+INT4 token-wise & 0.0 & 0.0 & -22.056 & 4.4094 & 100.0 & -- & 0.147 & 0.098 & 30.73 & 0.287 & 31.87 & 0 & 180 \\
+INT4 channel-K/token-V & 100.0 & 100.0 & -0.008 & 0.0005 & 100.0 & -- & 0.007 & 0.098 & 30.73 & 0.287 & 31.79 & 0 & 0 \\
+Hybrid FP16 + INT2 & 100.0 & 100.0 & -0.014 & 0.0014 & 100.0 & 87.2 & -- & -- & 29.85 & 0.279 & 30.91 & 0 & 0 \\
 \bottomrule
 \end{tabular}
 \end{adjustbox}
