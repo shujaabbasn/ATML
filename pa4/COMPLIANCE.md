@@ -8,7 +8,7 @@ Each row pairs a manual requirement (paraphrased from the full PA4 manual text) 
 |---|---|
 | transformers 4.57.1, huggingface_hub 0.36.2 | `requirements.txt` |
 | Seed 6304, extra fixed seeds where specified | every `configs/*.yaml`; `common/utils.set_seed` |
-| Record checkpoint, tokenizer, versions, GPU, CUDA | `package_versions()` saved in `setup.json`, `attention_results.json`, `c1_reference_check.json`, `cost.json`, `throughput.json` |
+| Record checkpoint revision, tokenizer, versions, GPU, CUDA, precision, attention backend | `results/model_revisions.json` (Hub commit of each checkpoint, fp16, SDPA); `package_versions()` saved in `setup.json`, `attention_results.json`, `c1_reference_check.json`, `cost.json`, `throughput.json` |
 | Warmed-up, CUDA-synchronized timing; separate prefill from decode | `common/utils.time_call` (CUDA events); `task1_compression/evaluate.resources` (decode minus prompt prefill) |
 | Use the staff data, pinned revisions, no silent substitutions | `data_repo/` + `local_source_revisions.json`; every loader goes through `data_path` |
 | Record every reported hyperparameter | `config` / `config_used.json` saved with each task's results |
@@ -36,6 +36,7 @@ Each row pairs a manual requirement (paraphrased from the full PA4 manual text) 
 | 2:4 diagnostic at 50% Wanda, no T4 acceleration claimed | `pruning.nm_prune`, `nm24_wanda_s50` note |
 | Quality vs packed bytes, pruning and quantization separated | `make_report_assets.py → t1_quality_vs_bytes.pdf` |
 | Sensitivity visualization per adaptive method | `t1_p3_sensitivity_allocation.pdf`, `t1_q3_sensitivity_bits.pdf` |
+| Summary of all conditions as paired changes from the unchanged model; compression/calibration time | `metrics.json` → `t1_change_vs_fp16` |
 | Paired 95% bootstrap for P3−P2 and Q3−Q2: HellaSwag examples; perplexity by whole windows, pooled token NLL before exp | `common.utils.bootstrap_ppl_diff` (window lengths from `token_nll.npz`), `compare.py → paired_bootstrap.json` |
 | Uniform vs adaptive layer-error diagnostic on dev data | `layer_relative_error_dev` in metrics → `t1_layer_error_uniform_vs_adaptive.pdf` |
 | Fixed qualitative HellaSwag example across conditions | `t1_qualitative_hellaswag` (selection rule written in the table comment) |
@@ -65,6 +66,7 @@ Each row pairs a manual requirement (paraphrased from the full PA4 manual text) 
 | C4 hybrid: sinks + recent + top question-aware in FP16, the rest channel-K/token-V INT2 in complete 64-element groups, residual FP16; metadata, indices counted; not above the budget | `hybrid_plan`, `compress_hybrid` |
 | Shared question/decode FP16 component reported separately; realized fraction of full FP16 bytes per prompt | `shared_decode_fp16_bytes`, `total_live_cache_bytes`, `fraction_of_full_fp16_bytes` in `c_eval_rows.jsonl` |
 | C5 five caches + reference on 180 cases: EM, reference-answer NLL, KL, evidence retained, bytes; ≥2,000 paired bootstrap resamples; accuracy conditional on reference correctness; breakdown by length / position / distractors | `step_eval`, `step_summary` (`accuracy_given_reference_correct`, `accuracy_by_factor`) |
+| Small fixed set of aligned generations with evidence spans, FP16 selections and token-selection masks | `c_masks_examples.jsonl`, `c_eval_rows.jsonl` → `t2c_aligned_examples`, `t2c_aligned_answers` |
 | C5 packed encode/decode at batch 1 and 8, both lengths, ≥10 reps; decode step with unpacking vs FP16 at matched shapes; serialized vs allocated | `packed_benchmark` → `c5_timing.json: packed` → `t2c_packed_codec` |
 | Evidence offsets only for evaluation | used only in `evidence_kept` |
 
@@ -91,6 +93,8 @@ Each row pairs a manual requirement (paraphrased from the full PA4 manual text) 
 | Step 6 merge, check merged vs unmerged; same EOS-aware 120-prompt evaluation at γ=2,4 with a 64-token cap; counterbalanced adjacent target-only run per condition; four-part per-round time + prefill + host; c, v_γ, Ŝ, measured S, break-even α; one unmerged adapter timed | `distill.merge`, `spec_eval --mode speed / throughput / unmerged` |
 | Fixed-64-token diagnostic on 24 math prompts, EOS ignored for timing only | `spec_eval --mode throughput` → `t3_speedup` |
 | Paired bootstrap 95% intervals over prompts for throughput and acceptance | `spec_eval.summary` (`throughput_ratio_vs_target`, `speed_differences`) → `t3_speed`, `t3_speed_bootstrap` |
+| Distillation evidence: model and adapter parameter counts | `cost.json` → `t3_parameters` |
+| Representative matched-prompt continuations (fixed selection rule) | `quality/*.jsonl` → `t3_continuations` |
 | Step 7 by math / familiar / shifted / output-length bins; standalone student accuracy at 512 / 32 with extraction and truncation flags; deployment break-even incl. distillation + merge cost | `spec_eval --mode quality`, `spec_eval.summary` (`quality`, `deployment`) → `t3_quality`, `t3_deployment` |
 | GSM8K exact numeric match; short-form answer extraction and extraction-format compliance reported separately | `common.is_correct` (first answer of the asked type = gold), `common.format_compliant` (bare answer only), `spec_eval --mode rescore` |
 

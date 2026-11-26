@@ -1,0 +1,12 @@
+{
+ "note": "Models were loaded from the Hub main branch (not pinned in code). Each model's main has not changed since the lastModified date below, which is before every Kaggle run (Nov 2026), so these are the exact commits the runs downloaded. Read from https://huggingface.co/api/models/<name>/revision/main on 2026-11-26.",
+ "models": {
+  "Qwen/Qwen2.5-1.5B": {"sha": "8faed761d45a263340a0528343f099c05c9a4323", "lastModified": "2024-10-08T10:56:50Z", "used_in": "task 1"},
+  "Qwen/Qwen2.5-1.5B-Instruct": {"sha": "989aa7980e4cf806f80c7fef2b1adb7bc71aa306", "lastModified": "2024-09-25T12:32:50Z", "used_in": "task 2 part C, task 3 target/teacher"},
+  "Qwen/Qwen2.5-0.5B-Instruct": {"sha": "7ae557604adf67be50417f59c2c2f167def9a775", "lastModified": "2024-09-25T12:32:56Z", "used_in": "task 3 draft/student"}
+ },
+ "tokenizer": "the tokenizer of each checkpoint at the same commit; task 3 checks the target and draft tokenizers are identical",
+ "precision": "fp16 weights for every pretrained model (task 1 fake-quantized weights are stored back in fp16)",
+ "attention_backend": "attn_implementation=sdpa for every pretrained model load (task1_compression/model_utils.py, task2_attention/kv_cache.py, task3_speculative/common.py)",
+ "environment": "torch 2.11.0+cu130, transformers 4.57.1, huggingface_hub 0.36.2, peft 0.21.2, CUDA 13.0, Tesla T4 (also saved per run in setup.json / attention_results.json / cost.json / package_versions.txt)"
+}

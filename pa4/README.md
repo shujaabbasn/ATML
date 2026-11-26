@@ -96,6 +96,10 @@ python make_report_assets.py      # every table (outputs/tables, csv + tex) and 
 
 `COMPLIANCE.md` maps each manual requirement to the code and result file that covers it.
 
+## Checkpoints and environment
+
+The exact Hub commit of each checkpoint, the precision (fp16) and the attention backend (SDPA) are in `results/model_revisions.json`. The code loads each model from `main`, which has not changed since 2024, so those commits are the ones every run used.
+
 ## Attribution for reused external code and recipes
 
 - `task3_speculative/banks.bank_positions` copies the position-sampling rule from the staff `scripts/setup_data.py`, so our banks match the staff banks.

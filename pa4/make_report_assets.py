@@ -110,6 +110,18 @@ def task1(root):
             m["achieved_sparsity_eligible"],m["storage"]["bits_per_eligible_weight"],m["storage"]["eligible_packed_bytes"]/2**20,m["storage"]["total_packed_bytes"]/2**20,m["storage"]["compression_ratio_total"]])
     write_table("t1_quality_storage",["condition","WikiText-2 PPL","C4 PPL","HS acc","HS acc_norm","HS acc (diag 512)","zero fraction","bits/weight (packed)","eligible MiB","total MiB","ratio"],rows,3,
         "zero fraction counts exact zeros in eligible weights; for quantized models zeros come from rounding")
+    #paired change from the unchanged fp16 model (manual required evidence), same eval data for every condition
+    if "baseline_fp16" in metrics:
+        base=metrics["baseline_fp16"]
+        rows=[]
+        for name in metrics:
+            if name=="baseline_fp16":
+                continue
+            m=metrics[name]
+            rows.append([name,m["wikitext2_ppl"]["ppl"]-base["wikitext2_ppl"]["ppl"],m["c4_val_ppl"]["ppl"]-base["c4_val_ppl"]["ppl"],
+                100*(m["hellaswag"]["acc"]-base["hellaswag"]["acc"]),100*(m["hellaswag"]["acc_norm"]-base["hellaswag"]["acc_norm"]),m.get("compression_seconds")])
+        write_table("t1_change_vs_fp16",["condition","d WikiText-2 PPL","d C4 PPL","d HS acc (pp)","d HS acc_norm (pp)","compression + calibration s"],rows,3,
+            "each condition minus the unchanged fp16 model on the same windows/examples; pp = percentage points; seconds timed around the compression call in run.py (includes the calibration passes for Wanda/OWL/AWQ/Q3, none for magnitude/RTN)")
     #resources: measured vs theoretical
     rows=[]
     for name in metrics:
@@ -546,6 +558,40 @@ def task2(root):
                 rows.append([row["target"],row["layout"],row["batch"],row["status"],"","","","","","",""])
         write_table("t2c_packed_codec",["target L","layout","batch","pack ms","unpack ms","decode step fp16 ms","decode step + unpack ms","serialized MiB","formula MiB","fp16 MiB","peak alloc MiB"],rows,2,
             ">=10 warmed-up cuda-synchronized repeats; packed nibbles + fp16 scale/zero, dequantized to fp16 before SDPA")
+        #aligned examples: the cases kv_cache saved in c_masks_examples.jsonl (fixed rule there: every 30th case), with the evidence span,
+        #the fp16 selection of the middle layer / kv head 0, and every cache's greedy answer on that same case
+        if (part_c/"c_masks_examples.jsonl").exists():
+            answers={}
+            for row in read_jsonl(part_c/"c_eval_rows.jsonl"):
+                answers[(row["id"],row["method"])]=row
+            rows=[]
+            for example in read_jsonl(part_c/"c_masks_examples.jsonl"):
+                kept=set(example["kept_positions"])
+                evidence=example["evidence_positions"]
+                inside=0
+                for position in evidence:
+                    if position in kept:
+                        inside=inside+1
+                result=answers[(example["id"],example["method"])]
+                full=answers[(example["id"],"full")]
+                rows.append([example["id"],example["method"],example["layer"],example["kv_head"],f"{min(evidence)}-{max(evidence)}",len(kept),f"{inside}/{len(evidence)}",
+                    full["answer"][:20],result["answer"][:20],result["answer_kind"]])
+            write_table("t2c_aligned_examples",["case","cache","layer","kv head","evidence span","fp16 positions kept","evidence kept (this head)","full fp16 answer","cache answer","answer kind"],rows,3,
+                "rule in kv_cache: every 30th case; token positions after the chat template; one layer/kv head shown, all retained positions are in c_masks_examples.jsonl")
+            #same cases, every cache's generation side by side
+            cases=[]
+            for example in read_jsonl(part_c/"c_masks_examples.jsonl"):
+                if example["id"] not in cases:
+                    cases.append(example["id"])
+            methods=["full","sink_recent","question_aware","int4_tokenwise","int4_kivi","hybrid"]
+            rows=[]
+            for case in cases:
+                row=[case]
+                for method in methods:
+                    result=answers[(case,method)]
+                    row.append(result["answer"][:18]+" ("+result["answer_kind"]+")")
+                rows.append(row)
+            write_table("t2c_aligned_answers",["case"]+methods,rows,3,"greedy answers on the same cases, kind = gold / distractor code / other; first 18 characters")
 
 
 def mean_field(rows,key):
@@ -672,6 +718,45 @@ def task3(root):
                 steps.append(u["step_latency"][label][length]["mean_ms"])
             rows.append([u["draft"],label,u["gamma"],float(np.mean(steps)),u["spec_seconds"][label]["mean"]])
         write_table("t3_unmerged",["draft","execution","gamma","draft step ms","spec seconds / prompt"],rows,3,"wrapper overhead only, not the primary comparison")
+    #model and adapter parameter counts (manual: distillation evidence)
+    rows=[]
+    for cost_path in sorted((root/"drafts").glob("*/cost.json")):
+        c=load_json(cost_path)
+        rows.append([cost_path.parent.name,c["teacher_parameters"],c["student_parameters_with_adapter"],c["adapter_parameters"],100*c["adapter_parameters"]/c["student_parameters_with_adapter"]])
+    if len(rows)>0:
+        write_table("t3_parameters",["run","teacher params","student params (with adapter)","adapter params","adapter (%)"],rows,3,"LoRA r=8, alpha=16 on q/k/v/o")
+    #matched-prompt continuations: fixed rule = per subset, the first test prompt (seed 0) where the original and the two s6304 students
+    #do not all agree on correctness, else the first prompt of that subset
+    models=["target_only","student_only_original","student_only_off_policy_s6304","student_only_on_policy_s6304"]
+    quality={}
+    for model in models:
+        path=root/"quality"/f"{model}.jsonl"
+        if path.exists():
+            quality[model]={}
+            for row in read_jsonl(path):
+                if row["seed_index"]==0:
+                    quality[model][row["id"]]=row
+    if len(quality)==len(models):
+        rows=[]
+        for subset in ["math","familiar","shifted"]:
+            ids=[]
+            for prompt_id in quality["target_only"]:
+                if quality["target_only"][prompt_id]["subset"]==subset:
+                    ids.append(prompt_id)
+            chosen=ids[0]
+            for prompt_id in ids:
+                flags=set()
+                for model in models[1:]:
+                    flags.add(quality[model][prompt_id]["correct"])
+                if len(flags)>1:
+                    chosen=prompt_id
+                    break
+            for model in models:
+                row=quality[model][chosen]
+                text=" ".join(row["response"].split()) #one line for the table
+                rows.append([chosen,model,text[-70:],row["tokens"],row["truncated"],row["correct"]])
+        write_table("t3_continuations",["prompt","model","response (last 70 chars)","tokens","truncated","correct"],rows,3,
+            "seed 0, caps 512 math / 32 short; rule: per subset the first prompt where the original and s6304 students disagree on correctness")
 
 
 def main():
