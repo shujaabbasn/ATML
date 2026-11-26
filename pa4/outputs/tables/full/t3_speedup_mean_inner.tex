@@ -1,0 +1,19 @@
+\scriptsize
+\setlength{\tabcolsep}{3.5pt}
+\captionof{table}{Fixed-64-token test on 24 GSM8K prompts, mean over training seeds (each seed with intervals in Table~\ref{tab:t3speedup}). Target only runs at 25.73 tokens/s. S is measured speedup, c draft over target cost per forward, $\alpha$ measured acceptance, $\hat S=(1-\alpha^{{\gamma+1}})/((1-\alpha)(\gamma c+v_\gamma))$ and break-even the $\alpha$ where $\hat S=1$. The last 4 columns split a round into draft, verify, accept/residual and rollback time (ms).}
+\label{tab:t3speedupmean}
+\begin{adjustbox}{max width=\linewidth}
+\begin{tabular}{lrrrrrrrrrr}
+\toprule
+Draft & $\gamma$ & S & c & $\alpha$ & $\hat S$ & Break-even & Draft & Verify & Accept & Rollback \\
+\midrule
+Original & 2 & 0.973 & 0.837 & 0.863 & 0.982 & 0.880 & 67.1 & 39.6 & 0.66 & 0.12 \\
+Off-policy & 2 & 0.979 & 0.840 & 0.864 & 0.982 & 0.882 & 62.6 & 37.2 & 0.57 & 0.11 \\
+On-policy & 2 & 0.963 & 0.869 & 0.868 & 0.964 & 0.904 & 62.6 & 37.1 & 0.54 & 0.10 \\
+\midrule
+Original & 4 & 0.932 & 0.837 & 0.857 & 0.873 & 0.926 & 133.5 & 39.8 & 0.78 & 0.23 \\
+Off-policy & 4 & 0.891 & 0.840 & 0.864 & 0.883 & 0.927 & 125.1 & 37.3 & 0.69 & 0.20 \\
+On-policy & 4 & 0.886 & 0.869 & 0.863 & 0.857 & 0.940 & 126.2 & 37.7 & 0.65 & 0.20 \\
+\bottomrule
+\end{tabular}
+\end{adjustbox}

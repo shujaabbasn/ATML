@@ -1,0 +1,15 @@
+\scriptsize
+\setlength{\tabcolsep}{3.5pt}
+\captionof{table}{Checkpoints. Every model was loaded in FP16 with the SDPA attention backend from the Hub main branch that has not changed since the date shown (before every run). The environment was torch 2.11.0+cu130, transformers 4.57.1, huggingface\_hub 0.36.2, peft 0.21.2, CUDA 13.0, Tesla T4 and is also saved per run in setup.json / attention\_results.json / cost.json / package\_versions.txt.}
+\label{tab:revisions}
+\begin{adjustbox}{max width=\linewidth}
+\begin{tabular}{llll}
+\toprule
+Model & Commit & Unchanged since & Used in \\
+\midrule
+Qwen/Qwen2.5-1.5B & \texttt{8faed761d45a} & 2024-10-08 & task 1 \\
+Qwen/Qwen2.5-1.5B-Instruct & \texttt{989aa7980e4c} & 2024-09-25 & task 2 part C, task 3 target/teacher \\
+Qwen/Qwen2.5-0.5B-Instruct & \texttt{7ae557604adf} & 2024-09-25 & task 3 draft/student \\
+\bottomrule
+\end{tabular}
+\end{adjustbox}

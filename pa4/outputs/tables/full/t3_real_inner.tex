@@ -1,0 +1,15 @@
+\scriptsize
+\setlength{\tabcolsep}{3.5pt}
+\captionof{table}{Real-model cache checks in FP16 (largest differences). Accept is acceptance when the draft is the target.}
+\label{tab:t3real}
+\begin{adjustbox}{max width=\linewidth}
+\begin{tabular}{lrrrlrl}
+\toprule
+Prompt & Prefill & Rollback & Final cache & Cap and EOS & Accept & Target repeatable \\
+\midrule
+GSM8K-0000 & 0.025 & 0.0028 & 0.046 & True & 1.00 & True \\
+GSM8K-0001 & 0.023 & 0.0050 & 0.031 & True & 1.00 & True \\
+SHORT-shifted-0029 & 0.029 & 0.0002 & 0.035 & True & 1.00 & True \\
+\bottomrule
+\end{tabular}
+\end{adjustbox}

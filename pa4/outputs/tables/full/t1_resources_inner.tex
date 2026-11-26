@@ -1,0 +1,30 @@
+\scriptsize
+\setlength{\tabcolsep}{3.5pt}
+\captionof{table}{Task 1 resources on one T4. Packed is the logical storage of the 196 eligible matrices and In memory is what the GPU actually holds (dense FP16 for every condition, since no sparse or low-bit kernel was run). Zeros is the achieved share of zero eligible weights (\%). Latency is the mean of 5 warmed-up CUDA-synchronized repeats at batch 1. Decode is 64 tokens after a 512-token prompt with the prefill subtracted. Peak is peak allocated memory during decode. Time is the compression call including its calibration passes.}
+\label{tab:t1res}
+\begin{adjustbox}{max width=\linewidth}
+\begin{tabular}{lrrrrrrrr}
+\toprule
+Condition & Zeros & Packed MiB & In memory MiB & Prefill 512 (ms) & Prefill 2048 (ms) & Decode (ms/token) & Peak MiB & Time (s) \\
+\midrule
+FP16 (unchanged) & 0.0 & 2499 & 2499 & 115.9 & 487.0 & 34.68 & 3127 & -- \\
+P1 magnitude 25\% & 25.0 & 2030 & 2499 & 114.1 & 483.5 & 35.62 & 3127 & 1.2 \\
+P1 magnitude 50\% & 50.0 & 1406 & 2499 & 111.8 & 477.1 & 36.45 & 3127 & 1.2 \\
+P1 magnitude 75\% & 75.0 & 781 & 2499 & 105.1 & 459.7 & 35.74 & 3127 & 1.2 \\
+P2 Wanda 25\% & 25.0 & 2030 & 2499 & 116.3 & 487.5 & 35.04 & 3127 & 171.3 \\
+P2 Wanda 50\% & 50.0 & 1406 & 2499 & 109.6 & 480.9 & 34.16 & 3127 & 165.6 \\
+P2 Wanda 75\% & 75.0 & 781 & 2499 & 107.8 & 457.4 & 34.95 & 3127 & 158.0 \\
+P3 OWL 50\% & 50.0 & 1406 & 2499 & 110.7 & 475.6 & 35.28 & 3128 & 164.5 \\
+P3 OWL 75\% & 75.0 & 781 & 2499 & 104.3 & 454.5 & 35.25 & 3128 & 157.5 \\
+2:4 Wanda 50\% & 50.0 & 1406 & 2499 & 111.8 & 478.8 & 35.44 & 3127 & 166.5 \\
+Q1 RTN INT8 & 0.9 & 1279 & 2499 & 116.1 & 490.8 & 35.16 & 3127 & 0.3 \\
+Q1 RTN INT4 & 15.0 & 649 & 2499 & 113.1 & 482.8 & 35.39 & 3127 & 0.3 \\
+Q1 RTN INT3 & 31.1 & 492 & 2499 & 110.6 & 475.3 & 35.01 & 3127 & 0.3 \\
+Q2 AWQ INT8 & 1.0 & 1279 & 2499 & 115.1 & 487.9 & 36.02 & 3127 & 320.6 \\
+Q2 AWQ INT4 & 15.8 & 649 & 2499 & 112.5 & 482.4 & 35.98 & 3127 & 315.3 \\
+Q2 AWQ INT3 & 32.6 & 492 & 2499 & 112.9 & 481.1 & 35.93 & 3127 & 312.0 \\
+Q3 mixed (= Q2 INT4 bytes) & 19.5 & 648 & 2499 & 113.6 & 483.3 & 36.25 & 3127 & 315.7 \\
+Q3 mixed (= Q2 INT3 bytes) & 35.4 & 492 & 2499 & 110.3 & 473.9 & 36.41 & 3127 & 310.7 \\
+\bottomrule
+\end{tabular}
+\end{adjustbox}

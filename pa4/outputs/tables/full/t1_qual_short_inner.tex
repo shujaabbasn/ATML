@@ -1,0 +1,14 @@
+\scriptsize
+\setlength{\tabcolsep}{3.5pt}
+\captionof{table}{Fixed HellaSwag example (gold 3, summed log-likelihood per ending), FP16 and every condition with a different pick. The example was fixed before looking as the first of the 512 diagnostic examples that FP16 gets right and some condition changes (all conditions in \texttt{t1\_qualitative\_hellaswag.csv}).}
+\label{tab:t1qualshort}
+\begin{adjustbox}{max width=\linewidth}
+\begin{tabular}{lrrrrr}
+\toprule
+Condition & Ending 0 & Ending 1 & Ending 2 & Ending 3 & Pick \\
+\midrule
+FP16 (unchanged) & -27.45 & -25.68 & -28.92 & -10.39 & 3 \\
+P1 magnitude 75\% & -140.01 & -125.01 & -105.04 & -172.27 & 2 \\
+\bottomrule
+\end{tabular}
+\end{adjustbox}

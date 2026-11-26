@@ -1,0 +1,18 @@
+\scriptsize
+\setlength{\tabcolsep}{3.5pt}
+\captionof{table}{KV exact match (\%) by context length, evidence position and distractors.}
+\label{tab:t2cfactor}
+\begin{adjustbox}{max width=\linewidth}
+\begin{tabular}{lrrrrrrrr}
+\toprule
+Cache & 2,048 & 4,096 & Start & Middle & End & 0 distr. & 2 & 8 \\
+\midrule
+Full FP16 & 100.0 & 100.0 & 100.0 & 100.0 & 100.0 & 100.0 & 100.0 & 100.0 \\
+Sink + recent & 33.3 & 33.3 & 0.0 & 0.0 & 100.0 & 33.3 & 33.3 & 33.3 \\
+Question-aware & 97.8 & 98.9 & 100.0 & 95.0 & 100.0 & 100.0 & 98.3 & 96.7 \\
+INT4 token-wise & 0.0 & 0.0 & 0.0 & 0.0 & 0.0 & 0.0 & 0.0 & 0.0 \\
+INT4 channel-K/token-V & 100.0 & 100.0 & 100.0 & 100.0 & 100.0 & 100.0 & 100.0 & 100.0 \\
+Hybrid FP16 + INT2 & 100.0 & 100.0 & 100.0 & 100.0 & 100.0 & 100.0 & 100.0 & 100.0 \\
+\bottomrule
+\end{tabular}
+\end{adjustbox}

@@ -1,0 +1,16 @@
+\scriptsize
+\setlength{\tabcolsep}{3.5pt}
+\captionof{table}{Distillation runs (40,000 teacher-scored tokens, times in s). Teacher 1,543,714,304 parameters, student 495,114,112 with 1,081,344 (0.22\%) LoRA. Off-policy is charged its teacher bank. Merge diff is the largest merged minus unmerged logit gap.}
+\label{tab:t3cost}
+\begin{adjustbox}{max width=\linewidth}
+\begin{tabular}{lrrrrrrrrrrr}
+\toprule
+Run & Updates & Skipped & Truncated & Teacher bank & Rollout & Scoring & Train & Merge & Total & Peak MiB & Merge diff \\
+\midrule
+Off s6304 & 157 & 0 & 2 & 3920 & 0 & 49.6 & 144.5 & 0.038 & 4118 & 5312 & 0.250 \\
+Off s6305 & 157 & 1 & 2 & 3920 & 0 & 50.7 & 149.9 & 0.039 & 4125 & 5280 & 0.188 \\
+On s6304 & 157 & 2 & 2 & 0 & 2205 & 52.7 & 149.0 & 0.038 & 2418 & 5439 & 0.164 \\
+On s6305 & 157 & 0 & 2 & 0 & 2121 & 52.3 & 146.9 & 0.042 & 2331 & 5323 & 0.270 \\
+\bottomrule
+\end{tabular}
+\end{adjustbox}

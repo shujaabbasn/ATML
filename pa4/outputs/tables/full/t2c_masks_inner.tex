@@ -1,0 +1,30 @@
+\scriptsize
+\setlength{\tabcolsep}{3.5pt}
+\captionof{table}{Token selections on the fixed cases for the middle layer (14) and KV head 0. Evidence span is in token positions after the chat template. Kept counts context positions in the cache at any precision and FP16 those kept in FP16 (eviction keeps everything in FP16, the hybrid keeps every position and stores the rest in INT2). The evidence columns count evidence tokens among them.}
+\label{tab:t2cmasks}
+\begin{adjustbox}{max width=\linewidth}
+\begin{tabular}{llrrrrrl}
+\toprule
+Case & Cache & Evidence span & Kept & FP16 & Evidence kept & Evidence FP16 & Answer \\
+\midrule
+2048-start-0-00 & Sink + recent & 240-266 & 741 & 741 & 0/27 & 0/27 & 12345 \\
+2048-start-0-00 & Question-aware & 240-266 & 741 & 741 & 27/27 & 27/27 & 26836 \\
+2048-start-0-00 & Hybrid FP16 + INT2 & 240-266 & 2633 & 393 & 27/27 & 27/27 & 26836 \\
+2048-middle-0-00 & Sink + recent & 1279-1305 & 750 & 750 & 0/27 & 0/27 & 12345 \\
+2048-middle-0-00 & Question-aware & 1279-1305 & 750 & 750 & 27/27 & 27/27 & 32056 \\
+2048-middle-0-00 & Hybrid FP16 + INT2 & 1279-1305 & 2642 & 402 & 27/27 & 27/27 & 32056 \\
+2048-end-0-00 & Sink + recent & 2369-2394 & 746 & 746 & 26/26 & 26/26 & 38757 \\
+2048-end-0-00 & Question-aware & 2369-2394 & 746 & 746 & 26/26 & 26/26 & 38757 \\
+2048-end-0-00 & Hybrid FP16 + INT2 & 2369-2394 & 2638 & 398 & 26/26 & 26/26 & 38757 \\
+4096-start-0-00 & Sink + recent & 435-461 & 1479 & 1479 & 0/27 & 0/27 & 12345 \\
+4096-start-0-00 & Question-aware & 435-461 & 1479 & 1479 & 27/27 & 27/27 & 45142 \\
+4096-start-0-00 & Hybrid FP16 + INT2 & 435-461 & 5217 & 737 & 27/27 & 27/27 & 45142 \\
+4096-middle-0-00 & Sink + recent & 2506-2532 & 1474 & 1474 & 0/27 & 0/27 & 12345 \\
+4096-middle-0-00 & Question-aware & 2506-2532 & 1474 & 1474 & 27/27 & 27/27 & 30246 \\
+4096-middle-0-00 & Hybrid FP16 + INT2 & 2506-2532 & 5212 & 732 & 27/27 & 27/27 & 30246 \\
+4096-end-0-00 & Sink + recent & 4722-4747 & 1495 & 1495 & 26/26 & 26/26 & 68534 \\
+4096-end-0-00 & Question-aware & 4722-4747 & 1495 & 1495 & 26/26 & 26/26 & 68534 \\
+4096-end-0-00 & Hybrid FP16 + INT2 & 4722-4747 & 5233 & 753 & 26/26 & 26/26 & 68534 \\
+\bottomrule
+\end{tabular}
+\end{adjustbox}

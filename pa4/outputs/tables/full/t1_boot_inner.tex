@@ -1,0 +1,17 @@
+\scriptsize
+\setlength{\tabcolsep}{3.5pt}
+\captionof{table}{Paired 95\% bootstrap intervals (2,000 resamples) for the adaptive minus uniform method at the same budget. Perplexity resamples whole evaluation windows (437 WikiText-2, 177 C4) and pools token NLL before exponentiating. HellaSwag resamples the 2,000 examples (percentage points).}
+\label{tab:t1boot}
+\begin{adjustbox}{max width=\linewidth}
+\begin{tabular}{lrrr}
+\toprule
+Comparison & $\Delta$ WikiText-2 PPL & $\Delta$ C4 PPL & $\Delta$ HS acc (pp) \\
+\midrule
+P3 OWL $-$ P2 Wanda, 50\% & $-$0.54 [$-$0.62, $-$0.46] & $-$0.26 [$-$0.36, $-$0.18] & $-$0.05 [$-$0.70, +0.60] \\
+P3 OWL $-$ P2 Wanda, 75\% & $-$$1.87\times10^{3}$ [$-$$2.01\times10^{3}$, $-$$1.72\times10^{3}$] & $-$$1.38\times10^{3}$ [$-$$1.58\times10^{3}$, $-$$1.19\times10^{3}$] & +0.45 [$-$0.70, +1.70] \\
+Q3 mixed $-$ Q2 AWQ, INT4 bytes & +4.20 [+3.81, +4.65] & +2.87 [+2.43, +3.44] & $-$1.90 [$-$2.90, $-$0.95] \\
+Q3 mixed $-$ Q2 AWQ, INT3 bytes & +10.07 [+9.22, +11.08] & +6.50 [+5.73, +7.45] & $-$2.20 [$-$3.55, $-$0.85] \\
+2:4 Wanda $-$ unstructured Wanda, 50\% & +41.37 [+37.61, +45.58] & +29.79 [+26.54, +33.48] & $-$8.85 [$-$10.30, $-$7.30] \\
+\bottomrule
+\end{tabular}
+\end{adjustbox}

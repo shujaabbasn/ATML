@@ -1,0 +1,13 @@
+\scriptsize
+\setlength{\tabcolsep}{3.5pt}
+\captionof{table}{KV reference check. The FP16 model run with our split cache (context cached, question re-run on the cache) against a plain forward without a cache on all cases.}
+\label{tab:t2cc1}
+\begin{adjustbox}{max width=\linewidth}
+\begin{tabular}{rrrrrr}
+\toprule
+Cases & Argmax agree & Greedy equal & Finite & Full-cache EM (\%) & Worst logit diff \\
+\midrule
+180 & 180 & 180 & 180 & 100.0 & 0.109 \\
+\bottomrule
+\end{tabular}
+\end{adjustbox}

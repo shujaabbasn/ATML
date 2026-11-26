@@ -1,0 +1,21 @@
+\scriptsize
+\setlength{\tabcolsep}{3.5pt}
+\captionof{table}{Aligned cases at $L$=2,048 (every 30th case, layer 14, KV head 0), context positions kept and evidence tokens kept in FP16.}
+\label{tab:t2cmasks2048}
+\begin{adjustbox}{max width=\linewidth}
+\begin{tabular}{llrrrrl}
+\toprule
+Case & Cache & Evidence & Kept & FP16 & Evid. FP16 & Answer \\
+\midrule
+start & Sink+recent & 240-266 & 741 & 741 & 0/27 & 12345 \\
+start & Q-aware & 240-266 & 741 & 741 & 27/27 & 26836 \\
+start & Hybrid & 240-266 & 2633 & 393 & 27/27 & 26836 \\
+middle & Sink+recent & 1279-1305 & 750 & 750 & 0/27 & 12345 \\
+middle & Q-aware & 1279-1305 & 750 & 750 & 27/27 & 32056 \\
+middle & Hybrid & 1279-1305 & 2642 & 402 & 27/27 & 32056 \\
+end & Sink+recent & 2369-2394 & 746 & 746 & 26/26 & 38757 \\
+end & Q-aware & 2369-2394 & 746 & 746 & 26/26 & 38757 \\
+end & Hybrid & 2369-2394 & 2638 & 398 & 26/26 & 38757 \\
+\bottomrule
+\end{tabular}
+\end{adjustbox}

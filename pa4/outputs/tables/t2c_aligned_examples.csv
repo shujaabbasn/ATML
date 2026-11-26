@@ -1,19 +1,19 @@
-case,cache,layer,kv head,evidence span,fp16 positions kept,evidence kept (this head),full fp16 answer,cache answer,answer kind
-KV-2048-start-0-00,sink_recent,14,0,240-266,741,0/27,26836,12345,other code
-KV-2048-start-0-00,question_aware,14,0,240-266,741,27/27,26836,26836,gold
-KV-2048-start-0-00,hybrid,14,0,240-266,2633,27/27,26836,26836,gold
-KV-2048-middle-0-00,sink_recent,14,0,1279-1305,750,0/27,32056,12345,other code
-KV-2048-middle-0-00,question_aware,14,0,1279-1305,750,27/27,32056,32056,gold
-KV-2048-middle-0-00,hybrid,14,0,1279-1305,2642,27/27,32056,32056,gold
-KV-2048-end-0-00,sink_recent,14,0,2369-2394,746,26/26,38757,38757,gold
-KV-2048-end-0-00,question_aware,14,0,2369-2394,746,26/26,38757,38757,gold
-KV-2048-end-0-00,hybrid,14,0,2369-2394,2638,26/26,38757,38757,gold
-KV-4096-start-0-00,sink_recent,14,0,435-461,1479,0/27,45142,12345,other code
-KV-4096-start-0-00,question_aware,14,0,435-461,1479,27/27,45142,45142,gold
-KV-4096-start-0-00,hybrid,14,0,435-461,5217,27/27,45142,45142,gold
-KV-4096-middle-0-00,sink_recent,14,0,2506-2532,1474,0/27,30246,12345,other code
-KV-4096-middle-0-00,question_aware,14,0,2506-2532,1474,27/27,30246,30246,gold
-KV-4096-middle-0-00,hybrid,14,0,2506-2532,5212,27/27,30246,30246,gold
-KV-4096-end-0-00,sink_recent,14,0,4722-4747,1495,26/26,68534,68534,gold
-KV-4096-end-0-00,question_aware,14,0,4722-4747,1495,26/26,68534,68534,gold
-KV-4096-end-0-00,hybrid,14,0,4722-4747,5233,26/26,68534,68534,gold
+case,cache,layer,kv head,evidence span,positions kept,fp16 positions kept,evidence kept (this head),evidence in fp16,full fp16 answer,cache answer,answer kind
+KV-2048-start-0-00,sink_recent,14,0,240-266,741,741,0/27,0/27,26836,12345,other code
+KV-2048-start-0-00,question_aware,14,0,240-266,741,741,27/27,27/27,26836,26836,gold
+KV-2048-start-0-00,hybrid,14,0,240-266,2633,393,27/27,27/27,26836,26836,gold
+KV-2048-middle-0-00,sink_recent,14,0,1279-1305,750,750,0/27,0/27,32056,12345,other code
+KV-2048-middle-0-00,question_aware,14,0,1279-1305,750,750,27/27,27/27,32056,32056,gold
+KV-2048-middle-0-00,hybrid,14,0,1279-1305,2642,402,27/27,27/27,32056,32056,gold
+KV-2048-end-0-00,sink_recent,14,0,2369-2394,746,746,26/26,26/26,38757,38757,gold
+KV-2048-end-0-00,question_aware,14,0,2369-2394,746,746,26/26,26/26,38757,38757,gold
+KV-2048-end-0-00,hybrid,14,0,2369-2394,2638,398,26/26,26/26,38757,38757,gold
+KV-4096-start-0-00,sink_recent,14,0,435-461,1479,1479,0/27,0/27,45142,12345,other code
+KV-4096-start-0-00,question_aware,14,0,435-461,1479,1479,27/27,27/27,45142,45142,gold
+KV-4096-start-0-00,hybrid,14,0,435-461,5217,737,27/27,27/27,45142,45142,gold
+KV-4096-middle-0-00,sink_recent,14,0,2506-2532,1474,1474,0/27,0/27,30246,12345,other code
+KV-4096-middle-0-00,question_aware,14,0,2506-2532,1474,1474,27/27,27/27,30246,30246,gold
+KV-4096-middle-0-00,hybrid,14,0,2506-2532,5212,732,27/27,27/27,30246,30246,gold
+KV-4096-end-0-00,sink_recent,14,0,4722-4747,1495,1495,26/26,26/26,68534,68534,gold
+KV-4096-end-0-00,question_aware,14,0,4722-4747,1495,1495,26/26,26/26,68534,68534,gold
+KV-4096-end-0-00,hybrid,14,0,4722-4747,5233,753,26/26,26/26,68534,68534,gold

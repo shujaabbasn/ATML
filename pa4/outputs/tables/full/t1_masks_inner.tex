@@ -1,0 +1,19 @@
+\scriptsize
+\setlength{\tabcolsep}{3.5pt}
+\captionof{table}{Wanda against magnitude pruning, mean over the 28 blocks. Jaccard is the overlap of the two sets of pruned weights. Norm ratio is the largest input-feature norm over the median one on the calibration data at that sparsity (Wanda prunes block by block so later blocks see already pruned inputs).}
+\label{tab:t1masks}
+\begin{adjustbox}{max width=\linewidth}
+\begin{tabular}{lrrrrrr}
+\toprule
+Projection & Jaccard 25\% & 50\% & 75\% & Norm ratio 25\% & 50\% & 75\% \\
+\midrule
+q\_proj & 0.762 & 0.796 & 0.825 & 24.8 & 26.2 & 40.8 \\
+k\_proj & 0.780 & 0.806 & 0.826 & 24.8 & 26.2 & 40.8 \\
+v\_proj & 0.761 & 0.805 & 0.836 & 24.8 & 26.2 & 40.8 \\
+o\_proj & 0.718 & 0.765 & 0.829 & 10.6 & 10.4 & 8.0 \\
+gate\_proj & 0.881 & 0.890 & 0.860 & 20.8 & 21.6 & 16.9 \\
+up\_proj & 0.864 & 0.881 & 0.861 & 20.8 & 21.6 & 16.9 \\
+down\_proj & 0.790 & 0.811 & 0.815 & 173.5 & 156.2 & 76.0 \\
+\bottomrule
+\end{tabular}
+\end{adjustbox}

@@ -16,6 +16,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 from common.utils import load_json, read_jsonl, repo_path
+import report_tables
 
 
 TABLES=repo_path("outputs/tables")
@@ -159,30 +160,30 @@ def task1(root):
                 entry["c4_val_ppl_diff"]["diff"],entry["c4_val_ppl_diff"]["low"],entry["c4_val_ppl_diff"]["high"],
                 100*entry["hellaswag_acc_diff"]["mean"],100*entry["hellaswag_acc_diff"]["low"],100*entry["hellaswag_acc_diff"]["high"]])
         write_table("t1_paired_bootstrap",["comparison","dWiki PPL","low","high","dC4 PPL","low","high","dHS acc (pp)","low","high"],rows,3,"paired 95% bootstrap, same tokens / same examples")
-    #quality vs packed bytes, pruning and quantization separately
+    #quality vs packed bytes, one colour and marker per method family, legend instead of labels on points
+    families=[["baseline","FP16","black","*"],["p1","P1 magnitude","tab:blue","o"],["p2","P2 Wanda","tab:green","o"],["p3","P3 OWL","tab:red","o"],["nm24","2:4 Wanda","tab:purple","D"],
+        ["q1","Q1 RTN","tab:cyan","s"],["q2","Q2 AWQ","tab:orange","s"],["q3","Q3 mixed","tab:brown","^"]]
     figure,axes=plt.subplots(1,2,figsize=(9,3.4))
-    for name in metrics:
-        m=metrics[name]
-        size=m["storage"]["total_packed_bytes"]/2**30
-        if name.startswith("p") or name.startswith("nm"):
-            marker="o"
-            color="tab:blue"
-        elif name.startswith("q"):
-            marker="s"
-            color="tab:orange"
-        else:
-            marker="*"
-            color="black"
-        axes[0].scatter(size,m["wikitext2_ppl"]["ppl"],marker=marker,color=color)
-        axes[0].annotate(name,(size,m["wikitext2_ppl"]["ppl"]),fontsize=5)
-        axes[1].scatter(size,100*m["hellaswag"]["acc_norm"],marker=marker,color=color)
-        axes[1].annotate(name,(size,100*m["hellaswag"]["acc_norm"]),fontsize=5)
+    for family in families:
+        xs=[]
+        wiki=[]
+        hellaswag=[]
+        for name in sorted(metrics):
+            if name.startswith(family[0])==False:
+                continue
+            m=metrics[name]
+            xs.append(m["storage"]["total_packed_bytes"]/2**30)
+            wiki.append(m["wikitext2_ppl"]["ppl"])
+            hellaswag.append(100*m["hellaswag"]["acc_norm"])
+        axes[0].scatter(xs,wiki,marker=family[3],color=family[2],label=family[1],s=30)
+        axes[1].scatter(xs,hellaswag,marker=family[3],color=family[2],label=family[1],s=30)
     axes[0].set_xlabel("total packed model size (GiB)")
-    axes[0].set_ylabel("WikiText-2 perplexity (50k tokens)")
+    axes[0].set_ylabel("WikiText-2 perplexity (log scale)")
     axes[0].set_yscale("log")
     axes[1].set_xlabel("total packed model size (GiB)")
     axes[1].set_ylabel("HellaSwag acc_norm (%, n=2000)")
-    axes[0].set_title("circles: pruning, squares: quantization",fontsize=8)
+    axes[1].axhline(25,color="grey",linestyle=":",linewidth=1) #4-way chance
+    axes[1].legend(fontsize=7,loc="lower right")
     save_figure(figure,"t1_quality_vs_bytes")
     #P3 sensitivity and allocation
     p3=[]
@@ -441,7 +442,7 @@ def task2(root):
                 rows.append(row)
             write_table(name,["run"]+cells,rows,1,note+"; chance 1/64 = 1.6%, 1/K = 25.0/12.5/6.2%")
         bins=["d0-32","d32-64","d64-128","d128-256"]
-        figure,axes=plt.subplots(1,3,figsize=(11,3.4),sharey=True)
+        figure,axes=plt.subplots(1,4,figsize=(11,3.0),gridspec_kw={"width_ratios":[1,1,1,0.05]}) #last axis only holds the colorbar
         for k_index in range(3):
             k=[4,8,16][k_index]
             labels=[]
@@ -459,13 +460,18 @@ def task2(root):
             image=axes[k_index].imshow(np.array(grid),vmin=0,vmax=100,aspect="auto",cmap="viridis")
             axes[k_index].set_xticks(range(len(bins)))
             axes[k_index].set_xticklabels(bins,fontsize=7)
+            axes[k_index].set_xlabel("query-to-key distance (tokens)",fontsize=7)
             axes[k_index].set_title(f"test K={k}",fontsize=8)
             axes[k_index].set_yticks(range(len(labels)))
-            axes[k_index].set_yticklabels(labels,fontsize=6)
-        figure.colorbar(image,ax=axes,label="test accuracy (%)")
+            if k_index==0:
+                axes[k_index].set_yticklabels(labels,fontsize=6)
+            else:
+                axes[k_index].set_yticklabels([])
+        figure.colorbar(image,cax=axes[3],label="test accuracy (%)")
         save_figure(figure,"t2b_distance_load_heatmap")
         rows=[]
         checkpoints={}
+        train_logs={}
         for folder in sorted(part_b.iterdir()):
             if (folder/"result.json").exists()==False:
                 continue
@@ -476,25 +482,47 @@ def task2(root):
                 result["max_reach_positions"],reach_fraction,result["mean_step_ms"],result["train_peak_mb"],result["inference"]["mean_ms"]])
             if label not in checkpoints:
                 checkpoints[label]=[]
+                train_logs[label]=[]
             checkpoints[label].append(result["checkpoints"])
+            train_logs[label].append(result["train_log"])
             if result.get("b3") is not None:
                 b3=result["b3"]
                 write_table("t2b_b3_intervention",["window","state dtype","hybrid state B/layer","comparator state B/layer","ratio","selection rule","prediction"],
                     [[b3["window"],b3["state_dtype"],b3["state_match"]["hybrid_state_bytes"],b3["state_match"]["comparator_state_bytes"],b3["state_match"]["ratio"],b3["rule"],b3["prediction"]]],3)
         write_table("t2b_costs",["run","seed","params","params/dense","state bytes/layer","attn pairs/head (T=256)","candidate keys/query","max reach","K16 far reachable","train step ms","train peak MiB","inference ms (batch)"],rows,3,
             "theoretical pairs and state vs measured time; masked dense implementation for local/dilated, runtimes are not sparse-kernel runtimes")
-        figure,axis=plt.subplots(1,1,figsize=(6,3.4))
-        for label in checkpoints:
-            for run in checkpoints[label]:
-                xs=[]
-                ys=[]
-                for entry in run:
-                    xs.append(entry["update"])
-                    ys.append(100*entry["dev_accuracy"])
-                axis.plot(xs,ys,marker=".",alpha=0.6,label=label)
-        axis.set_xlabel("optimizer update")
-        axis.set_ylabel("development accuracy (%)")
-        axis.legend(fontsize=5,ncol=2)
+        architectures=["dense","local","dilated","linear","hybrid"]
+        figure,axes=plt.subplots(2,5,figsize=(13,3.8),sharex=True)
+        for column in range(5):
+            for label in sorted(train_logs):
+                if label.startswith(architectures[column]+"_")==False:
+                    continue
+                runs=train_logs[label]
+                steps=[]
+                losses=[]
+                for index in range(len(runs[0])):
+                    total=0.0
+                    for run in runs:
+                        total=total+run[index]["loss"]
+                    steps.append(runs[0][index]["step"])
+                    losses.append(total/len(runs)) #mean over seeds
+                line=axes[0][column].plot(steps,losses,label=label.replace(architectures[column]+"_",""))
+                updates=[]
+                accuracies=[]
+                for index in range(len(checkpoints[label][0])):
+                    total=0.0
+                    for run in checkpoints[label]:
+                        total=total+100*run[index]["dev_accuracy"]
+                    updates.append(checkpoints[label][0][index]["update"])
+                    accuracies.append(total/len(checkpoints[label]))
+                axes[1][column].plot(updates,accuracies,marker=".",color=line[0].get_color())
+            axes[0][column].axhline(np.log(64),color="grey",linestyle=":",linewidth=1) #loss of a uniform guess over 64 values
+            axes[0][column].set_title(architectures[column],fontsize=9)
+            axes[0][column].legend(fontsize=6)
+            axes[1][column].set_xlabel("optimizer update")
+            axes[1][column].set_ylim(0,102)
+        axes[0][0].set_ylabel("training loss (mean of seeds)")
+        axes[1][0].set_ylabel("dev accuracy, all K pooled (%)")
         save_figure(figure,"t2b_learning_curves")
     if (part_b/"inference_sweep.json").exists():
         rows=[]
@@ -567,16 +595,23 @@ def task2(root):
             rows=[]
             for example in read_jsonl(part_c/"c_masks_examples.jsonl"):
                 kept=set(example["kept_positions"])
+                if "fp16_positions" in example:
+                    fp16=set(example["fp16_positions"]) #hybrid keeps every token, only some of them in fp16
+                else:
+                    fp16=kept #eviction keeps its tokens in fp16
                 evidence=example["evidence_positions"]
                 inside=0
+                inside_fp16=0
                 for position in evidence:
                     if position in kept:
                         inside=inside+1
+                    if position in fp16:
+                        inside_fp16=inside_fp16+1
                 result=answers[(example["id"],example["method"])]
                 full=answers[(example["id"],"full")]
-                rows.append([example["id"],example["method"],example["layer"],example["kv_head"],f"{min(evidence)}-{max(evidence)}",len(kept),f"{inside}/{len(evidence)}",
+                rows.append([example["id"],example["method"],example["layer"],example["kv_head"],f"{min(evidence)}-{max(evidence)}",len(kept),len(fp16),f"{inside}/{len(evidence)}",f"{inside_fp16}/{len(evidence)}",
                     full["answer"][:20],result["answer"][:20],result["answer_kind"]])
-            write_table("t2c_aligned_examples",["case","cache","layer","kv head","evidence span","fp16 positions kept","evidence kept (this head)","full fp16 answer","cache answer","answer kind"],rows,3,
+            write_table("t2c_aligned_examples",["case","cache","layer","kv head","evidence span","positions kept","fp16 positions kept","evidence kept (this head)","evidence in fp16","full fp16 answer","cache answer","answer kind"],rows,3,
                 "rule in kv_cache: every 30th case; token positions after the chat template; one layer/kv head shown, all retained positions are in c_masks_examples.jsonl")
             #same cases, every cache's generation side by side
             cases=[]
@@ -652,12 +687,22 @@ def task3(root):
             updates=read_jsonl(folder/"updates.jsonl")
             xs=[]
             ys=[]
-            for update in updates:
-                xs.append(update["scored_tokens_so_far"])
-                ys.append(update["mean_kl"])
-            axis.plot(xs,ys,label=folder.name,alpha=0.8)
+            for index in range(len(updates)):
+                start=max(0,index-9)
+                total=0.0
+                for inner in range(start,index+1):
+                    total=total+updates[inner]["mean_kl"]
+                xs.append(updates[index]["scored_tokens_so_far"])
+                ys.append(total/(index+1-start)) #running mean of the last 10 updates
+            color="tab:blue"
+            if folder.name.endswith("s6305"):
+                color="tab:orange" #same colour for the same seed
+            style="-"
+            if folder.name.startswith("off"):
+                style="--"
+            axis.plot(xs,ys,label=folder.name.replace("_policy"," policy").replace("_"," "),color=color,linestyle=style)
         axis.set_xlabel("teacher-scored response tokens")
-        axis.set_ylabel("mean forward KL per token (update)")
+        axis.set_ylabel("forward KL per token (10-update mean)")
         axis.legend(fontsize=7)
         save_figure(figure,"t3_distill_curves")
         write_table("t3_distill_cost",["run","scored tokens","updates","skipped","truncated responses","adapter params","teacher fwd tokens","teacher bank s (charged)","rollout s","teacher scoring s","student fwd/bwd/update s","merge s","end-to-end s","peak MiB","merge max logit diff"],rows,2)
@@ -768,6 +813,7 @@ def main():
     task1(repo_path(args.task1))
     task2(repo_path(args.task2))
     task3(repo_path(args.task3))
+    report_tables.build() #captioned report tables in outputs/tables/full
 
 
 if __name__=="__main__":

@@ -1,0 +1,32 @@
+\scriptsize
+\setlength{\tabcolsep}{3.5pt}
+\captionof{table}{Forward-only operator sweep at batch 1 with random embeddings and matched B, H and d (warmed-up, synchronized). The last column says what the implementation builds in memory.}
+\label{tab:t2bsweep}
+\begin{adjustbox}{max width=\linewidth}
+\begin{tabular}{lrrrp{6.2cm}}
+\toprule
+Operator & T & Forward (ms) & Peak MiB & Materializes \\
+\midrule
+dense & 256 & 0.46 & 12.4 & dense boolean (H,T,T) mask and (B,H,T,T) scores \\
+local & 256 & 0.44 & 12.4 & dense boolean (H,T,T) mask and (B,H,T,T) scores \\
+dilated & 256 & 0.41 & 12.4 & dense boolean (H,T,T) mask and (B,H,T,T) scores \\
+linear & 256 & 0.62 & 22.4 & (B,H,T,d,d) prefix-sum state tensor \\
+hybrid & 256 & 1.14 & 22.8 & both of the above \\
+dense & 1024 & 1.41 & 51.4 & dense boolean (H,T,T) mask and (B,H,T,T) scores \\
+local & 1024 & 1.42 & 51.4 & dense boolean (H,T,T) mask and (B,H,T,T) scores \\
+dilated & 1024 & 1.44 & 51.4 & dense boolean (H,T,T) mask and (B,H,T,T) scores \\
+linear & 1024 & 1.71 & 64.4 & (B,H,T,d,d) prefix-sum state tensor \\
+hybrid & 1024 & 3.46 & 65.9 & both of the above \\
+dense & 4096 & 16.81 & 657.4 & dense boolean (H,T,T) mask and (B,H,T,T) scores \\
+local & 4096 & 14.67 & 657.4 & dense boolean (H,T,T) mask and (B,H,T,T) scores \\
+dilated & 4096 & 14.89 & 657.4 & dense boolean (H,T,T) mask and (B,H,T,T) scores \\
+linear & 4096 & 4.64 & 277.4 & (B,H,T,d,d) prefix-sum state tensor \\
+hybrid & 4096 & 20.53 & 661.4 & both of the above \\
+dense & 8192 & 60.79 & 2585.4 & dense boolean (H,T,T) mask and (B,H,T,T) scores \\
+local & 8192 & 59.70 & 2585.4 & dense boolean (H,T,T) mask and (B,H,T,T) scores \\
+dilated & 8192 & 59.17 & 2585.4 & dense boolean (H,T,T) mask and (B,H,T,T) scores \\
+linear & 8192 & 9.80 & 673.4 & (B,H,T,d,d) prefix-sum state tensor \\
+hybrid & 8192 & 70.77 & 2593.4 & both of the above \\
+\bottomrule
+\end{tabular}
+\end{adjustbox}

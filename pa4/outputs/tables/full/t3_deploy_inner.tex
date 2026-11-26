@@ -1,0 +1,16 @@
+\scriptsize
+\setlength{\tabcolsep}{3.5pt}
+\captionof{table}{Deployment break-even. Saving is time saved per request (negative is a slowdown).}
+\label{tab:t3deploy}
+\begin{adjustbox}{max width=\linewidth}
+\begin{tabular}{lrrrl}
+\toprule
+Draft & Upfront (s) & Saving $\gamma$=2 (s) & Saving $\gamma$=4 (s) & Requests to break even \\
+\midrule
+Off s6304 & 4118 & $-$0.154 & $-$0.342 & never \\
+Off s6305 & 4125 & $-$0.191 & $-$0.338 & never \\
+On s6304 & 2418 & $-$0.164 & $-$0.405 & never \\
+On s6305 & 2331 & $-$0.132 & $-$0.327 & never \\
+\bottomrule
+\end{tabular}
+\end{adjustbox}
