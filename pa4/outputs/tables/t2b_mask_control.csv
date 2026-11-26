@@ -1,0 +1,2 @@
+run,K4_near,K4_far,K4_mixed,K8_near,K8_far,K8_mixed,K16_near,K16_far,K16_mixed
+dense_K16_mixed_testmask_local,88.6+-14.7,1.4+-0.1,23.7+-3.2,88.0+-16.0,1.6+-0.0,22.2+-2.9,88.2+-16.6,1.6+-0.0,20.4+-3.1

@@ -648,8 +648,8 @@ def task3(root):
         for condition in summary["quality"]:
             for scope in summary["quality"][condition]:
                 q=summary["quality"][condition][scope]
-                rows.append([condition,scope,q["runs"],100*q["accuracy"],q["extractable_rate"],q["truncated_rate"],q["eos_rate"]])
-        write_table("t3_quality",["model","subset","runs","accuracy (%)","extractable","truncated","EOS rate"],rows,3,"standalone models, caps 512 math / 32 short")
+                rows.append([condition,scope,q["runs"],100*q["accuracy"],q["extractable_rate"],q.get("format_rate"),q["truncated_rate"],q["eos_rate"]])
+        write_table("t3_quality",["model","subset","runs","accuracy (%)","extractable","bare answer","truncated","EOS rate"],rows,3,"standalone models, caps 512 math / 32 short; short accuracy = first answer of the asked type, bare answer = reply is only the answer")
         rows=[]
         for condition in summary["deployment"]:
             d=summary["deployment"][condition]

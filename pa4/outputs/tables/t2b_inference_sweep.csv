@@ -1,0 +1,21 @@
+operator,T,batch,status,forward ms,peak MiB,materializes
+dense,256,1,ok,0.4569023996591568,12.376953125,"dense boolean (H,T,T) mask and (B,H,T,T) scores"
+local,256,1,ok,0.44464320242404937,12.376953125,"dense boolean (H,T,T) mask and (B,H,T,T) scores"
+dilated,256,1,ok,0.4111967980861664,12.376953125,"dense boolean (H,T,T) mask and (B,H,T,T) scores"
+linear,256,1,ok,0.6166591942310333,22.376953125,"(B,H,T,d,d) prefix-sum state tensor"
+hybrid,256,1,ok,1.1441824078559875,22.75439453125,both of the above
+dense,1024,1,ok,1.4083360075950622,51.376953125,"dense boolean (H,T,T) mask and (B,H,T,T) scores"
+local,1024,1,ok,1.4152735948562623,51.376953125,"dense boolean (H,T,T) mask and (B,H,T,T) scores"
+dilated,1024,1,ok,1.439145600795746,51.376953125,"dense boolean (H,T,T) mask and (B,H,T,T) scores"
+linear,1024,1,ok,1.7065856099128722,64.376953125,"(B,H,T,d,d) prefix-sum state tensor"
+hybrid,1024,1,ok,3.4629088163375856,65.87939453125,both of the above
+dense,4096,1,ok,16.80615367889404,657.376953125,"dense boolean (H,T,T) mask and (B,H,T,T) scores"
+local,4096,1,ok,14.673110294342042,657.376953125,"dense boolean (H,T,T) mask and (B,H,T,T) scores"
+dilated,4096,1,ok,14.891062355041504,657.376953125,"dense boolean (H,T,T) mask and (B,H,T,T) scores"
+linear,4096,1,ok,4.643004846572876,277.376953125,"(B,H,T,d,d) prefix-sum state tensor"
+hybrid,4096,1,ok,20.527737617492676,661.37939453125,both of the above
+dense,8192,1,ok,60.79020767211914,2585.376953125,"dense boolean (H,T,T) mask and (B,H,T,T) scores"
+local,8192,1,ok,59.701285934448244,2585.376953125,"dense boolean (H,T,T) mask and (B,H,T,T) scores"
+dilated,8192,1,ok,59.16999969482422,2585.376953125,"dense boolean (H,T,T) mask and (B,H,T,T) scores"
+linear,8192,1,ok,9.795148849487305,673.376953125,"(B,H,T,d,d) prefix-sum state tensor"
+hybrid,8192,1,ok,70.77281188964844,2593.37939453125,both of the above

@@ -1,0 +1,73 @@
+{
+  "method": "off_policy",
+  "seed": 6304,
+  "updates": 157,
+  "adapter_parameters": 1081344,
+  "student_parameters_with_adapter": 495114112,
+  "teacher_parameters": 1543714304,
+  "teacher_forward_tokens": 106786,
+  "scored_tokens_total": 40000,
+  "config": {
+    "seeds": [
+      6304,
+      6305
+    ],
+    "methods": [
+      "off_policy",
+      "on_policy"
+    ],
+    "quota_math": 30000,
+    "quota_short": 10000,
+    "cap_math": 192,
+    "cap_short": 32,
+    "temperature": 1.0,
+    "tokens_per_update": 256,
+    "lr": 0.0003,
+    "weight_decay": 0.01,
+    "clip": 1.0,
+    "lora_r": 8,
+    "lora_alpha": 16,
+    "lora_dropout": 0.0,
+    "lora_targets": [
+      "q_proj",
+      "k_proj",
+      "v_proj",
+      "o_proj"
+    ],
+    "merge_check_prompts": 4
+  },
+  "skipped_updates": 0,
+  "scored_tokens": {
+    "math": 30000,
+    "short": 10000
+  },
+  "responses_used": 848,
+  "truncations": [
+    {
+      "id": "GSM8K-TRAIN-0430",
+      "domain": "math",
+      "response_tokens": 192,
+      "scored": 159
+    },
+    {
+      "id": "SHORT-train-0187",
+      "domain": "short",
+      "response_tokens": 32,
+      "scored": 22
+    }
+  ],
+  "teacher_bank_generation_seconds_charged": 3920.263750261999,
+  "student_rollout_seconds": 0.0,
+  "student_rollout_tokens": 0,
+  "teacher_scoring_seconds": 49.56497543900065,
+  "student_forward_backward_update_seconds": 144.52890844300003,
+  "training_loop_seconds": 197.91355807600002,
+  "end_to_end_seconds": 4118.177308337999,
+  "peak_mb": 5311.75927734375,
+  "versions": {
+    "torch": "2.11.0+cu130",
+    "transformers": "4.57.1",
+    "cuda": "13.0",
+    "gpu": "Tesla T4"
+  }
+}

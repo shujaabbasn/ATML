@@ -1,0 +1,4 @@
+prompt,prefill logit diff,rollback prob diff,final cache logit diff,cap ok,accept (draft=target),target-only repeatable
+GSM8K-0000,0.025390625,0.002785719931125641,0.04638671875,True,1.0,True
+GSM8K-0001,0.0234375,0.005017638206481934,0.03125,True,1.0,True
+SHORT-shifted-0029,0.029296875,0.00016763806343078613,0.03515625,True,1.0,True

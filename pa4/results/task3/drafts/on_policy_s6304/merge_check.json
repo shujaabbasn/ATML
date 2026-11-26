@@ -1,0 +1,21 @@
+{
+  "checks": [
+    {
+      "max_abs_logit_diff": 0.154296875,
+      "argmax_agree": 1.0
+    },
+    {
+      "max_abs_logit_diff": 0.1640625,
+      "argmax_agree": 1.0
+    },
+    {
+      "max_abs_logit_diff": 0.12890625,
+      "argmax_agree": 1.0
+    },
+    {
+      "max_abs_logit_diff": 0.125,
+      "argmax_agree": 1.0
+    }
+  ],
+  "merge_seconds": 0.037657168000350794
+}

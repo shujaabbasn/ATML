@@ -1,0 +1,9 @@
+comparison,dEM (pp),low,high,prompts
+sink_recent_minus_full,-66.66666666666666,-73.33333333333333,-60.0,180
+question_aware_minus_full,-1.6666666666666667,-3.888888888888889,0.0,180
+int4_tokenwise_minus_full,-100.0,-100.0,-100.0,180
+int4_kivi_minus_full,0.0,0.0,0.0,180
+hybrid_minus_full,0.0,0.0,0.0,180
+question_aware_minus_sink_recent,65.0,58.333333333333336,71.66666666666667,180
+hybrid_minus_question_aware,1.6666666666666667,0.0,3.888888888888889,180
+int4_kivi_minus_int4_tokenwise,100.0,100.0,100.0,180

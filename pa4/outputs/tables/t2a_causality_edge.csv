@@ -1,0 +1,8 @@
+check,impl,max abs change / error
+future-perturbation,dense,0.0
+future-perturbation,tiled,0.0
+future-perturbation,sdpa,0.0
+huge-logit torch.float32,dense,0.0
+huge-logit torch.float32,tiled,1.1920928955078125e-07
+huge-logit torch.float16,dense,0.0009140968322753906
+huge-logit torch.float16,tiled,0.0009140968322753906

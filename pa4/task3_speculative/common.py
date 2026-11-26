@@ -75,8 +75,25 @@ def last_number(text):
     return candidates[-1].replace(",","").rstrip(".")
 
 
+def short_candidates(item,response):
+    """Deterministic extractor for the three short-form families (staff short_test: 0 month, 1 integer, 2 two-letter code,
+    same family ids in the familiar and shifted templates). Returns every answer of the asked type, in order."""
+    family=int(item["family"])
+    if family==0:
+        months="January|February|March|April|May|June|July|August|September|October|November|December"
+        found=re.findall(r"\b("+months+r")\b",response) #case sensitive so the verb 'may' is not read as May
+    elif family==1:
+        found=[]
+        for number in re.findall(r"\d[\d,]*",response):
+            found.append(number.replace(",","")) #888, or 3,761 -> plain digits
+    else:
+        found=re.findall(r"\b[A-Z]{2}\b",response) #two capital letters on their own, like PK or DE
+    return found
+
+
 def is_correct(item,response):
-    """GSM8K: final numeric answer equals the gold number. Short form: exact match after trimming case/punctuation."""
+    """GSM8K: final numeric answer equals the gold number. Short form: the first answer of the asked type equals gold,
+    so 'The destination code is PK.' counts; whether the reply was bare is format_compliant, kept separate (manual step 7)."""
     if item["domain"]=="math":
         predicted=last_number(response)
         if predicted is None:
@@ -86,8 +103,18 @@ def is_correct(item,response):
         except ValueError:
             return False
     else:
-        cleaned=response.strip().strip(".").strip().lower()
-        return cleaned==str(item["answer"]).strip().lower()
+        found=short_candidates(item,response)
+        if len(found)==0:
+            return False
+        return found[0]==str(item["answer"]).strip()
+
+
+def format_compliant(item,response):
+    """Short form only: the reply is just the answer (exact match after trimming case/punctuation). None for math."""
+    if item["domain"]=="math":
+        return None
+    cleaned=response.strip().strip(".").strip().lower()
+    return cleaned==str(item["answer"]).strip().lower()
 
 
 def cap_for(item,caps):

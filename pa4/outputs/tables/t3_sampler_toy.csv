@@ -1,0 +1,4 @@
+test,statistic / count,p-value / rounds,cells,pass
+chi-square exact sampler,14.666733721970765,0.9631284044536529,27,True
+chi-square negative control,17285.33916518043,0.0,27,True
+bonus token (q=p),4000,4000,,True

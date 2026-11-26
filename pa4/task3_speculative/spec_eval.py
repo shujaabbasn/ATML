@@ -21,8 +21,8 @@ import time
 import numpy as np
 import torch
 
-from common.utils import load_yaml, save_json, load_json, read_jsonl, append_jsonl, repo_path, get_device, sync, time_call, summarize_times, bootstrap_mean_ci, reset_peak, peak_mb, package_versions
-from task3_speculative.common import load_causal, load_tokenizer, eos_ids, chat_ids, test_prompts, is_correct, cap_for, last_number
+from common.utils import load_yaml, save_json, load_json, read_jsonl, write_jsonl, append_jsonl, repo_path, data_path, get_device, sync, time_call, summarize_times, bootstrap_mean_ci, reset_peak, peak_mb, package_versions
+from task3_speculative.common import load_causal, load_tokenizer, eos_ids, chat_ids, test_prompts, is_correct, format_compliant, short_candidates, cap_for, last_number
 from task3_speculative.sampler import speculative_generate, plain_generate, make_generator, CachedModel
 
 
@@ -132,13 +132,35 @@ def speed(config,drafts):
 #---------------- answer quality (standalone models) ----------------
 
 def answer_flags(item,text,tokens,ended_eos,cap):
-    """Correct, extractable (math: a final number found; short: a non-empty answer) and truncated (hit the cap, no EOS)."""
+    """Correct, extractable (math: a final number found; short: an answer of the asked type found), format_compliant
+    (short only: the reply is just the answer) and truncated (hit the cap, no EOS)."""
     if item["domain"]=="math":
         extractable=last_number(text) is not None
     else:
-        extractable=len(text.strip())>0
+        extractable=len(short_candidates(item,text))>0
     truncated=(tokens>=cap and ended_eos==False)
-    return {"correct":is_correct(item,text),"extractable":extractable,"truncated":truncated}
+    return {"correct":is_correct(item,text),"extractable":extractable,"format_compliant":format_compliant(item,text),"truncated":truncated}
+
+
+def rescore(config):
+    """Recompute the answer flags of the saved quality rows from their stored responses (no model, CPU only).
+    Only short-form rows change: needs data/short_form/short_test.jsonl; math rows keep their flags, that extractor is unchanged."""
+    items={}
+    for record in read_jsonl(data_path(config["data"]["short_test"])):
+        items[record["id"]]={"domain":"short","family":record["family"],"answer":record["answer"]}
+    for path in sorted((repo_path(config["results_dir"])/"quality").glob("*.jsonl")):
+        rows=read_jsonl(path)
+        changed=0
+        for row in rows:
+            if row["domain"]=="short":
+                flags=answer_flags(items[row["id"]],row["response"],row["tokens"],row["ended_eos"],row["cap"])
+                if flags["correct"]!=row["correct"]:
+                    changed=changed+1
+                row.update(flags)
+            else:
+                row["format_compliant"]=None #math has no format flag
+        write_jsonl(path,rows)
+        print("rescored",path.stem,"short rows whose correct flag changed:",changed)
 
 
 @torch.no_grad()
@@ -510,8 +532,16 @@ def summary(config):
         out["quality"][path.stem]={}
         for scope in groups:
             group=groups[scope]
+            formats=[]
+            for row in group:
+                if row.get("format_compliant") is not None:
+                    formats.append(row["format_compliant"])
+            if len(formats)>0:
+                format_rate=float(np.mean(formats))
+            else:
+                format_rate=None #math-only scope
             out["quality"][path.stem][scope]={"runs":len(group),"accuracy":float(np.mean(column(group,"correct"))),"extractable_rate":float(np.mean(column(group,"extractable"))),
-                "truncated_rate":float(np.mean(column(group,"truncated"))),"eos_rate":float(np.mean(column(group,"ended_eos")))}
+                "format_rate":format_rate,"truncated_rate":float(np.mean(column(group,"truncated"))),"eos_rate":float(np.mean(column(group,"ended_eos")))}
     #deployment break-even: upfront distillation + merge cost over the measured per-request saving
     for condition in speed_rows:
         draft=speed_rows[condition][0]["draft"]
@@ -539,7 +569,7 @@ def summary(config):
 def main():
     parser=argparse.ArgumentParser()
     parser.add_argument("--config",default="configs/task3.yaml")
-    parser.add_argument("--mode",required=True,choices=["speed","quality","throughput","unmerged","summary"])
+    parser.add_argument("--mode",required=True,choices=["speed","quality","throughput","unmerged","rescore","summary"])
     parser.add_argument("--drafts",nargs="*",default=["original"])
     args=parser.parse_args()
     config=load_yaml(args.config)
@@ -551,6 +581,8 @@ def main():
         throughput(config,args.drafts)
     elif args.mode=="unmerged":
         unmerged(config)
+    elif args.mode=="rescore":
+        rescore(config)
     else:
         summary(config)
 

@@ -1,0 +1,6 @@
+{
+  "condition": "spec_off_policy_s6304_g2",
+  "prompt": "GSM8K-0000",
+  "spec_seconds": 3.115849545999936,
+  "target_seconds": 2.434160317000078
+}

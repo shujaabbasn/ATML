@@ -92,7 +92,7 @@ Each row pairs a manual requirement (paraphrased from the full PA4 manual text) 
 | Fixed-64-token diagnostic on 24 math prompts, EOS ignored for timing only | `spec_eval --mode throughput` → `t3_speedup` |
 | Paired bootstrap 95% intervals over prompts for throughput and acceptance | `spec_eval.summary` (`throughput_ratio_vs_target`, `speed_differences`) → `t3_speed`, `t3_speed_bootstrap` |
 | Step 7 by math / familiar / shifted / output-length bins; standalone student accuracy at 512 / 32 with extraction and truncation flags; deployment break-even incl. distillation + merge cost | `spec_eval --mode quality`, `spec_eval.summary` (`quality`, `deployment`) → `t3_quality`, `t3_deployment` |
-| GSM8K exact numeric match; short-form exact match | `common.is_correct` |
+| GSM8K exact numeric match; short-form answer extraction and extraction-format compliance reported separately | `common.is_correct` (first answer of the asked type = gold), `common.format_compliant` (bare answer only), `spec_eval --mode rescore` |
 
 ## Before you submit
 
