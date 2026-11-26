@@ -1,0 +1,39 @@
+{
+  "task1": {
+    "calibration_sequences": 128,
+    "development_sequences": 32,
+    "calibration_development_shared_rows": 0,
+    "calibration_split": "c4 train",
+    "evaluation_split": "c4 validation / wikitext-2 test",
+    "shared_64_token_chunks_with_evaluation": {
+      "wikitext2_test": 0,
+      "c4_validation": 0
+    },
+    "pass": true
+  },
+  "task2": {
+    "streams": [
+      "train_stream_K16_mixed.npz",
+      "train_stream_K16_near.npz",
+      "train_stream_K4_mixed.npz",
+      "train_stream_K4_near.npz",
+      "train_stream_K8_mixed.npz",
+      "train_stream_K8_near.npz"
+    ],
+    "train_sequences": 864000,
+    "held_out_sequences": 11520,
+    "identical_sequences": 0,
+    "pass": true
+  },
+  "task3": {
+    "gsm8k_train": 500,
+    "gsm8k_test": 60,
+    "gsm8k_shared_questions": 0,
+    "gsm8k_splits": "train rows from the train split, test rows from the test split",
+    "short_train": 296,
+    "short_test": 60,
+    "short_shared_inputs": 0,
+    "teacher_bank_non_training_ids": 0,
+    "pass": true
+  }
+}
